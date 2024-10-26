@@ -169,14 +169,15 @@ const featureCards = [
   },
   {
     title: "Scholarship",
-    image: ScholarshipHomePage,
+    image: "https://i.imgur.com/zwFZOIk.png",
+    image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
       path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
     description: "Find support for your education.",
-      image: LivelihoodHomePage,
+      image: "https://i.imgur.com/lfOwU5G.png",
       path: "/livelihood"
   },
   {
@@ -200,42 +201,6 @@ const featureCards = [
   {
       title: "University",
     image: UniversityHomePage ,
-    description: "Find out available scholarships.",
-      path: "/list/university"
-  },
-  {
-    title: "Scholarship",
-    image: ScholarshipHomePage,
-    description: "Find out available scholarships.",
-      path: "/list/Scholarship"
-  },
-  {
-    title: "Livelihood",
-    description: "Find support for your education.",
-      image: LivelihoodHomePage,
-      path: "/livelihood"
-  },
-  {
-      title: "University",
-    image: UniversityHomePage ,
-    description: "Find out available scholarships.",
-      path: "/list/university"
-  },
-  {
-    title: "Scholarship",
-    image: ScholarshipHomePage,
-    description: "Find out available scholarships.",
-      path: "/list/Scholarship"
-  },
-  {
-    title: "Livelihood",
-    description: "Find support for your education.",
-      image: LivelihoodHomePage,
-      path: "/livelihood"
-  },
-  {
-    title: "University",
-    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
     path: "/list/university"
   },
@@ -243,14 +208,14 @@ const featureCards = [
     title: "Scholarship",
     image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
-    path: "/list/Scholarship"
+      path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
-    image: "https://i.imgur.com/lfOwU5G.png",
     description: "Find support for your education.",
-    path: "/livelihood"
-  }
+      image: "https://i.imgur.com/lfOwU5G.png",
+      path: "/livelihood"
+  },
 ];
 
 
