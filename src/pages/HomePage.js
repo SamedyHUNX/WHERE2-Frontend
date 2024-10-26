@@ -14,11 +14,6 @@ import { searchUniversities } from "../features/slices/universitySlice";
 
 // assets
 import CardSlider from "../components/reusable/CardsSlider";
-import LivelihoodHomePage from "../assets/images/livelihood-homepage.png";
-import UniversityHomePage from "../assets/images/university-homepage.png";
-import ScholarshipHomePage from "../assets/images/shcolarship-homepage.png"
-import defaultImage from "../assets/images/where2.jpg"
-import { title } from "process";
 
 
 const hero1 = {
@@ -160,21 +155,21 @@ path: "https://anbschool.org/"
 ]
 const featureCards = [
   {
-      title: "University",
-    image: UniversityHomePage ,
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
       path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: ScholarshipHomePage,
+    image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
       path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
     description: "Find support for your education.",
-      image: LivelihoodHomePage,
+      image: "https://i.imgur.com/lfOwU5G.png",
       path: "/livelihood"
   },
   {
@@ -196,21 +191,21 @@ const featureCards = [
       path: "/livelihood"
   },
   {
-      title: "University",
-    image: UniversityHomePage ,
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
       path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: ScholarshipHomePage,
+    image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
       path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
     description: "Find support for your education.",
-      image: LivelihoodHomePage,
+      image: "https://i.imgur.com/lfOwU5G.png",
       path: "/livelihood"
   },
   {
