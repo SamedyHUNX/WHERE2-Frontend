@@ -1,13 +1,10 @@
 import CardSlider from "./reusable/CardsSlider";
-import PartTimeJob from '../assets/images/part-time-job.jpg';
-import StudentLoan from '../assets/images/student-loan.jpeg';
-import Accommodation from '../assets/images/accommodation.jpg';
 import JobFinder from '../assets/images/job-finder.jpg';
-import LiveliHood from '../assets/images/livelihood.png'
 import LivelihoodBox from "./reusable/LivelihoodBox";
 import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
 import { Link } from "react-router-dom";
+import Hero from "../layouts/Hero";
 const Livelihood = () => {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
@@ -19,30 +16,44 @@ const Livelihood = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
     const cards = [
         {
             title: "Part-time Job",
-            image: PartTimeJob,
+            image: "https://i.imgur.com/wNSAnFb.png",
             path: "/list/job"
         },
         {
             title: "Student Loan",
-            image: StudentLoan,
+            image: "https://i.imgur.com/nbIan17.png",
             path: "/list/student-loan"
         },
         {
             title: "Accommodation",
-            image: Accommodation,
+            image: "https://i.imgur.com/uidTbxO.png",
             path: "/list/accommodation"
         },
     ];
+
+    const hero1 = {
+        title: "PURSUE YOUR CAREER.",
+        subtitle: "By supporting yourself.",
+        backgroundGradient: "from-blue-100",
+        titleColor: "text-blue-900",
+        subtitleColor: "text-blue-600",
+        mainImageSrc: "https://i.imgur.com/x4yB3Xz.png",
+        mainImageAlt: "University building",
+        button:"Find part time jobs",
+      };
+
     return (
         <section className="bg-[#F4F8FA]">
             <div className="flex flex-col align-middle justify-center gap-6 p-6 mt-[64px] h-max">
                 <WrapperComponent>
-                <div className="w-full lg:h-[925px] sm:h-[500px]">
+                {/* <div className="w-full lg:h-[925px] sm:h-[500px]">
                     <img src={LiveliHood} className="h-full sm:min-h-full lg:object-fit sm:object-none" alt="Hero photo of livelidhood page"/>
-                </div>
+                </div> */}
+                <Hero props={hero1}/>
                 </WrapperComponent>
                 <WrapperComponent>
                 <CardSlider cards={cards} header={"Conveniently Self-Supporting"} className="h-fit"/>

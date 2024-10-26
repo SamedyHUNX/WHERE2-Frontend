@@ -10,6 +10,8 @@ import Footer from '../components/reusable/Footer';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 import AccommodationList from '../components/AccommodationList';
+import { fetchAllList } from '../features/slices/paginationSlice';
+
 import { fetchAccommodations } from '../features/slices/accommodationSlice';
 /** Enable for debugging */
 const isDebug = true;

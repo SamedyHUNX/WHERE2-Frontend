@@ -1,6 +1,7 @@
 import React from "react";
-import KeepInWithUs from "../../assets/images/Pexels-Photo-by-Skitterphoto-4 (1).png"
 import { Link } from "react-router-dom";
+
+const KeepInWithUs = "https://i.imgur.com/96f0W9s.jpg"
 
 const joinUs = () => {
 	return (

@@ -7,22 +7,13 @@ import WrapperComponent from "../components/reusable/WrapperComponent";
 import CardFeatureSlider from "../components/reusable/CardFeatureSlider";
 import SaveSection from "../components/reusable/Saves";
 import JoinUs from "../components/reusable/JoinUs";
-import Content_Hero2 from "../assets/images/content-module-hero2.png";
-import Conten_Hero1 from "../assets/images/home-banner-neo.png";
 // import Card from "../components/reusable/Card";
 
 // slices
 import { searchUniversities } from "../features/slices/universitySlice";
 
 // assets
-import MainHero from "../assets/images/content-module-hero1-no-bg.png";
-import SecondaryHero from "../assets/images/content-module-hero2.png";
 import CardSlider from "../components/reusable/CardsSlider";
-import LivelihoodHomePage from "../assets/images/livelihood-homepage.png";
-import UniversityHomePage from "../assets/images/university-homepage.png";
-import ScholarshipHomePage from "../assets/images/shcolarship-homepage.png"
-import defaultImage from "../assets/images/where2.jpg"
-import { title } from "process";
 
 
 const hero1 = {
@@ -32,7 +23,7 @@ const hero1 = {
   backgroundGradient: "bg-gray-primary",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: Conten_Hero1,
+  mainImageSrc: "https://i.imgur.com/dACQws5.png",
   mainImageAlt: "University building",
   onSearch: () => {},
 };
@@ -45,11 +36,12 @@ const hero2 = {
   backgroundGradient: "from-blue-100",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: Content_Hero2,
+  mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
   mainImageAlt: "University building",
   button:"Find part time jobs",
   onSearch: () => {},
 };
+
 const header =[
   {
     suggested: "SUGGESTED FOR YOU"
@@ -163,21 +155,21 @@ path: "https://anbschool.org/"
 ]
 const featureCards = [
   {
-      title: "University",
-    image: UniversityHomePage ,
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
       path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: ScholarshipHomePage,
+    image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
       path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
     description: "Find support for your education.",
-      image: LivelihoodHomePage,
+      image: "https://i.imgur.com/lfOwU5G.png",
       path: "/livelihood"
   },
   {
@@ -199,21 +191,21 @@ const featureCards = [
       path: "/livelihood"
   },
   {
-      title: "University",
-    image: UniversityHomePage ,
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
       path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: ScholarshipHomePage,
+    image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
       path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
     description: "Find support for your education.",
-      image: LivelihoodHomePage,
+      image: "https://i.imgur.com/lfOwU5G.png",
       path: "/livelihood"
   },
 ];
