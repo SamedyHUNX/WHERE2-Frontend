@@ -44,24 +44,24 @@ const ListLayout = ({ items, category, page , isLoading }) => {
         }
 
         return items.map((item, index) => (
-            <WrapperComponent>
-            <Card
-                key={index}
-                image={item.image_url}
-                imageAlt={item.image_alt}
-                title={item.name}
-                description={item.description}
-                facebookLink={item.facebook_url}
-                instagramLink={item.instagram_url}
-                telegramLink={item.telegram_url}
-                websiteLink={item.website}
-                location={item.location}
-                route={`/detail/${category}/${item.id}`}
-                id={item.id}
-                type={category}
-                isHeartClicked={isClicked[item.id]}
-                />
-                </WrapperComponent>
+            // <WrapperComponent>
+                <Card
+                    key={index}
+                    image={item.image_url}
+                    imageAlt={item.image_alt}
+                    title={item.name}
+                    description={item.description}
+                    facebookLink={item.facebook_url}
+                    instagramLink={item.instagram_url}
+                    telegramLink={item.telegram_url}
+                    websiteLink={item.website}
+                    location={item.location}
+                    route={`/detail/${category}/${item.id}`}
+                    id={item.id}
+                    type={category}
+                    isHeartClicked={isClicked[item.id]}
+                    />
+            // </WrapperComponent>
         ));
     };
 
