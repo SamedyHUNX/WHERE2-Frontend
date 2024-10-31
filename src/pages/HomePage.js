@@ -165,58 +165,22 @@ const featureCards = [
       title: "University",
     image: UniversityHomePage ,
     description: "Find out available scholarships.",
-      path: "/list/university"
-  },
-  {
-    title: "Scholarship",
-    image: "https://i.imgur.com/zwFZOIk.png",
-    image: "https://i.imgur.com/zwFZOIk.png",
-    description: "Find out available scholarships.",
-      path: "/list/Scholarship"
-  },
-  {
-    title: "Livelihood",
-    description: "Find support for your education.",
-      image: "https://i.imgur.com/lfOwU5G.png",
-      path: "/livelihood"
-  },
-  {
-      title: "University",
-    image: UniversityHomePage ,
-    description: "Find out available scholarships.",
-      path: "/list/university"
-  },
-  {
-    title: "Scholarship",
-    image: ScholarshipHomePage,
-    description: "Find out available scholarships.",
-      path: "/list/Scholarship"
-  },
-  {
-    title: "Livelihood",
-    description: "Find support for your education.",
-      image: LivelihoodHomePage,
-      path: "/livelihood"
-  },
-  {
-      title: "University",
-    image: UniversityHomePage ,
-    description: "Find out available scholarships.",
     path: "/list/university"
   },
   {
     title: "Scholarship",
     image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
-      path: "/list/Scholarship"
+    path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
+    image: "https://i.imgur.com/lfOwU5G.png",
     description: "Find support for your education.",
-      image: "https://i.imgur.com/lfOwU5G.png",
-      path: "/livelihood"
-  },
+    path: "/livelihood"
+  }
 ];
+
 
 
 const HomePage = () => {
