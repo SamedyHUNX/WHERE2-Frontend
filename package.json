@@ -14,7 +14,6 @@
     "@testing-library/user-event": "^13.5.0",
     "ajv": "^8.17.1",
     "assert": "^2.1.0",
-    "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "babel": "^6.23.0",
     "babel-loader": "^9.2.1",
@@ -30,7 +29,6 @@
     "lucide-react": "^0.439.0",
     "path-browserify": "^1.0.1",
     "paypal": "^1.0.1",
-    "postcss": "^8.4.47",
     "process": "^0.11.10",
     "querystring-es3": "^0.2.1",
     "react": "^18.3.1",
@@ -79,6 +77,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@eslint/js": "^9.10.0",
+    "autoprefixer": "^10.4.20",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
@@ -86,7 +85,8 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.9.0",
+    "postcss": "^8.4.47",
     "source-map-loader": "^5.0.0",
-    "tailwindcss": "^3.4.13"
+    "tailwindcss": "^3.4.14"
   }
 }

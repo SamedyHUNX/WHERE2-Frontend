@@ -36,18 +36,6 @@ module.exports = {
       fontFamily: {
         sans: ["Poppins", ...defaultTheme.fontFamily.sans],
       },
-      fontSize: {
-        h1: "2.75rem",
-        h1p: "2.375rem",
-        h2: "2rem",
-        h3: "1.75rem",
-        h4: "1.4375rem",
-        h4p: "1.3125rem",
-        h5: "1.25rem",
-        h6: "1.125rem",
-        p: "1rem",
-        pp: "0.75rem",
-      },
       colors: {
         "light-100": "#375761",
         "light-300": "#808A8D",
