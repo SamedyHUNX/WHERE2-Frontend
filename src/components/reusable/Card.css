@@ -8,6 +8,13 @@
     height: 348px;
 }
 
+.card-container .description{
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .image-container {
     flex: 5;
     max-width: 40%;
