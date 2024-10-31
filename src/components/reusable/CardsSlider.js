@@ -56,8 +56,8 @@ const CardSlider = ({ cards = [], header , ads }) => {
 
   return (
     <div className="relative lg:h-fit sm:h-fit w-full mx-auto my-[16px] max-w-[1440px]">
-      <div className="text-[#367588]">
-        <b>{header}</b>
+      <div className="text-[#367588] text-2xl md:text-base">
+        <h1>{header}</h1>
       </div>
       <div className="overflow-hidden w-full h-fit my-[32px]">
         <div

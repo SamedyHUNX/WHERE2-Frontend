@@ -1,9 +1,9 @@
 const ListContainer = ({children}) => {
     return (
-        <div className="min-h-screen mx-auto grid 
-        max-w-[1200px] lg:mt-[248px]
-        sm:w-[100%] sm:px-[35px] sm:mt-[6.9rem]
-        gap-[30px] 
+        <div className="min-h-screen mx-auto  
+        max-w-[1200px] lg:mt-[180px]
+        sm:w-[100%] md:px-[24px] min-[1440px]:px-[35px] sm:px-[16px] sm:mt-[6.9rem]
+        list
         "
         >
             {children}

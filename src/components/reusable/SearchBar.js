@@ -15,7 +15,8 @@ const cssStyles = {
     border: "1px solid #d1d5db", 
     backgroundColor: "rgba(255, 255, 255, 0.8)", 
     borderRadius: "30px",
-    borderColor: "#d1d5db"
+    borderColor: "#d1d5db",
+    margin: "0px 0px 30px 0px"
   },
   input: {
     width: "100%",
