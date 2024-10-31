@@ -160,21 +160,22 @@ const featureCards = [
     title: "University",
     image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
-      path: "/list/university"
+    path: "/list/university"
   },
   {
     title: "Scholarship",
     image: "https://i.imgur.com/zwFZOIk.png",
     description: "Find out available scholarships.",
-      path: "/list/Scholarship"
+    path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
+    image: "https://i.imgur.com/lfOwU5G.png",
     description: "Find support for your education.",
-      image: "https://i.imgur.com/lfOwU5G.png",
-      path: "/livelihood"
+    path: "/livelihood"
   }
 ];
+
 
 const HomePage = () => {
   return (
