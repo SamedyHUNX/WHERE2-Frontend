@@ -179,7 +179,7 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
-      <WrapperComponent>
+      {/* <WrapperComponent> */}
         <Hero props={hero1}>
           <Searchbar 
             handleSearch={searchUniversities}
@@ -187,7 +187,7 @@ const HomePage = () => {
             category="university"
           />
         </Hero>
-      </WrapperComponent>
+      {/* </WrapperComponent> */}
         <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
       <WrapperComponent>
         <Hero props={hero2} />

@@ -50,7 +50,7 @@ const CardFeatureSlider = ({ cardFeature, header  }) => {
   return (
     <div className="relative w-full max-w-6xl mx-auto my-[32px]">
       <div className="overflow-hidden w-full shadow-4xl sm:py-5">
-        <div className="p-5 text-blue-900 text-[32px] sm:text-[28px]">
+        <div className="text-h1p pl-2 font-black text-[#13188C]">
           {header}
           {/* {header.length > 0 ? (
             header.map((item, index) => <b key={index}>{item.suggested}</b>)
@@ -84,13 +84,13 @@ const CardFeatureSlider = ({ cardFeature, header  }) => {
       <div className="absolute bottom-0 right-4 flex space-x-2">
         <button
           onClick={prevSlide}
-          className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors hover:scale-105"
+          className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors hover:scale-105"
+          className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
