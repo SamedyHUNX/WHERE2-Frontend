@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 
 const cssStyles = {
   form: {
-    height: "54px",
+    height: "3rem",
     display: "flex",
     justifyContent: "space-between",
     overflow: "hidden",

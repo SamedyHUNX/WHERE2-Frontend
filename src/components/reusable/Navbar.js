@@ -6,8 +6,9 @@ import Menu from "./../../assets/svg/menu.svg";
 import useAuth from "./../../hooks/useAuth";
 import ProfilePicture from "./PictureUpload";
 import ButtonComponent from "./Button";
-import WrapperComponent from "./WrapperComponent";
+
 import {  School,  BookOpenTextIcon,  LucideBriefcaseBusiness,  User2,  Activity,  ChartNoAxesCombinedIcon,} from "lucide-react";
+import NavButton from "./NavButton/NavButton";
 
 const MenuIcon = <img src={Menu} alt="Menu Item" />;
 
@@ -34,19 +35,8 @@ const Navbar = () => {
     { logo: <BookOpenTextIcon />, name: "Scholarships", to: "/list/scholarship", showMobile: true },
     { logo: <LucideBriefcaseBusiness />, name: "Livelihood", to: "/livelihood", showMobile: true },
     { logo: <Activity />, name: "Health", to: "/health", showMobile: true },
-    {
-      logo: <MessageCircleMore />,
-      name: "Community",
-      to: "/discussions",
-      showMobile: true,
-    },
-    {
-      logo: <User2 />,
-      name: "Profile",
-      to: `${isLoggedIn ? `/profile/${encodeURIComponent(username || entity)}` : "/login"}`,
-      showMobile: true,
-      showDesktop: false,
-    },
+    { logo: <MessageCircleMore />, name: "Community", to: "/discussions", showMobile: true, }, 
+    { logo: <User2 />, name: "Profile", to: `${isLoggedIn ? `/profile/${encodeURIComponent(username || entity)}` : "/login"}`, showMobile: true, showDesktop: false, },
     { logo: <LucideMessageCircleQuestion/>, name: "About Us", to: "/about-us" },
   ];
 
@@ -56,25 +46,14 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-gray-100 h-[64px] w-full fixed top-0 left-0 right-0 z-[1002]">
-        <div className="flex items-center justify-between h-full px-4 py-3 m-auto sm:hidden gap-x-10 lg:w-9/12">
-          <Link to="/" className="text-xl font-bold tracking-tighter hover:text-cyan-500">
-            WHERE2
-          </Link>
-          <div className="flex align-center justify-between h-full mx-auto lg:w-[800px] tracking-tighter">
+        <div className="flex items-center justify-between h-full px-4 py-3 m-auto sm:hidden gap-x-10">
+          <Link to="/" className="text-p font-bold tracking-tighter hover:text-cyan-500">WHERE2</Link>
+          <div className="flex align-center justify-center h-full mx-auto lg:w-[800px] tracking-tighter">
             {menuItems
               .filter((item) => item.showDesktop !== false)
               .map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.to}
-                  className="flex mb-[6px] pt-[8px] px-6 align-center justify-center mx-0 whitespace-nowrap text-gray-700 hover:text-cyan-500 h-full hover:underline decoration-[1px] underline-offset-5"
-                >
-                  <span className="relative">
-                    {item.name}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                  </span>
-                </Link>
-              ))}
+                <NavButton key={item.name} linkTo={item.to} name={item.name} />
+            ))}
           </div>
           <div className="flex items-center space-x-4 hover:text-cyan-500">
             {showDashboard && (
@@ -85,10 +64,8 @@ const Navbar = () => {
                 <ProfilePicture userId={userId} />
               </Link>
             ) : (
-            <Link to="/login" className="relative w-8 h-8 r-4">
-              <ButtonComponent className={"pb-2 hover:scale-105"}>
-                Login
-                </ButtonComponent>
+            <Link to="/login" className="relative h-8 r-4">
+              <ButtonComponent className={"text-nm pb-2 hover:scale-105"}>Login</ButtonComponent>
             </Link>
             )}
           </div>
