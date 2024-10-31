@@ -8,13 +8,18 @@ const HeroSkeleton = () => {
       <div className="w-full h-full bg-white text-center flex justify-center">
         <div className="absolute w-full z-10 mx-auto top-[7%] max-w-[660px] px-4">
           {/* Title skeleton */}
-          <div className="h-14 bg-gray-200 rounded-lg mx-auto w-3/4 mb-4" />
-          
-          {/* Subtitle skeleton */}
-          <div className="h-8 bg-gray-200 rounded-lg mx-auto w-2/3 mb-8" />
-          
+        <div className="h-14 bg-gray-200 rounded-lg mx-auto w-3/4 mb-4" />
+        
+        {/* Subtitle skeleton */}
+        <div className="h-8 bg-gray-200 rounded-lg mx-auto w-2/3 mb-8" />
+        {/* Subtitle skeleton */}
+        <div className="h-8 bg-gray-200 rounded-lg mx-auto w-2/3 mb-8" />
+        
+        {/* Button skeleton */}
+        <div className="h-10 bg-gray-200 rounded-full mx-auto w-32" />
+        </div>
           {/* Button skeleton */}
-          <div className="h-10 bg-gray-200 rounded-full mx-auto w-32" />
+        <div className="h-10 bg-gray-200 rounded-full mx-auto w-32" />
         </div>
         
         {/* Image skeleton */}
@@ -22,7 +27,6 @@ const HeroSkeleton = () => {
           <div className="w-2/3 h-2/3 bg-gray-200 rounded-lg object-contain" />
         </div>
       </div>
-    </div>
   );
 };
 
@@ -51,6 +55,7 @@ const Hero = ({ props, children, isLoading }) => {
     button: "border rounded-[100px] bg-[#A9EBFF] w-fit px-[18px] py-[5px] text-[#375761] drop-shadow-lg ",
     form: "relative mx-[20px]",
     input: "w-full py-3 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-80",
+    input: "w-full py-3 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-80",
     searchButton: "absolute right-3 top-1/2 transform -translate-y-1/2",
     searchIcon: "h-5 w-5 text-gray-400 z-[0]",
   };
@@ -67,9 +72,6 @@ const Hero = ({ props, children, isLoading }) => {
           style={styles.gradientClipPath}
         />
         <div className={styles.contentWrapper}>
-          <h1 className={`${styles.title} ${titleColor}`}>
-            <TypewriterEffect text={title}/>
-          </h1>
           <h1 className={`${styles.title} ${titleColor}`}>
             <TypewriterEffect text={title}/>
           </h1>
