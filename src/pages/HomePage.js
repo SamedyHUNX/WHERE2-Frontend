@@ -173,24 +173,6 @@ const featureCards = [
       path: "/livelihood"
   },
   {
-      title: "University",
-    image: UniversityHomePage ,
-    description: "Find out available scholarships.",
-      path: "/list/university"
-  },
-  {
-    title: "Scholarship",
-    image: ScholarshipHomePage,
-    description: "Find out available scholarships.",
-      path: "/list/Scholarship"
-  },
-  {
-    title: "Livelihood",
-    description: "Find support for your education.",
-      image: LivelihoodHomePage,
-      path: "/livelihood"
-  },
-  {
     title: "University",
     image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
