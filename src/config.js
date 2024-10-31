@@ -32,6 +32,7 @@ const config = {
     getMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
     getPublicProfile: (userId) =>
       `${API_URL}/api/users/profile/public/${userId}`,
+    getAdminContentList : (adminId) => `${API_URL}/api/users/content-list/${adminId}`
   },
   analytics: {
     getAllUsers: `${API_URL}/api/users/user-list`,

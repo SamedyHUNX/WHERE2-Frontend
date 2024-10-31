@@ -126,7 +126,52 @@ const adsCards = [
   },
 
 ]
+
+const sponsers = [
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+    path: "https://anbschool.org/"
+  },
+]
 const featureCards = [
+  {
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
+    description: "Find out available scholarships.",
+      path: "/list/university"
+  },
+  {
+    title: "Scholarship",
+    image: "https://i.imgur.com/zwFZOIk.png",
+    description: "Find out available scholarships.",
+      path: "/list/Scholarship"
+  },
+  {
+    title: "Livelihood",
+    description: "Find support for your education.",
+      image: "https://i.imgur.com/lfOwU5G.png",
+      path: "/livelihood"
+  },
   {
     title: "University",
     image: "https://i.imgur.com/nLz3Gqg.png",
@@ -160,9 +205,7 @@ const HomePage = () => {
           />
         </Hero>
       </WrapperComponent>
-      <WrapperComponent>
         <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
-      </WrapperComponent>
       <WrapperComponent>
         <Hero props={hero2} />
       </WrapperComponent>
@@ -173,7 +216,7 @@ const HomePage = () => {
         <SaveSection />
       </WrapperComponent>
       <WrapperComponent>
-        <CardSlider cards={adsCards} header={"OUR PARTNERS"} ads={true}/>
+        <CardSlider cards={sponsers} header={"OUR SPONSERS"} ads={sponsers.length > 1}/>
         <JoinUs />
       </WrapperComponent>
         <Footer />
