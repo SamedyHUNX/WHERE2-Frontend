@@ -4,6 +4,7 @@ import LivelihoodBox from "./reusable/LivelihoodBox";
 import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
 import { Link } from "react-router-dom";
+import LiveLihood from "../assets/images/new_livelihood.png"
 import Hero from "../layouts/Hero";
 const Livelihood = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -47,13 +48,14 @@ const Livelihood = () => {
       };
 
     return (
-        <section className="bg-[#F4F8FA]">
-            <div className="flex flex-col align-middle justify-center gap-6 p-6 mt-[64px] h-max">
+        <section className="">
+            <div className="flex flex-col align-middle justify-center gap-6 p-6 mt-[64px] h-max max-w-[1440px] mx-auto">
                 <WrapperComponent>
-                {/* <div className="w-full lg:h-[925px] sm:h-[500px]">
-                    <img src={LiveliHood} className="h-full sm:min-h-full lg:object-fit sm:object-none" alt="Hero photo of livelidhood page"/>
-                </div> */}
-                <Hero props={hero1}/>
+                    <div className="flex justify-center bg-white">
+                            {/* <img src={"https://i.imgur.com/x4yB3Xz.png"} className="object-cover" alt="Hero photo of livelidhood page" /> */}
+                            <img src={LiveLihood} className="h-full w-full"></img> 
+                    </div>
+                {/* <Hero props={hero1}/> */}
                 </WrapperComponent>
                 <WrapperComponent>
                 <CardSlider cards={cards} header={"Conveniently Self-Supporting"} className="h-fit"/>
