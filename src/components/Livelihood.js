@@ -48,15 +48,15 @@ const Livelihood = () => {
       };
 
     return (
-        <section className="">
-            <div className="flex flex-col align-middle justify-center gap-6 p-6 mt-[64px] h-max max-w-[1440px] mx-auto">
-                <WrapperComponent>
-                    <div className="flex justify-center bg-white">
+        <section className="mt-[64px]">
+             <WrapperComponent>
+                    <div className="flex justify-center bg-white max-w-[1440px] mx-auto">
                             {/* <img src={"https://i.imgur.com/x4yB3Xz.png"} className="object-cover" alt="Hero photo of livelidhood page" /> */}
                             <img src={LiveLihood} className="h-full w-full"></img> 
                     </div>
                 {/* <Hero props={hero1}/> */}
-                </WrapperComponent>
+            </WrapperComponent>
+            <div className="flex flex-col align-middle justify-center gap-6 p-6  h-max max-w-[1440px] mx-auto">
                 <WrapperComponent>
                 <CardSlider cards={cards} header={"Conveniently Self-Supporting"} className="h-fit"/>
                 </WrapperComponent>
