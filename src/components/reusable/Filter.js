@@ -29,7 +29,7 @@ function FilterComponent ({ items , category , location }){
 	}, [location])
 
 	return(
-		<div className="" style={{ display: "flex" , width:"100%" }}>
+		<div className="" style={{ display: "flex" , width:"100%", margin: "0px 0px 30px 0px" }}>
 			<div 
 				className="lg:max-w-[103px] h-[51px] bg-white border flex items-center justify-center cursor-pointer rounded-md text-lg z-10  border-[#7CD1EB] px-5"
 				onClick={handleModel}
