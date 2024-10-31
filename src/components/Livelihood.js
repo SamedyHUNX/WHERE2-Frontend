@@ -59,10 +59,12 @@ const Livelihood = () => {
                 <CardSlider cards={cards} header={"Conveniently Self-Supporting"} className="h-fit"/>
                 </WrapperComponent>
                 <section className="flex gap-x-12 lg:px-12 sm:px-2 mx-auto mb-[64px]">
-                    {isMobile ? null : <div className="flex-1 content-center">
-                        <h1 className="text-[#367588] pb-[54px]"><b>Ready to discover how we can help you achieve your academic and financial goal?</b></h1>
-                        <img src={JobFinder} className="rounded-full w-96 h-96" />
-                    </div>}
+                    {isMobile ? null : (
+                        <div className="flex-1 content-center">
+                            <h1 className="text-[#367588] pb-[54px]"><b>Ready to discover how we can help you achieve your academic and financial goal?</b></h1>
+                            <img src={JobFinder} className="rounded-full w-96 h-96" />
+                        </div>
+                    )}
                     <div className="flex-1 content-center">
                         <div>
                             <Link to={'/list/job'}>
