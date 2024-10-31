@@ -31,6 +31,31 @@ const HeroSkeleton = () => {
 };
 
 const Hero = ({ props, children, isLoading }) => {
+const HeroSkeleton = () => {
+  return (
+    <div className="animate-pulse w-full lg:h-[90vh] sm:h-[500px] relative">
+      <div className="w-full h-full bg-white text-center flex justify-center">
+        <div className="absolute w-full z-10 mx-auto top-[7%] max-w-[660px] px-4">
+          {/* Title skeleton */}
+          <div className="h-14 bg-gray-200 rounded-lg mx-auto w-3/4 mb-4" />
+          
+          {/* Subtitle skeleton */}
+          <div className="h-8 bg-gray-200 rounded-lg mx-auto w-2/3 mb-8" />
+          
+          {/* Button skeleton */}
+          <div className="h-10 bg-gray-200 rounded-full mx-auto w-32" />
+        </div>
+        
+        {/* Image skeleton */}
+        <div className="mt-image-container-top-margin flex justify-center w-full h-full">
+          <div className="w-2/3 h-2/3 bg-gray-200 rounded-lg object-contain" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Hero = ({ props, children, isLoading }) => {
   const {
     button,
     title,
@@ -59,6 +84,10 @@ const Hero = ({ props, children, isLoading }) => {
     searchButton: "absolute right-3 top-1/2 transform -translate-y-1/2",
     searchIcon: "h-5 w-5 text-gray-400 z-[0]",
   };
+
+  if (isLoading) {
+    return <HeroSkeleton />;
+  }
 
   if (isLoading) {
     return <HeroSkeleton />;
