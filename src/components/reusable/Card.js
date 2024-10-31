@@ -140,7 +140,9 @@ const Card = ({
             </div>
           )}
 
-          <div className="description">{convertToHTML(description)}</div>
+          <div className="description">
+            {convertToHTML(description)}
+          </div>
         </div>
         <div className='footer'>
           <div className="actions">

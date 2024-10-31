@@ -40,7 +40,6 @@ export const convertToHTML = (text) => {
 
 	return (
 		<markdown
-			className="container"
 			dangerouslySetInnerHTML={{ __html: purified }}
 		/>
 	);

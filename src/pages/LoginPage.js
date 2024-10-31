@@ -4,11 +4,11 @@ import Navbar from "./../components/reusable/Navbar";
 
 const LoginPage = () => {
     return (
-            <>
-                <Navbar/>
-                <LoginComponent/>
-                <Footer/>
-            </>
+        <>
+            <Navbar/>
+            <LoginComponent/>
+            <Footer/>
+        </>
     )
 }
 
