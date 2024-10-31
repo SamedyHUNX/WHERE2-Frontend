@@ -173,7 +173,6 @@ const RegisterComponent = () => {
           <FormInput
             name="entity"
             label="Enter your entity name"
-            placeholder="Ex: your company name, your business identity, etc..."
             type="text"
             value={formData.entity}
             onChange={handleInputChange}
@@ -188,7 +187,6 @@ const RegisterComponent = () => {
             name="firstName"
             label="First Name"
             type="text"
-            placeholder="Your given name"
             value={formData.firstName}
             onChange={handleInputChange}
             required
@@ -200,7 +198,6 @@ const RegisterComponent = () => {
             name="lastName"
             label="Last Name"
             type="text"
-            placeholder="Your surname"
             value={formData.lastName}
             onChange={handleInputChange}
             required
@@ -214,7 +211,6 @@ const RegisterComponent = () => {
             name="userName"
             label="Username"
             type="text"
-            placeholder="Your unique username"
             value={formData.userName}
             onChange={handleInputChange}
             required
@@ -227,7 +223,6 @@ const RegisterComponent = () => {
           name="email"
           label="Email"
           type="email"
-          placeholder="Your registered email address (make sure you have access to this email)"
           value={formData.email}
           onChange={handleInputChange}
           required
@@ -239,7 +234,6 @@ const RegisterComponent = () => {
           name="phoneNumber"
           label="Phone Number"
           type="tel"
-          placeholder="Your phone number"
           value={formData.phoneNumber}
           onChange={handleInputChange}
           required
@@ -252,7 +246,6 @@ const RegisterComponent = () => {
             name="location"
             label="Location"
             type="text"
-            placeholder="Click on the pin button to automatically fill in the location..."
             value={formData.location}
             onChange={handleInputChange}
             required
@@ -292,7 +285,6 @@ const RegisterComponent = () => {
             name="password"
             label="Password"
             type="password"
-            placeholder="Enter your password"
             value={formData.password}
             onChange={handleInputChange}
             required
@@ -304,7 +296,6 @@ const RegisterComponent = () => {
             name="passwordConfirm"
             label="Confirm Password"
             type="password"
-            placeholder="Confirm your password"
             value={formData.passwordConfirm}
             onChange={handleInputChange}
             required
