@@ -68,9 +68,9 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: (
-     <PublicOnlyROute>
-                <RegisterPage />
-     </PublicOnlyROute>
+    <PublicOnlyROute>
+      <RegisterPage />
+    </PublicOnlyROute>
    
     ),
   },

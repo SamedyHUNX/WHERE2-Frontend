@@ -6,7 +6,7 @@ const RegisterPage = () => {
     return (
             <>
                 <Navbar/>
-                <RegisterComponent />
+                    <RegisterComponent />
                 <Footer />
             </>
     )
