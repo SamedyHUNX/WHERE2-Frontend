@@ -13,7 +13,59 @@ html {
     background-color: white;
 }
 
+/* fonts.css */
+.text-h1 {
+    font-size: 2.75rem;
+  }
+  
+  .text-h1p {
+    font-size: 2.375rem;
+  }
+  
+  .text-h2 {
+    font-size: 2rem;
+  }
+  
+  .text-h3 {
+    font-size: 1.75rem;
+  }
+  
+  .text-h4 {
+    font-size: 1.4375rem;
+  }
+  
+  .text-h4p {
+    font-size: 1.3125rem;
+  }
+  
+  .text-h5 {
+    font-size: 1.25rem;
+  }
+  
+  .text-h6 {
+    font-size: 1.125rem;
+  }
+  
+  .text-p {
+    font-size: 1rem;
+  }
+  
+  .text-nm {
+    font-size: 1rem;
+  }
+
+  .text-pp {
+    font-size: 0.75rem;
+  }
+  
+  
+
+
 @media (max-width: 980px) {
     html { font-size: 14px; }
+}
+
+@media (max-width: 500px) {
+    html { font-size: 10px; }
 }
 
