@@ -21,6 +21,9 @@ import CardSlider from "../components/reusable/CardsSlider";
 import LivelihoodHomePage from "../assets/images/livelihood-homepage.png";
 import UniversityHomePage from "../assets/images/university-homepage.png";
 import ScholarshipHomePage from "../assets/images/shcolarship-homepage.png"
+import defaultImage from "../assets/images/where2.jpg"
+import { title } from "process";
+
 
 const hero1 = {
   title: "DISCOVER YOUR FUTURE.",
@@ -131,7 +134,70 @@ const adsCards = [
   },
 
 ]
+
+const sponsers = [
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+path: "https://anbschool.org/"
+  },
+  {
+    title: "A&B",
+    image : "https://anbschool.org/wp-content/uploads/2023/03/AboveBeyond-.png",
+    description: "ABOVE & BEYOND School is an innovative tech school. We create a place where anyone come together to collaborate, create great things, and make an impact.",
+    path: "https://anbschool.org/"
+  },
+]
 const featureCards = [
+  {
+      title: "University",
+    image: UniversityHomePage ,
+    description: "Find out available scholarships.",
+      path: "/list/university"
+  },
+  {
+    title: "Scholarship",
+    image: ScholarshipHomePage,
+    description: "Find out available scholarships.",
+      path: "/list/Scholarship"
+  },
+  {
+    title: "Livelihood",
+    description: "Find support for your education.",
+      image: LivelihoodHomePage,
+      path: "/livelihood"
+  },
+  {
+      title: "University",
+    image: UniversityHomePage ,
+    description: "Find out available scholarships.",
+      path: "/list/university"
+  },
+  {
+    title: "Scholarship",
+    image: ScholarshipHomePage,
+    description: "Find out available scholarships.",
+      path: "/list/Scholarship"
+  },
+  {
+    title: "Livelihood",
+    description: "Find support for your education.",
+      image: LivelihoodHomePage,
+      path: "/livelihood"
+  },
   {
       title: "University",
     image: UniversityHomePage ,
@@ -165,9 +231,7 @@ const HomePage = () => {
           />
         </Hero>
       </WrapperComponent>
-      <WrapperComponent>
         <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
-      </WrapperComponent>
       <WrapperComponent>
         <Hero props={hero2} />
       </WrapperComponent>
@@ -178,7 +242,7 @@ const HomePage = () => {
         <SaveSection />
       </WrapperComponent>
       <WrapperComponent>
-        <CardSlider cards={adsCards} header={"OUR PARTNERS"} ads={true}/>
+        <CardSlider cards={sponsers} header={"OUR SPONSERS"} ads={sponsers.length > 1}/>
         <JoinUs />
       </WrapperComponent>
         <Footer />

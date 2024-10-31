@@ -64,7 +64,7 @@ const CardFeatureSlider = ({ cardFeature, header  }) => {
             !isTransitioning && 'transition-none'
           }`}
           style={{
-            transform: `translateX(-${currentIndex * (isMobile ? 100 : 33.33)}%)`,
+            transform: `translateX(-${currentIndex * (isMobile ? 100 : 23.33)}%)`,
           }}
         >
           {cardFeature.length > 0 ? (

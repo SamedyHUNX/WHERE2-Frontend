@@ -131,12 +131,12 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut") },
     ],
     admin: [
-      { label: 'Content', icon: <DocumentDuplicateIcon className="h-5 w-5" />, onClick: () => handleItemClick("adminContent", "adminContent") },
       { label: 'Profile', icon: <UserCircleIcon className="h-5 w-5" /> , onClick: () => handleItemClick("account", "account") },
-      { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5"/> , onClick: () => handleItemClick("setting", "setting")  },
-      { label: 'Dashboard', icon: <ChartNoAxesColumnIncreasingIcon className="h-5 w-5" /> , onClick: () => handleItemClick("adminDashboard", "adminDashboard") },
-      { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut")  },
+      { label: 'Content', icon: <DocumentDuplicateIcon className="h-5 w-5" />, onClick: () => handleItemClick("adminContent", "adminContent") },
       { label: 'View your posts', icon: <PanelsLeftBottom className="h-5 w-5" /> , onClick: () => handleItemClick("adminContentListing", "adminContentListing")  },
+      { label: 'Dashboard', icon: <ChartNoAxesColumnIncreasingIcon className="h-5 w-5" /> , onClick: () => handleItemClick("adminDashboard", "adminDashboard") },
+      { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5"/> , onClick: () => handleItemClick("setting", "setting")  },
+      { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut")  },
     ],
     developer: [
       { label: 'Account', icon: <User className="w-5 h-5" />, onClick: () => handleItemClick("account", "account") },
