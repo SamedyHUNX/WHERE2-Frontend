@@ -47,65 +47,41 @@ const Livelihood = () => {
 		button: "Find part time jobs",
 	};
 
-	return (
-		<section className="">
-			<div className="flex flex-col align-middle justify-center gap-6 p-6 mt-[64px] h-max max-w-[1440px] mx-auto">
-				<WrapperComponent>
-					<div className="flex justify-center bg-white">
-						{/* <img src={"https://i.imgur.com/x4yB3Xz.png"} className="object-cover" alt="Hero photo of livelidhood page" /> */}
-						<img src={LiveLihood} className="h-full w-full"></img>
-					</div>
-					{/* <Hero props={hero1}/> */}
-				</WrapperComponent>
-				<WrapperComponent>
-					<CardSlider
-						cards={cards}
-						header={"Conveniently Self-Supporting"}
-						className="h-fit"
-					/>
-				</WrapperComponent>
-				<section className="flex gap-x-12 mx-auto mb-[64px]">
-					{isMobile ? null : (
-						<div className="flex-1 content-center">
-							<h1 className="text-[#367588] pb-[54px]">
-								Ready to discover how we can help you achieve your academic and
-								financial goal?
-							</h1>
-							<img src={JobFinder} className="rounded-full w-96 h-96" />
-						</div>
-					)}
-					<div className="flex-1 content-center">
-						<div>
-							<Link to={"/list/job"}>
-								<LivelihoodBox
-									title={"Part Time Job"}
-									content={
-										"Invest in your future. Discover part-time jobs that help fund your education goals."
-									}
-								/>
-							</Link>
-							<Link to={"/list/student-loan"}>
-								<LivelihoodBox
-									title={"Student Loan"}
-									content={
-										"Simplify your student loan journey. Explore refinancing options and get personalized advice."
-									}
-								/>
-							</Link>
-							<Link to={"/list/accommodation"}>
-								<LivelihoodBox
-									title={"Accommodation"}
-									content={
-										"Enhance your learning experience with the perfect living space. Find accommodations that inspire and support your academic journey."
-									}
-								/>
-							</Link>
-						</div>
-					</div>
-				</section>
-			</div>
-		</section>
-	);
+    return (
+        <section className="mt-[64px]">
+             <WrapperComponent>
+                    <div className="flex justify-center bg-white max-w-[1440px] mx-auto">
+                            {/* <img src={"https://i.imgur.com/x4yB3Xz.png"} className="object-cover" alt="Hero photo of livelidhood page" /> */}
+                            <img src={LiveLihood} className="h-full w-full"></img> 
+                    </div>
+                {/* <Hero props={hero1}/> */}
+            </WrapperComponent>
+            <div className="flex flex-col align-middle justify-center gap-6 p-6  h-max max-w-[1440px] mx-auto">
+                <WrapperComponent>
+                <CardSlider cards={cards} header={"Conveniently Self-Supporting"} className="h-fit"/>
+                </WrapperComponent>
+                <section className="flex gap-x-12 mx-auto mb-[64px]">
+                    {isMobile ? null : <div className="flex-1 content-center">
+                        <h1 className="text-[#367588] pb-[54px]">Ready to discover how we can help you achieve your academic and financial goal?</h1>
+                        <img src={JobFinder} className="rounded-full w-96 h-96" />
+                    </div>}
+                    <div className="flex-1 content-center">
+                        <div>
+                            <Link to={'/list/job'}>
+                                <LivelihoodBox title={"Part Time Job"} content={"Invest in your future. Discover part-time jobs that help fund your education goals."} />
+                            </Link>
+                            <Link to={'/list/student-loan'}>
+                                <LivelihoodBox title={"Student Loan"} content={"Simplify your student loan journey. Explore refinancing options and get personalized advice."} />
+                            </Link>
+                            <Link to={'/list/accommodation'}>
+                                <LivelihoodBox title={"Accommodation"} content={"Enhance your learning experience with the perfect living space. Find accommodations that inspire and support your academic journey."} />
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    );
 };
 
 export default Livelihood;
