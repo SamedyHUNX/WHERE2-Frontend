@@ -14,11 +14,6 @@ import { searchUniversities } from "../features/slices/universitySlice";
 
 // assets
 import CardSlider from "../components/reusable/CardsSlider";
-import LivelihoodHomePage from "../assets/images/livelihood-homepage.png";
-import UniversityHomePage from "../assets/images/university-homepage.png";
-import ScholarshipHomePage from "../assets/images/shcolarship-homepage.png"
-import defaultImage from "../assets/images/where2.jpg"
-import { title } from "process";
 
 
 const hero1 = {
@@ -46,7 +41,6 @@ const hero2 = {
   button:"Find part time jobs",
   onSearch: () => {},
 };
-
 
 
 const header =[
@@ -162,8 +156,8 @@ path: "https://anbschool.org/"
 ]
 const featureCards = [
   {
-      title: "University",
-    image: UniversityHomePage ,
+    title: "University",
+    image: "https://i.imgur.com/nLz3Gqg.png",
     description: "Find out available scholarships.",
     path: "/list/university"
   },
