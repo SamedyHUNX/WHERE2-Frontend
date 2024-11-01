@@ -1,6 +1,5 @@
 import CardSlider from "./reusable/CardsSlider";
 import JobFinder from "../assets/images/job-finder.jpg";
-import JobFinder from "../assets/images/job-finder.jpg";
 import LivelihoodBox from "./reusable/LivelihoodBox";
 import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
