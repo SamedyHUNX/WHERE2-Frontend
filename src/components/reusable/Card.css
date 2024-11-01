@@ -75,12 +75,15 @@ h1{
 }
 
 .title {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 21px;
     margin-bottom: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+b{
+    font-weight: 600;
 }
 
 .work-details {
