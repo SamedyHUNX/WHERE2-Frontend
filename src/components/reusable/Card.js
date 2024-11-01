@@ -136,7 +136,7 @@ const Card = ({
           {type === 'accommodation' && (
             <div className="accommodation-info">
               <p>Size: <span>{size}</span></p>
-              <p>Price: <span>{price}</span></p>
+              <p>Price: <span>${price}</span></p>
             </div>
           )}
 
