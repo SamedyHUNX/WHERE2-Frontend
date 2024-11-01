@@ -55,7 +55,7 @@ const Card = ({
   }, [isHeartClicked]);
 
   const handleReadMoreClick = () => {
-    navigate(route);
+    redirect? window.location.href = redirect: navigate(route);
   };
 
   const handleHeartClick = async () => {
@@ -122,14 +122,14 @@ const Card = ({
           {type === 'job' && (
             <div className="job-info">
               <p><b>Position</b>: <span>{position}</span></p>
-              <p><b>Salary</b>: <span>${salary}</span></p>
+              <p><b>Salary</b>: <span>{salary}</span></p>
             </div>
           )}
 
           {type === 'loan' && (
             <div className="loan-info">
-              <p>Term: <span>{term}</span></p>
-              <p>Interest Rate: <span>{interest}</span></p>
+              <p><b>Term</b>: <span>{term}</span></p>
+              <p><b>Interest Rate</b>: <span>{interest}</span></p>
             </div>
           )}
 
@@ -169,9 +169,12 @@ const Card = ({
                 alt="Heart"
                 onClick={heartClicked ? handleHeartClick : handleRemoveHeartClick}
               />
-              <Link to={`/location/${location}`}>
-                <img className="map-icon" src={mapURL ? EnabledMap : DisabledMap} alt="Map" />
-              </Link>
+              {mapURL ?
+                <a href={mapURL}>
+                  <img className="map-icon" src={EnabledMap} alt="Map" />
+                </a>
+                : <img className="map-icon" src={DisabledMap} alt="Map" />
+              }
               <Button className="p-2" onClick={handleReadMoreClick}>Read More</Button>
             </div>
           </div>
