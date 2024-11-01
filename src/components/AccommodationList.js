@@ -40,6 +40,7 @@ const AccommodationList = ({ accommodations, page }) => {
                 price = {accommodation.price}
                 location={accommodation.location}
                 description={accommodation.description}
+                mapURL={accommodation.google_map}
                 // facebookLink={accommodation.updatedAt}
                 // instagramLink={accommodation.updatedAt}
                 // twitterLink={accommodation.createdAt}

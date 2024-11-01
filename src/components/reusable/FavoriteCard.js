@@ -30,33 +30,15 @@ const FavoriteCard = ({ title, description, facebookLink, instagramLink, twitter
     return (
         <div className="lg:h-[348px] max-w-[1200px]  mb-[64px]">
             <div className={`${cardBody}`}>
-                <div>
-                    <div className="p-6 pb-0 ">
-                        <h1 className={`${cardTitle}`}>{title}</h1>
-                        <div className='flex justify-between w-full'>
-                            <div className="flex items-center space-x-8">
-                                {type === "job"?workDetails.map(({ icon , linkKey }, index) => (
-                                    <div key={index} className="flex items-center text-[12px]">
-                                        <img src={icon} alt={icon}/>
-                                        {index !== 2 ? <p className='border-r-gray-200 border-r-2 p-1 text-nowrap'>{linkKey}</p> : <p className='text-nowrap'>{linkKey}</p>}
-                                    </div>
-                                )) :null}
-                            </div>
-                        </div>
-            
+            <div className="p-6 pb-0 w-full">
+                <h1 className={`${cardTitle}`}>{title}</h1>
             {type === "job"?  <div className="py-2">
               <p className="py-1">Position :<span> {position}</span></p>
-              <p>Salary :<span> ${salary}</span></p>
+              <p>Salary :<span> {salary}</span></p>
             </div> : null}
             {type === "loan"? <div className="py-2">
               <p>
-                Currency :<span> {currency}</span>
-              </p>
-              <p>
                 Term:<span> {term}</span>
-              </p>
-              <p>
-                Loan Size:<span> {loan_size}</span>
               </p>
               <p>
                 Interest Rate:<span> {interest}</span>
@@ -69,38 +51,12 @@ const FavoriteCard = ({ title, description, facebookLink, instagramLink, twitter
               <p>
                 Price:<span> {price}</span>
               </p>
-              <p>
-                Location:<span> {address}</span>
-              </p>
             </div> : null}
-                            
-                        
-                        <div className="text-clip overflow-hidden w-full h-[200px]">
-                            <p className={`${cardDescription} mt-3 text-justify`}>{convertToHTML(description)}</p>
-                        </div>
+            <div className="text-clip overflow-hidden w-full h-[200px]">
+                        <p className={`${ cardDescription } mt-3 text-justify`}>{convertToHTML(description)}</p>
+         
                     </div>
-                    <div className="p-4 pt-0 flex justify-between">
-                        <div className='flex-1 content-center'>
-                        <div className="social flex justify-around max-w-[200px] ">
-                            {socialMediaIcons.map(({ icon: Icon, linkKey, isExternal }, index) => {
-                                // if (NODE_ENV === 'development') {
-                                //     console.log(linkKey)
-                                // }
-                                return linkKey ? (
-                                    isExternal ? (
-                                        <a href={linkKey} key={index} target="_blank" rel="noopener noreferrer">
-                                            <Icon />
-                                        </a>
-                                    ) : (
-                                        <Link to={linkKey} key={index}>
-                                            <Icon />
-                                        </Link>
-                                    )
-                                ) : null;
-                            })}
-                        </div>
-                        </div>
-                        <div >
+                    <div className='flex flex-row-reverse pb-4 mt-2' >
                     {!redirect ? (
                 <Link to={route} className="text-blue-500 hover:underline">
                 <Button className="font- text-1xl p-2 px-3" variant="primary" size="large">
@@ -113,10 +69,14 @@ const FavoriteCard = ({ title, description, facebookLink, instagramLink, twitter
                   </Button>
                   </a>
               )}
-                        </div>
-                    </div>
-                </div>
+            </div> 
             </div>
+         
+         
+                  
+                
+            </div>
+            
         </div>
         
     );
