@@ -87,7 +87,7 @@ const AccommodationDetail = () => {
                   <DollarSign className="w-5 h-5 text-gray-400 mr-2" />
                   <div>
                     <p className="text-sm text-gray-500">Price</p>
-                    <p className="font-medium">${accommodation.price}</p>
+                    <p className="font-medium">{accommodation.price}</p>
                   </div>
                 </div>
                 <div className="flex items-center">

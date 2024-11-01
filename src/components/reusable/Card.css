@@ -96,10 +96,12 @@ b{
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 4px;
 }
 
 .job-info, .loan-info, .accommodation-info {
     margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 .description {
@@ -152,6 +154,12 @@ b{
         padding-right: 24px;  
     }
 }
+@media screen and (max-width: 600px) {
+.work-details{
+    display: inline;
+    font-size: 14px;
+}
+ }
 @media screen and (max-width: 400px) {
     .list{
      padding-left: 16px;
