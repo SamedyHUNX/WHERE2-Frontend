@@ -24,6 +24,7 @@ const hero1 = {
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
   mainImageSrc: "https://i.imgur.com/dACQws5.png",
+  mainImageSrc: "https://i.imgur.com/dACQws5.png",
   mainImageAlt: "University building",
   onSearch: () => {},
 };
@@ -37,10 +38,12 @@ const hero2 = {
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
   mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
+  mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
   mainImageAlt: "University building",
   button:"Find part time jobs",
   onSearch: () => {},
 };
+
 
 const header =[
   {
@@ -173,6 +176,7 @@ const featureCards = [
     path: "/livelihood"
   }
 ];
+
 
 
 const HomePage = () => {

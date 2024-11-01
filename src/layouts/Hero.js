@@ -51,6 +51,7 @@ const Hero = ({ props, children, isLoading }) => {
     button: "border rounded-[100px] bg-[#A9EBFF] w-fit px-[18px] py-[5px] text-[#375761] drop-shadow-lg ",
     form: "relative mx-[20px]",
     input: "w-full py-3 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-80",
+    input: "w-full py-3 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-80",
     searchButton: "absolute right-3 top-1/2 transform -translate-y-1/2",
     searchIcon: "h-5 w-5 text-gray-400 z-[0]",
   };
@@ -67,9 +68,9 @@ const Hero = ({ props, children, isLoading }) => {
           style={styles.gradientClipPath}
         />
         <div className={styles.contentWrapper}>
-          <span className={`${styles.title} ${titleColor}`}>
+          <h1 className={`${styles.title} ${titleColor}`}>
             <TypewriterEffect text={title}/>
-          </span>
+          </h1>
           <p className={`${styles.subtitle} ${subtitleColor}`}>{subtitle}</p>
 
           {button && (

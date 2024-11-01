@@ -4,7 +4,7 @@ import LivelihoodBox from "./reusable/LivelihoodBox";
 import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
 import { Link } from "react-router-dom";
-import LiveLihood from "../assets/images/new_livelihood.png";
+import LiveLihood from "../assets/images/new_livelihood.png"
 import Hero from "../layouts/Hero";
 const Livelihood = () => {
 	const [isMobile, setIsMobile] = useState(false);
