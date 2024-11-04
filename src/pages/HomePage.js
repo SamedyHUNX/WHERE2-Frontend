@@ -182,15 +182,15 @@ const HomePage = () => {
     <>
       <Navbar />
       {/* <WrapperComponent> */}
-        <Hero props={hero1}>
-          <Searchbar 
-            handleSearch={searchUniversities}
-            searchPlaceholder="Search universities..."
-            category="university"
-          />
-        </Hero>
+      <Hero props={hero1} top={true}>
+        <Searchbar 
+          handleSearch={searchUniversities}
+          searchPlaceholder="Search universities..."
+          category="university"
+        />
+      </Hero>
       {/* </WrapperComponent> */}
-        <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
+      <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
       <WrapperComponent>
         <Hero props={hero2} />
       </WrapperComponent>

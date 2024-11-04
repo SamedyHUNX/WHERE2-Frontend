@@ -61,7 +61,7 @@ const DetailLayout = ({
   return (
     <div className={`max-w-7xl mx-auto px-4 py-16 transition-opacity duration-1000 text-justify ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       {/* Hero Section */}
-      <div className="relative mb-12 group ">
+      <div className="relative mb-12 group sm:mt-[5vh]">
         <div className="relative w-
          overflow-hidden rounded-2xl shadow-xl bg-gray-100 cursor-zoom-in"
              onClick={() => setIsImageZoomed(!isImageZoomed)}>

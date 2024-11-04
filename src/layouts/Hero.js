@@ -26,7 +26,7 @@ import TypewriterEffect from './../styles/TypeWriterEffect';
 //   );
 // };
 
-const Hero = ({ props, children, isLoading }) => {
+const Hero = ({ props, children, isLoading, top}) => {
   const {
     button,
     title,
@@ -61,7 +61,7 @@ const Hero = ({ props, children, isLoading }) => {
   }
 
   return (
-    <section className={`${styles.section} ${backgroundGradient}`}>
+    <section className={`${styles.section} ${backgroundGradient} ${top ? "sm:mt-[10vh]" :""}`}>
       <div className={styles.container}>
         <div
           className={`${styles.gradientOverlay} `}
