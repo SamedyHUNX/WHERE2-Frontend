@@ -83,13 +83,11 @@ const config = {
     getAllList: (model) => `${API_URL}/api/list/${model}`,
   },
   universities: {
-    getAllUniversity: `${API_URL}/api/list/university`,
-    getUniversityList: `${API_URL}/api/detail/university/university-list`,
-    getUniversityById: `${API_URL}/api/detail/university`,
-    approveUniversity: (universityId) =>
-      `${API_URL}/api/university/approve/${universityId}`,
-    disapproveUniversity: (universityId) =>
-      `${API_URL}/api/university/disapprove/${universityId}`,
+    getAllUniversity : `${API_URL}/api/list/university`,
+    getUniversityList : `${API_URL}/api/detail/university/university-list`,
+    getUniversityById : `${API_URL}/api/detail/university`,
+    approveUniversity : (universityId) => `${API_URL}/api/detail/university/approve/${universityId}`,
+    disapproveUniversity : (universityId) => `${API_URL}/api/detail/university/disapprove/${universityId}`,
   },
   scholarships: {
     getAllScholarships: `${API_URL}/api/list/scholarship`,
