@@ -19,8 +19,8 @@ const entityConfig = {
     hasLocation: true,
     createEndpoint: config.contentCreation.createUniversity,
     fields: [
-      { name: 'description', label: 'University Description', type: 'textarea' },
       { name: 'name', label: 'University Name', type: 'text' },
+      { name: 'description', label: 'University Description', type: 'textarea' },
       { name: 'location', label: 'Location', type: 'text' },
       {name : 'image_url' , label: 'Image URL', type: 'text'}
     ],
