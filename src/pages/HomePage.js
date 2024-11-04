@@ -189,11 +189,7 @@ const HomePage = () => {
             category="university"
           />
         </Hero>
-<<<<<<< HEAD
       {/* </WrapperComponent> */}
-=======
-      </WrapperComponent>
->>>>>>> 811d916 (bugfix#4.0-Styling : added and fixed styles, added admin content)
         <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
       <WrapperComponent>
         <Hero props={hero2} />
