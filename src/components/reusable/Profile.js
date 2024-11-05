@@ -77,7 +77,7 @@ const Profile = ({ userData, isPublic }) => {
   const ContentComponent = contentComponents[sidebarContent] || (() => null);
 
   return (
-    <div className="flex w-full h-screen relative">
+    <div className="flex w-full h-full relative">
       <SidebarContentContext.Provider value={setSidebarContent}>
         {/* Sidebar */}
         <div
@@ -108,7 +108,7 @@ const Profile = ({ userData, isPublic }) => {
           }`}
         >
           <div className="h-full">
-            <div className="px-4">
+            <div className="px-4 h-full">
               {isMobile && !sidebarOpen && (
                 <button
                   onClick={toggleSidebar}

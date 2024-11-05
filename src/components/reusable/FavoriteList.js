@@ -1,5 +1,7 @@
 import FavoriteCard from "./FavoriteCard";
 import config from "./../../config";
+import { Link } from "react-router-dom";
+import ButtonComponent from "./Button";
 
 const FavoriteList = ({ favorites, category }) => {
     let renderFavorite;

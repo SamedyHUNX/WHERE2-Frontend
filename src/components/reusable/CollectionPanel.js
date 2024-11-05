@@ -13,11 +13,10 @@ const CollectionPanel = ({ category }) => {
         
     }, [category]);
     return (
-        <div className="mt-[100px]">
-            <div className="max-w-7xl mx-auto flex-col  justify-between flex p-6 bg-white rounded-3xl shadow-lg border-2  w-full ">
-          <h1 className="text-2xl font-bold mb-6">Collections</h1>
-          
-                <div className="max-w-7xl mx-auto flex-col gap-y-8 justify-between flex p-6 bg-white rounded-3xl shadow-inner border-2  w-full overflow-hidden max-h-[1000px] overflow-y-scroll">
+        <div className="w-full h-full rounded-3xl shadow-lg border-2">
+            <h1 className="text-2xl font-bold mt-[48px] ml-6">Collections</h1>
+            <div className="w-full mx-auto flex flex-col pt-[48px] justify-between bg-white px-4">
+                <div className="w-[90%] mx-auto flex flex-col gap-y-8 justify-evenly align-start p-6 bg-white rounded-3xl shadow-inner border-2 overflow-hidden overflow-y-scroll max-h-[1100px]">
                     {isLoading[`${category}`] ? <LoadingOverlay /> : <FavoriteList favorites={favorites} category={category} />}
                     {error && <p>{"You Have not add to your favorite yet..."}</p>}
             </div>

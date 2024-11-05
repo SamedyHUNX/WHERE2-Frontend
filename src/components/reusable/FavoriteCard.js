@@ -28,7 +28,7 @@ const FavoriteCard = ({ title, description, facebookLink, instagramLink, twitter
     ]
 
     return (
-        <div className="lg:h-[348px] max-w-[1200px]  mb-[64px]">
+        <div className="lg:h-[348px] mb-[64px] border rounded-[50px] bg-white shadow-xl">
             <div className={`${cardBody}`}>
             <div className="p-6 pb-0 w-full">
                 <h1 className={`${cardTitle}`}>{title}</h1>
