@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { X, User, Heart, ChevronDown, ChevronRight, BookKey, Users, School, House, Briefcase, BadgeDollarSignIcon, ChartNoAxesColumnIncreasingIcon,GraduationCap , PanelsLeftBottom, MessageCircleMoreIcon} from "lucide-react";
 
-import { SidebarContentContext } from "../reusable/Profile";
+import { SidebarContentContext } from "./../reusable/Profile";
 
 
 const MenuItem = ({ item, depth = 0, onItemClick, isSelected }) => {

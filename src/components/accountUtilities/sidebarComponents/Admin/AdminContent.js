@@ -154,7 +154,6 @@ const AdminEditor = () => {
 
     try {
       const response = await axios.post(entityConfig[entity].createEndpoint, data);
-      console.log('Server response:', response.data);
     } catch (error) {
       console.error('Error saving changes:', error.response ? error.response.data : error.message);
     }
@@ -166,7 +165,6 @@ const AdminEditor = () => {
       formData,
       links,
     };
-    console.log('Saving the following data:', data);
     localStorage.setItem(entityDataKey, JSON.stringify(data));
   };
 
