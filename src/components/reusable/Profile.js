@@ -108,7 +108,7 @@ const Profile = ({ userData, isPublic }) => {
           }`}
         >
           <div className="h-full">
-            <div className="p-4">
+            <div className="px-4">
               {isMobile && !sidebarOpen && (
                 <button
                   onClick={toggleSidebar}
