@@ -200,7 +200,7 @@ const SettingPanel = () => {
       </Snackbar>
       
       <div className="w-full mx-auto">
-        <section className="w-full bg-white rounded-3xl pt-[32px] mb-8 shadow-md border">
+        <section className="w-full bg-white rounded-3xl pt-[32px] shadow-md border h-screen">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
             <div className="border-b pb-8 mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Password Settings</h2>         

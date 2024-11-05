@@ -103,11 +103,11 @@ const Profile = ({ userData, isPublic }) => {
 
         {/* Main Content */}
         <div
-          className={`flex-grow max-h-[inherite] overflow-y-scroll ${
+          className={`flex-grow overflow-y-scroll h-full overflow-y-hidden ${
             isMobile ? "relative z-10" : ""
           }`}
         >
-          <div className="h-full">
+          <div className="h-full sm:mb-[16px]">
             <div className="px-4 h-full">
               {isMobile && !sidebarOpen && (
                 <button
