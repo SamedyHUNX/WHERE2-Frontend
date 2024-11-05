@@ -10,62 +10,91 @@ import { EyeIcon, EyeOffIcon, AlertTriangle } from "lucide-react";
 import { clearAuthState, logout } from "./../features/slices/authSlice";
 import { LoadingOverlay } from "./reusable/Loading";
 import deleteUser from "./reusable/functions/DeleteUser";
+import { Alert, Snackbar } from '@mui/material';
 import DeleteConfirmationModal from "./reusable/functions/DeleteConfirmationModal";
 
 const SettingPanel = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [passwordCurrent, setPasswordCurrent] = useState('');
-  const [password, setNewPassword] = useState('');
-  const [passwordConfirm, setNewConfirmPassword] = useState('');
-  const [localError, setLocalError] = useState('');
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showLogoutOverlay, setShowLogoutOverlay] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    passwordCurrent: '',
+    password: '',
+    passwordConfirm: ''
+  });
+  
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false
+  });
+  
   const [validationErrors, setValidationErrors] = useState({
     length: false,
     letter: false,
-    number: false,
+    number: false
+  });
+  
+  const [uiState, setUiState] = useState({
+    showLogoutOverlay: false,
+    showDeleteModal: false,
+    snackbar: {
+      open: false,
+      message: '',
+      severity: 'error'
+    }
   });
 
   const { userId, token } = useAuth();
   const { status, error, message } = useSelector((state) => state.auth);
 
-  const validatePassword = (password) => {
-    const isValidLength = password.length >= 6;
-    const hasLetter = /[a-zA-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-
-    setValidationErrors({
-      length: isValidLength,
-      letter: hasLetter,
-      number: hasNumber,
-    });
-
-    return isValidLength && hasLetter && hasNumber;
-  };
-
   useEffect(() => {
     dispatch(clearAuthState());
   }, [dispatch]);
 
+  const validatePassword = (password) => {
+    const validations = {
+      length: password.length >= 6,
+      letter: /[a-zA-Z]/.test(password),
+      number: /[0-9]/.test(password)
+    };
+    
+    setValidationErrors(validations);
+    return Object.values(validations).every(Boolean);
+  };
+
   useEffect(() => {
-    validatePassword(password);
-  }, [password]);
+    validatePassword(formData.password);
+  }, [formData.password]);
+
+  const handleChange = (field) => (value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const showSnackbar = (message, severity = 'error') => {
+    setUiState(prev => ({
+      ...prev,
+      snackbar: {
+        open: true,
+        message,
+        severity
+      }
+    }));
+  };
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    setLocalError('');
-
-    if (!validatePassword(password)) {
-      setLocalError('Password must be at least 6 characters long, contain at least one letter and one number.');
+    
+    if (!validatePassword(formData.password)) {
+      showSnackbar('Password must be at least 6 characters long, contain at least one letter and one number.');
       return;
     }
 
-    if (password !== passwordConfirm) {
-      setLocalError('Passwords do not match');
+    if (formData.password !== formData.passwordConfirm) {
+      showSnackbar('Passwords do not match');
       return;
     }
 
@@ -73,15 +102,17 @@ const SettingPanel = () => {
       await dispatch(updatePassword({
         userId,
         token,
-        passwordCurrent,
-        password,
-        passwordConfirm
+        ...formData
       })).unwrap();
 
-      setPasswordCurrent('');
-      setNewPassword('');
-      setNewConfirmPassword('');
-      setShowLogoutOverlay(true);
+      setFormData({
+        passwordCurrent: '',
+        password: '',
+        passwordConfirm: ''
+      });
+
+      showSnackbar('Password updated successfully!', 'success');
+      setUiState(prev => ({ ...prev, showLogoutOverlay: true }));
 
       setTimeout(async () => {
         await dispatch(logout());
@@ -90,7 +121,7 @@ const SettingPanel = () => {
       
     } catch (err) {
       console.error('Failed to update password:', err);
-      setLocalError(err || 'An error occurred. Please try again.');
+      showSnackbar(err?.message || 'An error occurred. Please try again.');
     }
   };
 
@@ -101,39 +132,44 @@ const SettingPanel = () => {
       navigate('/login');
     } catch (error) {
       console.error('Failed to delete account:', error);
-      setLocalError('Failed to delete account. Please try again.');
+      showSnackbar('Failed to delete account. Please try again.');
     }
   };
 
-  const renderPasswordInput = (label, value, onChange, show, setShow, error) => (
+  const renderPasswordInput = (label, field) => (
     <div className="relative">
       <FormInput
         label={label}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={formData[field]}
+        onChange={(e) => handleChange(field)(e.target.value)}
         required
-        className={`p-3 sm:p-4 h-fit pr-10 ${
-          error ? "border-rose-400 border" : ""
-        }`}
+        className="p-3 sm:p-4 h-fit pr-10"
         rounded
-        type={show ? "text" : "password"}
+        type={showPasswords[field] ? "text" : "password"}
       />
       <button
         type="button"
-        onClick={() => setShow(!show)}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2"
+        onClick={() => setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }))}
+        className="absolute right-3 bottom-3 transform -translate-y-1/2"
       >
-        {!show ? 
-          <EyeOffIcon className="h-5 w-5 text-gray-400" /> : 
+        {!showPasswords[field] ? 
+          <EyeOffIcon className="h-5 w-5 top-1 text-gray-400" /> : 
           <EyeIcon className="h-5 w-5 text-gray-400" />
         }
       </button>
     </div>
   );
 
+  const ValidationIndicator = ({ fulfilled, text }) => (
+    <div className={`flex items-center gap-2 ${fulfilled ? 'text-green-500' : 'text-gray-500'}`}>
+      <div className={`w-2 h-2 rounded-full ${fulfilled ? 'bg-green-500' : 'bg-gray-300'}`} />
+      <span>{text}</span>
+    </div>
+  );
+
   return (
     <>
-      {showLogoutOverlay && (
+      {uiState.showLogoutOverlay && (
         <LoadingOverlay
           message="Password updated successfully! You will be logged out in a moment for security purposes."
           showSpinner={true}
@@ -141,68 +177,42 @@ const SettingPanel = () => {
       )}
       
       <DeleteConfirmationModal
-        show={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
+        show={uiState.showDeleteModal}
+        onClose={() => setUiState(prev => ({ ...prev, showDeleteModal: false }))}
         onConfirm={handleDeleteAccount}
         type="Delete Account"
         warningMsg="Are you sure you want to delete your account? This action cannot be undone and you will lose all your data permanently."
       />
 
-      <div className="max-w-4xl mx-auto p-4">
+      <Snackbar
+        open={uiState.snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setUiState(prev => ({ ...prev, snackbar: { ...prev.snackbar, open: false } }))}
+      >
+        <Alert 
+          severity={uiState.snackbar.severity}
+          onClose={() => setUiState(prev => ({ ...prev, snackbar: { ...prev.snackbar, open: false } }))}
+        >
+          {uiState.snackbar.message}
+        </Alert>
+      </Snackbar>
+
+      <div className="w-full mx-auto">
         <section className="w-full bg-white rounded-3xl mb-8 shadow-md border">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
             <div className="border-b pb-8 mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Password Settings</h2>         
               <form className="flex flex-col space-y-6 max-w-md" onSubmit={handleChangePassword}>
-                {renderPasswordInput(
-                  "Current Password",
-                  passwordCurrent,
-                  setPasswordCurrent,
-                  showCurrentPassword,
-                  setShowCurrentPassword,
-                  localError
-                )}
-
-                {renderPasswordInput(
-                  "New Password",
-                  password,
-                  setNewPassword,
-                  showNewPassword,
-                  setShowNewPassword,
-                  localError
-                )}
+                {renderPasswordInput("Current Password", "passwordCurrent")}
+                {renderPasswordInput("New Password", "password")}
 
                 <div className="grid grid-cols-1 gap-2 text-sm bg-gray-50 p-4 rounded-lg">
-                  <div className={`flex items-center gap-2 ${validationErrors.length ? 'text-green-500' : 'text-gray-500'}`}>
-                    <div className={`w-2 h-2 rounded-full ${validationErrors.length ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span>At least 6 characters</span>
-                  </div>
-                  <div className={`flex items-center gap-2 ${validationErrors.letter ? 'text-green-500' : 'text-gray-500'}`}>
-                    <div className={`w-2 h-2 rounded-full ${validationErrors.letter ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span>At least one letter</span>
-                  </div>
-                  <div className={`flex items-center gap-2 ${validationErrors.number ? 'text-green-500' : 'text-gray-500'}`}>
-                    <div className={`w-2 h-2 rounded-full ${validationErrors.number ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span>At least one number</span>
-                  </div>
+                  <ValidationIndicator fulfilled={validationErrors.length} text="At least 6 characters" />
+                  <ValidationIndicator fulfilled={validationErrors.letter} text="At least one letter" />
+                  <ValidationIndicator fulfilled={validationErrors.number} text="At least one number" />
                 </div>
 
-                {renderPasswordInput(
-                  "Confirm New Password",
-                  passwordConfirm,
-                  setNewConfirmPassword,
-                  showConfirmPassword,
-                  setShowConfirmPassword,
-                  localError
-                )}
-
-                {localError && (
-                  <p className="text-rose-500 text-sm font-medium">{localError}</p>
-                )}
-
-                {status === "succeeded" && message && (
-                  <p className="text-green-500 text-sm font-medium">{message}</p>
-                )}
+                {renderPasswordInput("Confirm New Password", "passwordConfirm")}
 
                 <div className="flex justify-start">
                   <ButtonComponent
@@ -218,7 +228,7 @@ const SettingPanel = () => {
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-900 flex items-center gap-2">
+              <h2 className="text-2xl font-semibold text-gray-900">
                 <span className="text-red-500">Danger Zone</span>
               </h2>
               <div className="border-2 border-red-100 rounded-lg p-6 bg-red-50">
@@ -236,7 +246,7 @@ const SettingPanel = () => {
                       <ButtonComponent
                         variant="danger"
                         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
-                        onClick={() => setShowDeleteModal(true)}
+                        onClick={() => setUiState(prev => ({ ...prev, showDeleteModal: true }))}
                       >
                         Delete Account
                       </ButtonComponent>
