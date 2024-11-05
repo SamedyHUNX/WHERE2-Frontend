@@ -45,14 +45,14 @@ const HealthArticleList = () => {
   return (
     <>
       <WrapperComponent>
-        <header className="lg:w-[70%] h-[500px] sm:w-[80%] mx-auto py-16 text-center tracking-tightest">
+        <header className="lg:w-[70%] lg:h-[500px] sm:w-[80%] mx-auto py-16 text-center tracking-tightest">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tighter">
             <TypewriterEffect
               text={"A hub where you can find reliable health articles"}
               speed={30}
             />
           </h1>
-          <p className="text-lg sm:text-xl h-full lg:text-2xl max-w-3xl mx-auto text-balance tracking-tightest">
+          <p className="text-lg sm:text-xl h-fit lg:text-2xl max-w-3xl mx-auto text-balance tracking-tightest">
             Our mission is to provide exceptional health and wellness
             information to our users, community, and nation. We only publish
             trustworthy articles and publications, translated from reliable
