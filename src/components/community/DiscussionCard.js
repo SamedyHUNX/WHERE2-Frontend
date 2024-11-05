@@ -170,7 +170,8 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
         </div>
       )}
 
-      {isCurrentUserPost && role === "developer" && (
+      {/* Delete button visibility */}
+      {(isCurrentUserPost || role === "developer") && (
         <div
           className="absolute lg:top-4 lg:right-4 sm:top-2 sm:right-2"
           onClick={(e) => e.stopPropagation()}
@@ -190,3 +191,4 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
 };
 
 export default DiscussionCard;
+
