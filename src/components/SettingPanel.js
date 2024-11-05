@@ -32,6 +32,7 @@ const SettingPanel = () => {
   const [validationErrors, setValidationErrors] = useState({
     length: false,
     letter: false,
+    capital: false,
     number: false
   });
   
@@ -56,6 +57,7 @@ const SettingPanel = () => {
     const validations = {
       length: password.length >= 6,
       letter: /[a-zA-Z]/.test(password),
+      capital: /[A-Z]/.test(password),
       number: /[0-9]/.test(password)
     };
     
@@ -89,7 +91,7 @@ const SettingPanel = () => {
     e.preventDefault();
     
     if (!validatePassword(formData.password)) {
-      showSnackbar('Password must be at least 6 characters long, contain at least one letter and one number.');
+      showSnackbar('Password must be at least 6 characters long, contain at least one capital letter, one letter and one number.');
       return;
     }
 
@@ -121,7 +123,7 @@ const SettingPanel = () => {
       
     } catch (err) {
       console.error('Failed to update password:', err);
-      showSnackbar(err?.message || 'An error occurred. Please try again.');
+      showSnackbar(err || 'An error occurred. Please try again.');
     }
   };
 
@@ -153,7 +155,7 @@ const SettingPanel = () => {
         className="absolute right-3 bottom-3 transform -translate-y-1/2"
       >
         {!showPasswords[field] ? 
-          <EyeOffIcon className="h-5 w-5 top-1 text-gray-400" /> : 
+          <EyeOffIcon className="h-5 w-5 text-gray-400" /> : 
           <EyeIcon className="h-5 w-5 text-gray-400" />
         }
       </button>
@@ -196,9 +198,9 @@ const SettingPanel = () => {
           {uiState.snackbar.message}
         </Alert>
       </Snackbar>
-
+      
       <div className="w-full mx-auto">
-        <section className="w-full bg-white rounded-3xl mb-8 shadow-md border">
+        <section className="w-full bg-white rounded-3xl pt-[32px] mb-8 shadow-md border">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
             <div className="border-b pb-8 mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">Password Settings</h2>         
@@ -209,6 +211,7 @@ const SettingPanel = () => {
                 <div className="grid grid-cols-1 gap-2 text-sm bg-gray-50 p-4 rounded-lg">
                   <ValidationIndicator fulfilled={validationErrors.length} text="At least 6 characters" />
                   <ValidationIndicator fulfilled={validationErrors.letter} text="At least one letter" />
+                  <ValidationIndicator fulfilled={validationErrors.capital} text="At least one capital letter" />
                   <ValidationIndicator fulfilled={validationErrors.number} text="At least one number" />
                 </div>
 
