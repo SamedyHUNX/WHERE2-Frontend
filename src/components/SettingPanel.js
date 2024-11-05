@@ -202,8 +202,11 @@ const SettingPanel = () => {
       <div className="w-full mx-auto">
         <section className="w-full bg-white rounded-3xl pt-[32px] shadow-md border h-screen">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
+          <h2 className="text-3xl underline font-bold text-gray-900 mb-6">Account Settings</h2>
             <div className="border-b pb-8 mb-8">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Password Settings</h2>         
+              <h2 className="text-xl font-medium text-gray-900 my-8">
+                <span>Change Password</span>
+              </h2>        
               <form className="flex flex-col space-y-6 max-w-md" onSubmit={handleChangePassword}>
                 {renderPasswordInput("Current Password", "passwordCurrent")}
                 {renderPasswordInput("New Password", "password")}
@@ -231,8 +234,8 @@ const SettingPanel = () => {
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                <span className="text-red-500">Danger Zone</span>
+              <h2 className="text-xl font-medium text-gray-900 my-8">
+                <span className="text-red-500">Account Deletion</span>
               </h2>
               <div className="border-2 border-red-100 rounded-lg p-6 bg-red-50">
                 <div className="flex items-start space-x-4">
