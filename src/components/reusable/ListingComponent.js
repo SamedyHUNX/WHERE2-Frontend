@@ -37,7 +37,7 @@ const ListingComponent = ({
   };
 
   return (
-    <section className="lg:w-full sm:w-[100%] sm:mr-[32px] bg-white rounded-lg shadow-lg h-full">
+    <section className="lg:w-full bg-white rounded-lg shadow-lg h-full shadow-lg border-2 border-gray-200 rounded-4xl">
       <div className="flex justify-between items-center py-5 w-[80%] mx-auto">
         <h1 className="text-3xl text-blue-600 font-bold">{title}</h1>
         <div className="flex gap-2 sm:hidden">

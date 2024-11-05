@@ -64,7 +64,7 @@ const PartTimeJobListing = () => {
   };
 
   return (
-    <main>
+    <>
       <ButtonComponent onClick={toggleApproval} className={'rounded-md mx-5'}>
         {showApproved ? "Show Unapproved Posts" : "Show Approved Posts"}
       </ButtonComponent>
@@ -77,7 +77,7 @@ const PartTimeJobListing = () => {
         actions={getJobFunctions(showApproved)}
         totalItems={filteredJobs.length}
       />
-    </main>
+    </>
   );
 };
 

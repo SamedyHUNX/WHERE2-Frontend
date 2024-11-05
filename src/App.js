@@ -34,8 +34,6 @@ import UniversityDetailPage from "./pages/UniversityDetailPage";
 import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
-import Navbar from "./components/reusable/Navbar";
-import Footer from "./components/reusable/Footer";
 
 
 const queryClient = new QueryClient();

@@ -202,7 +202,7 @@ const SettingPanel = () => {
       <div className="w-full mx-auto">
         <section className="w-full bg-white rounded-3xl pt-[32px] shadow-md border h-screen">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
-          <h2 className="text-3xl underline font-bold text-gray-900 mb-6">Account Settings</h2>
+          <h2 className="text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">Account Settings</h2>
             <div className="border-b pb-8 mb-8">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span>Change Password</span>

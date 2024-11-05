@@ -24,7 +24,6 @@ const hero1 = {
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
   mainImageSrc: "https://i.imgur.com/dACQws5.png",
-  mainImageSrc: "https://i.imgur.com/dACQws5.png",
   mainImageAlt: "University building",
   onSearch: () => {},
 };

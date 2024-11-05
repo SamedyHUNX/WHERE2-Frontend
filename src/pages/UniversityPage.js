@@ -1,5 +1,5 @@
 // import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useQueryParams } from '../hooks/useQueryParams';
@@ -20,8 +20,6 @@ import Filter from '../components/reusable/Filter';
 import SearchBar from '../components/reusable/SearchBar';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
-import WrapperComponent from '../components/reusable/WrapperComponent';
-import Card from '../components/reusable/Card';
 
 /** Enable for debugging */
 const isDebug = false;
