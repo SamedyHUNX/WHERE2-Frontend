@@ -34,7 +34,9 @@ import UniversityDetailPage from "./pages/UniversityDetailPage";
 import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
-import Test from "./test/test";
+import Signin from "./pages/SigninPage"
+import Signup from "./pages/SignupPage"
+// import Test from "./test/test";
 
 const queryClient = new QueryClient();
 
@@ -59,7 +61,8 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <PublicOnlyROute>
-        <LoginPage />
+        {/* <LoginPage /> */}
+        <Signin />
       </PublicOnlyROute>
     ),
   },
@@ -67,7 +70,8 @@ const router = createBrowserRouter([
     path: "/signup",
     element: (
     <PublicOnlyROute>
-      <RegisterPage />
+      {/* <RegisterPage /> */}
+      <Signup />
     </PublicOnlyROute>
    
     ),
@@ -161,8 +165,6 @@ const router = createBrowserRouter([
   { path: "/scholarship/:id", element: <ScholarshipDetailPage /> },
   { path: "/health/article/:id", element: <HealthArticlePage /> },
   { path: "/about-us", element: <AboutUsPage />},
-  { path: "/test", element: <Test />}
-
 ]);
 
 function App() {
