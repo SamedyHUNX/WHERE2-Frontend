@@ -123,7 +123,7 @@ import config from "../../config";
     <div className="relative">
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-transparent h-48 rounded-xl z-10" />
       <div className="pt-8 text-center space-y-6">
-        <div className="relative inline-block group mt-[5vh]">
+        <div className="relative inline-block group mt-[10vh]">
           <div className="absolute inset-0 bg-blue-500 rounded-full opacity-0 group-hover:opacity-10 transition-opacity" />
           <img 
             src={imageUrl} 

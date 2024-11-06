@@ -37,7 +37,7 @@ const AccommodationDetail = () => {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-[5vh]">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-[10vh]">
             {accommodation.type}
           </h1>
           <div className="flex items-center text-gray-600">
