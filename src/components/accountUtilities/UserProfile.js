@@ -59,7 +59,7 @@ const UserProfile = () => {
       <div className="w-full h-full mt-[70px] lg:mb-[32px] relative">
         <Profile userData={userData} />  
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

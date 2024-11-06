@@ -1,0 +1,217 @@
+/* Existing Styles */
+.atom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #333;
+  width: 100%;
+  min-height: 500px;
+}
+
+.atom-form-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.atom-form .title {
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 35px;
+  color: #00bfff;
+}
+
+.atom-form .title::before {
+  width: 18px;
+  height: 18px;
+}
+
+.atom-form .title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+.atom-form .title::before,
+.atom-form .title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: #00bfff;
+  margin-left: 5px;
+}
+
+.atom-form .message,
+.atom-form .signin {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+}
+
+.atom-form .signin {
+  text-align: center;
+}
+
+.atom-form .signin a:hover {
+  text-decoration: underline royalblue;
+}
+
+.atom-form .signin a {
+  color: #00bfff;
+}
+
+.atom-form .flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.atom-form label {
+  position: relative;
+}
+
+.atom-form .input-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  width: 100%;
+}
+
+.atom-form label .input {
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  padding: 20px 5px 5px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.atom-form label .input+span {
+  color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: 10px;
+  top: 0.8rem;
+  text-align: center;
+  cursor: text;
+  transition: 0.3s ease;
+  font-size: 16px;
+}
+
+.atom-form label .input:placeholder-shown+span {
+  top: 12.5px;
+}
+
+.atom-form label .input:focus+span,
+.atom-form label .input:valid+span {
+  color: #00bfff;
+  top: 0px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.atom-form .submit {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: 0.3s ease;
+  background-color: #00bfff;
+}
+
+.atom-form .submit:hover {
+  background-color: #00bfff96;
+}
+
+.atom-form .error-message {
+  color: #f44336;
+  margin-top: 5px;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* New Styles */
+.atom-form .input-label.shake {
+    animation: shake 0.3s;
+    border-color: #f44336;
+}
+
+.atom-form .input-label.shake span {
+    color: #f44336;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25%, 75% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+@media screen and (max-width: 797px) {
+  .atom-form{
+    width: 100%;
+  }
+}
+
+/* Autofill styles */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #333 inset !important;
+    box-shadow: 0 0 0 30px #333 inset !important;
+    -webkit-text-fill-color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    color: #fff !important;
+    border: 1px solid rgba(105, 105, 105, 0.397) !important;
+}
+
+.input[type="date"]:not(.not-empty) {
+  color: transparent
+}
+
+.input[type="date"] .not-empty { 
+  color: #fff;
+}
+
+.input[type="date"] {
+  padding-right: 30px; /* Adjust based on your layout */
+  position: relative;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #fff; /* Adjust color as needed */
+}
+

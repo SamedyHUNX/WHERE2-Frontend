@@ -37,7 +37,6 @@ const hero2 = {
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
   mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
-  mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
   mainImageAlt: "University building",
   button:"Find part time jobs",
   onSearch: () => {},
@@ -183,15 +182,15 @@ const HomePage = () => {
     <>
       <Navbar />
       {/* <WrapperComponent> */}
-        <Hero props={hero1}>
-          <Searchbar 
-            handleSearch={searchUniversities}
-            searchPlaceholder="Search universities..."
-            category="university"
-          />
-        </Hero>
+      <Hero props={hero1} top={true}>
+        <Searchbar 
+          handleSearch={searchUniversities}
+          searchPlaceholder="Search universities..."
+          category="university"
+        />
+      </Hero>
       {/* </WrapperComponent> */}
-        <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
+      <CardFeatureSlider cardFeature={featureCards} header={"OUR MAIN FEATURES"} />
       <WrapperComponent>
         <Hero props={hero2} />
       </WrapperComponent>

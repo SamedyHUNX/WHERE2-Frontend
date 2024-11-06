@@ -46,11 +46,12 @@ const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView }) => {
           {isDiscussionsPath ? "Community Posts" : isDashboardForDeveloper ? 'All Posts' : "Related Posts"}
         </h2>
         {!isCreatingDiscussion &&
-          (role === "developer" && !location.pathname.startsWith('/profile')) && (
+          (!location.pathname.startsWith('/profile')) && (
             <ButtonComponent
               variant="primary"
               className={`${isDiscussionsPath ? "w-[197px] sm:w-full h-[38px] lg:w-[343px] sm:h-[50px]" : ""} w-fit h-full`}
               onClick={toggleDiscussionView}
+              disabled={role !== "admin" || role !== "developer"}
             >
               { isDiscussionsPath ? "Create Post" : <Pencil size={18}/> }
             </ButtonComponent>
