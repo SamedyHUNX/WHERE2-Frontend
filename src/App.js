@@ -111,7 +111,7 @@ const router = createBrowserRouter([
     path: "/community",
     element: <Navigate to="/discussions" replace />,
   },
-  { path: "/health", element: <LoggedInOnlyRoute><HealthPage /></LoggedInOnlyRoute> },
+  { path: "/health", element: <HealthPage /> },
   { path: "/user/:userId", element: <VisitProfile /> },
   {
     path: "/universities",
