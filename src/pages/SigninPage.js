@@ -1,11 +1,9 @@
-import Navbar from "../components/reusable/Navbar";
-
-import SigninLayout from "../layouts/SigninLayout";
+import SigninLayout from "./../layouts/SigninLayout";
+import FloatingContact from "./../components/reusable/FloatingContact";
 
 export default function Test() {
     return (
         <>
-            <Navbar />
             <div style={{ 
                 display: 'flex',
                 justifyContent: 'center',
@@ -16,6 +14,7 @@ export default function Test() {
             }}>
                 <SigninLayout />
             </div>
+            <FloatingContact/>
         </>
     );
 }

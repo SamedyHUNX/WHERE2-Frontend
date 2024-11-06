@@ -6,7 +6,6 @@ import { MapPin } from "lucide-react";
 
 // Import components
 import Form from "../components/reusable/Form/Form";
-;
 import Radio from "../components/reusable/Radio/Radio";
 import Personal from "./Signup.Personal.Layout";
 import Business from "./Signup.Business.Layout";

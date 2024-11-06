@@ -35,6 +35,8 @@ import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
 // import ContactForm from "./components/reusable/ContactForm";
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
 import FloatingContact from "./components/reusable/FloatingContact";
 
 
@@ -62,7 +64,7 @@ const router = createBrowserRouter([
     element: (
       <PublicOnlyROute>
         {/* <LoginPage /> */}
-        <Signin />
+        <SigninPage />
       </PublicOnlyROute>
     ),
   },
@@ -71,7 +73,7 @@ const router = createBrowserRouter([
     element: (
     <PublicOnlyROute>
       {/* <RegisterPage /> */}
-      <Signup />
+      <SignupPage />
     </PublicOnlyROute>
    
     ),

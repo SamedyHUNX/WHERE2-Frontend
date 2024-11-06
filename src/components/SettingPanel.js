@@ -203,11 +203,11 @@ const SettingPanel = () => {
         <section className="w-full bg-white rounded-3xl pt-[32px] shadow-md border h-screen">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
           <h2 className="text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">Account Settings</h2>
-            <div className="border-b pb-8 mb-8">
+            <div className="border-b pb-8 mb-8 w-full">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span>Change Password</span>
               </h2>        
-              <form className="flex flex-col space-y-6 max-w-md" onSubmit={handleChangePassword}>
+              <form className="flex flex-col space-y-6 lg:max-w-md sm:w-full" onSubmit={handleChangePassword}>
                 {renderPasswordInput("Current Password", "passwordCurrent")}
                 {renderPasswordInput("New Password", "password")}
 
