@@ -11,7 +11,6 @@ import Footer from "./../reusable/Footer";
 import DiscussionContainer from "./../reusable/DiscussionContainer";
 import TextSummary from "./../reusable/TextSummary";
 import config from "./../../config";
-import RelevantLinks from "../reusable/RelevantLinks";
 import {
   Facebook, Twitter, Instagram, ImageIcon, Globe, Send
 } from "lucide-react";

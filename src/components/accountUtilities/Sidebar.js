@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { 
-  ChartBarIcon, 
-  ShoppingBagIcon, 
   DocumentDuplicateIcon,
   UserCircleIcon,
   Cog6ToothIcon,
   PowerIcon,
-  BookOpenIcon,
-  BeakerIcon,
 } from '@heroicons/react/24/solid';
 import { X, User, Heart, ChevronDown, ChevronRight, MessageSquare, BookKey, Users, School, House, Briefcase, BadgeDollarSignIcon, ChartNoAxesColumnIncreasingIcon,GraduationCap , PanelsLeftBottom, MessageCircleMoreIcon, MessagesSquare} from "lucide-react";
 

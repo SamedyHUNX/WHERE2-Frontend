@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import FormInput from './InputField';
-import ButtonComponent from './Button';
 import axios from 'axios';
 import config from './../../config';
 import { MessageCircle, X } from 'lucide-react';
@@ -37,7 +35,7 @@ const FloatingContact = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 w-[80px] h-[80px] rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-200 z-50"
+        className="fixed lg:bottom-[8vh] lg:right-[5vw] sm:bottom-[4vh] sm:right-6 w-[80px] h-[80px] rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-200 z-50"
       >
         <MessageCircle size={36} />
       </button>
