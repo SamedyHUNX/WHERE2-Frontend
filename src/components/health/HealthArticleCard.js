@@ -11,10 +11,10 @@ const HealthArticleCard = ({ id, image, title, description, onClick }) => {
         <img
           src={image}
           alt={title}
-          className="w-full h-48 object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
+          className="w-full lg:h-64 object-cover"
         />
         <div className="p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">{title}</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2 min-h-[56px]">{title}</h2>
           <p className="text-gray-600 mb-4">
             {description.substring(0, 100)}...
           </p>
