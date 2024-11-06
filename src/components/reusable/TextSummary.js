@@ -3,7 +3,7 @@ import ButtonComponent from "./Button";
 import { Spinning } from "./../reusable/Loading"
 import config from "./../../config";
 
-const TextSummary = ({ textToSummarize }) => {
+const TextSummary = ({ textToSummarize, beta }) => {
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -65,7 +65,7 @@ const TextSummary = ({ textToSummarize }) => {
         variant="primary"
         size="large"
         fullWidth
-        disabled={isLoading}
+        disabled={isLoading || beta}
         onClick={handleSummarize}
       >
         {isLoading ? (

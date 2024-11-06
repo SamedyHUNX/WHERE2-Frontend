@@ -139,7 +139,7 @@ const HealthArticlePage = () => {
                 <WrapperComponent>
                   <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl shadow-xl p-6">
                     <h2 className="text-xl font-semibold mb-4 text-white">Quick Summary</h2>
-                    <TextSummary textToSummarize={article.content} />
+                    <TextSummary textToSummarize={article.content} beta={true}/>
                   </div>
                 </WrapperComponent>
                 <div className="mt-6 bg-gray-900/50 backdrop-blur-sm rounded-2xl ">
