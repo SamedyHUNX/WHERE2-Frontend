@@ -11,17 +11,10 @@ const useVisitTracker = (path, config) => {
   useEffect(() => {
     const trackVisit = async () => {
       try {
-        if (config.env !== 'production') {
-          console.log('Tracking visit to:', config.user.visitorTrack);
-        }
 
         await axios.post(config.user.visitorTrack, { path }, {
           headers: { 'Content-Type': 'application/json' }
         });
-
-        if (config.env !== 'production') {
-          console.log("Visit tracked successfully");
-        }
 
       } catch (error) {
         console.error('Error tracking visit:', error.message, error.config);
@@ -32,10 +25,6 @@ const useVisitTracker = (path, config) => {
     const fetchVisits = async () => {
       try {
         const today = new Date().toISOString().split('T')[0];
-
-        if (config.env !== 'production') {
-          console.log('Fetching visits for today:', config.user.visits);
-        }
         
         const response = await axios.get(config.user.visits, {
           params: { path, startDate: today, endDate: today }

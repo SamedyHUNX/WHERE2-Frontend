@@ -3,7 +3,6 @@ import React from "react";
 
 const AccordionButton = ({ applyFilter , contentItem }) => {
     function handleClick() {
-        console.log("AccordionButton says: applying filter...", contentItem)
         // navigate(`/list/university?location=${contentItem}`)
         applyFilter(contentItem)
     }

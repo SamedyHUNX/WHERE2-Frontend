@@ -26,10 +26,10 @@ const Pagination = ({ totalPage, limit = 10, currentPage, category, searchQuery 
         return url;
     };
 
-    if (isDebug) {
-        console.log("Pagination says: total page", totalPage);
-        console.log("Pagination says: current page", currentPage);
-    }
+    // if (isDebug) {
+    //     console.log("Pagination says: total page", totalPage);
+    //     console.log("Pagination says: current page", currentPage);
+    // }
 
     /**
      * handlePageChange

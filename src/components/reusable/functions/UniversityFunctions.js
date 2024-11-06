@@ -7,7 +7,6 @@ export const useUniversityFunctions = (onUniversityUpdate) => {
     const navigate = useNavigate();
 
     const handleApprovePost = async (id) => {
-        console.log("approve action triggered for university with ID:", id);
         try {
             const response = await axios.patch(config.universities.approveUniversity(id));
             if (response.status === 200) {
@@ -20,12 +19,10 @@ export const useUniversityFunctions = (onUniversityUpdate) => {
     };
 
     const handleView = (id) => {
-        console.log("View action triggered for university with ID:", id);
         navigate(`/detail/university/${id}`);
     };
 
     const handleDisapprovePost = async (id) => {
-        console.log("Disapprove action triggered for university with ID:", id);
         try {
             const response = await axios.patch(config.universities.disapproveUniversity(id));
             if (response.status === 200) {

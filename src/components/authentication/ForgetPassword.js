@@ -22,9 +22,6 @@ const ForgetPasswordComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email) {
-      if (config.env !== 'production') {
-        console.log("Submitting email:", email);
-      }
       dispatch(forgotPassword({ email }));
     }
   };

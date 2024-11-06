@@ -25,7 +25,6 @@ export const useUserFunctions = (onUserUpdate) => {
   };
 
   const handleActivateUser = async (id) => {
-    console.log("Activate action triggered for user with ID:", id);
     try {
       const response = await axios.patch(config.analytics.reactivateUserById(id));
       if (response.status === 200) {

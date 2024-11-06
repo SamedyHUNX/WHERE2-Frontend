@@ -24,7 +24,8 @@ function ScholarDetail() {
   if (isLoading) {
     return <LoadingOverlay />;
   }
-console.log("this is scholarship detail",scholarship)
+
+  
   return (
     <>
       <Navbar /> 

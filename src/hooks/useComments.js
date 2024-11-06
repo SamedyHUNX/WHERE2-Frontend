@@ -7,7 +7,6 @@ const useComments = (discussionId) => {
     const url = `${config.community.getAllComments(discussionId)}`;
     try {
       const response = await axios.get(url);
-      console.log("Fetched comments:", response.data);
 
       // Check if response data structure matches expectations
       if (!response.data || !response.data.data) {

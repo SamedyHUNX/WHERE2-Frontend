@@ -12,10 +12,6 @@ const SubscribeNow = () => {
   const [subscriptionId, setSubscriptionId] = useState(null);
   const { isLoggedIn, username, userId, entity, role, token } = useAuth();
 
-  useEffect(() => {
-    console.log('Auth state:', { isLoggedIn, token: !!token });
-  }, [isLoggedIn, token, window.location.reload]);
-
   const handleSubscribe = async () => {
     if (!isLoggedIn) {
       console.log('Subscribe attempted without login:', { isLoggedIn });

@@ -84,8 +84,6 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
             },
           }
         );
-
-        console.log("Delete Response:", response.data);
         onDeleteSuccess(discussionId);
       } catch (error) {
         console.error("Error deleting discussion:", error);

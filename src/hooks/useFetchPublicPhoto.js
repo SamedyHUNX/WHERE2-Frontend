@@ -121,8 +121,6 @@ export const useUploadPublicPhoto = () => {
         throw new Error(message || "Upload failed");
       }
 
-      console.log(response.data)
-
       // Return success response with all relevant data
       return {
         success: true,

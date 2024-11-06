@@ -8,7 +8,6 @@ export const fetchCompany = createAsyncThunk(
     const response = await axios.get(config.job.getAssociatedCompany(id));
     const approvedCompanies = response.data.data.associatedCompany.filter(company => company.isApproved);
     const companyDetails = response.data.data.associatedCompany
-    console.log(companyDetails)
     return { associatedCompany: companyDetails };
   }
 );

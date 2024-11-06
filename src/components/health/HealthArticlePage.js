@@ -35,8 +35,6 @@ const HealthArticlePage = () => {
         const response = await axios.get(apiUrl);
 
         if (response.data.status === "success" && response.data.data) {
-
-          console.log('SDFHJUHJKSDHJKFSJHKFHJKFDSG',response.data.data.healthArticle);
           setArticle(response.data.data.healthArticle);
         } else {
           throw new Error("Invalid data format received from the server");

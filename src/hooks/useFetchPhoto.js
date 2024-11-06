@@ -61,7 +61,6 @@ export const useUploadPhoto = (userId) => {
     try {
       // OBTAINING DATA FROM BACKEND (BACKEND API IS STORED IN config.js)
       const { data: s3Data } = await axios.post(config.photo.getS3Url, { folder });
-      console.log("Received S3 pre-signed URL:", s3Data);
 
       if (!s3Data || !s3Data.url) {
         throw new Error("Invalid S3 pre-signed URL received");
@@ -72,11 +71,9 @@ export const useUploadPhoto = (userId) => {
           "Content-Type": file.type,
         },
       });
-      console.log("File uploaded to S3 successfully");
 
       const urlParts = new URL(s3Data.url);
       const imageUrl = `${urlParts.protocol}//${urlParts.host}${urlParts.pathname}`;
-      console.log("Constructed Image URL:", imageUrl);
 
       if (!imageUrl) {
         throw new Error("S3 URL construction failed");
@@ -87,7 +84,6 @@ export const useUploadPhoto = (userId) => {
         imageUrl,
       });
 
-      console.log("Response from uploadProfilePicture:", response.data);
 
       if (!response.data || !response.data.profilePictureUrl) {
         throw new Error("Failed to upload profile picture");

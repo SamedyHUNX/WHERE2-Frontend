@@ -21,11 +21,6 @@ const useDiscussions = (pathname) => {
 
     try {
       const response = await axios.post(url, { isDashboardForDeveloper });
-
-      if (config.env !== 'production') {
-        console.log('Fetched discussions:', response.data);
-      }
-      
       // Check if response data structure matches expectations
       if (!response.data || !response.data.data || !response.data.data.discussions) {
         throw new Error('Invalid response structure');

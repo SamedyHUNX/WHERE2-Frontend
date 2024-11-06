@@ -12,7 +12,6 @@ export const useJobFunctions = (onJobUpdate) => {
   };
 
   const handleApprovePost = async (id) => {
-    console.log("Job with ID:", id, "approve function called");
     try {
       const response = await axios.patch(config.job.approveJob(id));
       if (response.status === 200) {
@@ -25,7 +24,6 @@ export const useJobFunctions = (onJobUpdate) => {
   };
 
   const handleDisapprovePost = async (id) => {
-    console.log("Job with ID:", id, "disapprove function called");
     try {
       const response = await axios.patch(config.job.disapproveJob(id));
       if (response.status === 200) {

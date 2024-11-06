@@ -5,11 +5,6 @@ const fetchProfile = async () => {
       const { token, userId } = getAuthData();
 
 
-      if (config.env !== "production") {
-        console.log("Fetching profile for user:", userId);
-      }
-
-
       const res = await fetch(config.profile.getMyProfile(userId), {
         headers: {
           "Content-Type": "application/json",
