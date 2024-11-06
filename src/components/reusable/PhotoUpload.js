@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { Alert } from "@mui/material";
 import { Edit2 } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import { useFetchPhoto, useUploadPhoto } from "./../../hooks/useFetchPhoto";
