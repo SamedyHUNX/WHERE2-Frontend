@@ -34,6 +34,8 @@ import UniversityDetailPage from "./pages/UniversityDetailPage";
 import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
+// import ContactForm from "./components/reusable/ContactForm";
+import FloatingContact from "./components/reusable/FloatingContact";
 
 
 const queryClient = new QueryClient();
@@ -111,7 +113,7 @@ const router = createBrowserRouter([
     path: "/community",
     element: <Navigate to="/discussions" replace />,
   },
-  { path: "/health", element: <HealthPage /> },
+  { path: "/health", element: <LoggedInOnlyRoute><HealthPage /></LoggedInOnlyRoute> },
   { path: "/user/:userId", element: <VisitProfile /> },
   {
     path: "/universities",
@@ -161,7 +163,7 @@ const router = createBrowserRouter([
   { path: "/scholarship/:id", element: <ScholarshipDetailPage /> },
   { path: "/health/article/:id", element: <HealthArticlePage /> },
   { path: "/about-us", element: <AboutUsPage />},
-
+  { path: '/contact-us', element: <FloatingContact />},
 ]);
 
 function App() {

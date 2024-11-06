@@ -9,7 +9,7 @@ import {
   BookOpenIcon,
   BeakerIcon,
 } from '@heroicons/react/24/solid';
-import { X, User, Heart, ChevronDown, ChevronRight, BookKey, Users, School, House, Briefcase, BadgeDollarSignIcon, ChartNoAxesColumnIncreasingIcon,GraduationCap , PanelsLeftBottom, MessageCircleMoreIcon} from "lucide-react";
+import { X, User, Heart, ChevronDown, ChevronRight, MessageSquare, BookKey, Users, School, House, Briefcase, BadgeDollarSignIcon, ChartNoAxesColumnIncreasingIcon,GraduationCap , PanelsLeftBottom, MessageCircleMoreIcon, MessagesSquare} from "lucide-react";
 
 import { SidebarContentContext } from "./../reusable/Profile";
 
@@ -146,6 +146,7 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
       { label: 'Part time job', icon: <Briefcase />, onClick: () => handleItemClick("job", "jobList") },
       { label: 'Dashboard', icon: <ChartNoAxesColumnIncreasingIcon className="h-5 w-5" /> , onClick: () => handleItemClick("developerDashboard", "adminDashboard") },
       {label : "View discussion", icon: <MessageCircleMoreIcon/> , onClick: () => handleItemClick("discussionListing" , "discussionListing") },
+      { label : "All Messages", icon: <MessagesSquare/> , onClick: () => handleItemClick("messageListing" , "messageListing") },
       { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5" />, onClick: () => handleItemClick("setting", "setting") },
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut")},
     ]

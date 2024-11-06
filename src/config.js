@@ -126,6 +126,9 @@ const config = {
     createUniversity : `${API_URL}/api/detail/university/addUniversity`,
     createJob : `${API_URL}/api/jobs/addJob`,
     createAccomodation : `${API_URL}`
+  },
+  contact: {
+    sendEmail: `${API_URL}/api/contact`,
   }
 }
 export default config;
