@@ -96,6 +96,7 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
   };
 
   const isCurrentUserPost = discussion.user?.id === userId;
+  const canDeletePost = isCurrentUserPost || role === "developer";
 
   return (
     <div
@@ -169,7 +170,7 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
       )}
 
       {/* Delete button visibility */}
-      {(isCurrentUserPost || role === "developer") && (
+      {canDeletePost && (
         <div
           className="absolute lg:top-4 lg:right-4 sm:top-2 sm:right-2"
           onClick={(e) => e.stopPropagation()}
