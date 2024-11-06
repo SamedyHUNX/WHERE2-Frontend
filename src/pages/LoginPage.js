@@ -5,7 +5,6 @@ const LoginPage = () => {
     return (
         <>
             <LoginComponent/>
-            <Footer/>
         </>
     )
 }
