@@ -53,7 +53,7 @@ export default function SignupLayout() {
 
     return (
         <Form title="Sign In">
-            <p className="message">Enter your email address and we'll send you a link to reset your password.</p>
+            <p className="message"></p>
             <form className="atom-form-container" onSubmit={handleSubmit}>
                 <Input key='email' name='email' placeholder='Email' value={email} onChange={handleInputChange} required />
                 <Input key='password' name='password' placeholder='Password' type='password'value={password}onChange={handleInputChange} required />
