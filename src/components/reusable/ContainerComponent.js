@@ -1,5 +1,4 @@
 import React from 'react';
-import WrapperComponent from './WrapperComponent';
 
 const ContainerComponent = ({ children, title, className = "" }) => {
   return (

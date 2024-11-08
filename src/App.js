@@ -35,8 +35,8 @@ import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
 // import ContactForm from "./components/reusable/ContactForm";
-import SigninPage from "./pages/SigninPage";
-import SignupPage from "./pages/SignupPage";
+// import SigninPage from "./pages/SigninPage";
+// import SignupPage from "./pages/SignupPage";
 import FloatingContact from "./components/reusable/FloatingContact";
 
 
@@ -50,8 +50,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/home",
-    element: <HomePage />,
     path: "/home",
     element: <Navigate to="/" replace />,
   },
@@ -113,8 +111,6 @@ const router = createBrowserRouter([
   { path: "/discussions", element: <DiscussionsPage /> },
   {
     path: "/community",
-    element: <DiscussionsPage />,
-    path: "/community",
     element: <Navigate to="/discussions" replace />,
   },
   { path: "/health", element: <LoggedInOnlyRoute><HealthPage /></LoggedInOnlyRoute> },
@@ -128,8 +124,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/discussion",
-    element: <DiscussionsPage />,
     path: "/discussion",
     element: <Navigate to="/discussions" replace />,
   },

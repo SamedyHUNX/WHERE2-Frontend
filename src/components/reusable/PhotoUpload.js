@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { Alert, AlertTitle } from "@mui/material";
 import { Edit2, X } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
@@ -11,13 +11,13 @@ const PictureUpload = () => {
   const { userId } = useAuth();
   const { photoUrl, isLoading, error, fetchPhoto } = useFetchPhoto(userId);
   const { uploadPhoto, isUploading, uploadError } = useUploadPhoto(userId);
-  const [showRequirements, setShowRequirements] = useState(false);
+  // const [showRequirements, setShowRequirements] = useState(false);
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
-    setShowRequirements(true);
+    // setShowRequirements(true);
     
     // Check file type
     if (!ALLOWED_FILE_TYPES.includes(selectedFile.type)) {

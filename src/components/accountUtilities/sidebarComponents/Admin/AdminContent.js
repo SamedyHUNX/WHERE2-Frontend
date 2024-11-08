@@ -58,7 +58,7 @@ const entityConfig = {
 };
 
 const AdminEditor = () => {
-  const { username, userId } = useAuth();
+  const {  userId } = useAuth();
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
@@ -106,7 +106,7 @@ const AdminEditor = () => {
     setFormData({});
   };
 
-  const formType = localStorage.getItem('formType');
+  // const formType = localStorage.getItem('formType');
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -225,7 +225,7 @@ const AdminEditor = () => {
         </div>
       </div>
 
-      {entity == "University" ? (
+      {entity === "University" ? (
       <div className="mt-6 bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
           <Link size={24} className="mr-2" />

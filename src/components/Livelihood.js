@@ -28,36 +28,39 @@ const Livelihood = () => {
 			title: "Part-time Job",
 			image: "https://i.imgur.com/wNSAnFb.png",
 			path: "/list/job",
+			alt: "Part-time job",
 		},
 		{
 			title: "Student Loan",
 			image: "https://i.imgur.com/nbIan17.png",
 			path: "/list/student-loan",
+			alt: "Student loan",
 		},
 		{
 			title: "Accommodation",
 			image: "https://i.imgur.com/uidTbxO.png",
+			alt: "Accommodation",
 			path: "/list/accommodation",
 		},
 	];
 
-	const hero1 = {
-		title: "PURSUE YOUR CAREER.",
-		subtitle: "By supporting yourself.",
-		backgroundGradient: "from-blue-100",
-		titleColor: "text-blue-900",
-		subtitleColor: "text-blue-600",
-		mainImageSrc: "https://i.imgur.com/x4yB3Xz.png",
-		mainImageAlt: "University building",
-		button: "Find part time jobs",
-	};
+	// const hero1 = {
+	// 	title: "PURSUE YOUR CAREER.",
+	// 	subtitle: "By supporting yourself.",
+	// 	backgroundGradient: "from-blue-100",
+	// 	titleColor: "text-blue-900",
+	// 	subtitleColor: "text-blue-600",
+	// 	mainImageSrc: "https://i.imgur.com/x4yB3Xz.png",
+	// 	mainImageAlt: "University building",
+	// 	button: "Find part time jobs",
+	// };
 
     return (
         <section className="mt-[64px]">
              <WrapperComponent>
                     <div className="flex justify-center bg-white max-w-[1440px] mx-auto">
                             {/* <img src={"https://i.imgur.com/x4yB3Xz.png"} className="object-cover" alt="Hero photo of livelidhood page" /> */}
-                            <img src={LiveLihood} className="h-full w-full"></img> 
+                            <img src={LiveLihood} className="h-full w-full" alt="Livelihood hero"></img> 
                     </div>
                 {/* <Hero props={hero1}/> */}
             </WrapperComponent>
@@ -68,7 +71,7 @@ const Livelihood = () => {
                 <section className="flex gap-x-12 mx-auto mb-[64px]">
                     {isMobile ? null : <div className="flex-1 content-center">
                         <h1 className="text-[#367588] pb-[54px]">Ready to discover how we can help you achieve your academic and financial goal?</h1>
-                        <img src={JobFinder} className="rounded-full w-96 h-96" />
+                        <img src={JobFinder} className="rounded-full w-96 h-96" alt="Job finder hero"/>
                     </div>}
                     <div className="flex-1 content-center">
                         <div>

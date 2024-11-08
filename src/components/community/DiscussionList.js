@@ -4,7 +4,6 @@ import {  useLocation } from "react-router-dom";
 import ButtonComponent from "./../reusable/Button";
 import { LoadingOverlay } from "./../reusable/Loading";
 import DiscussionCard from "./DiscussionCard";
-import WrapperComponent from "./../reusable/WrapperComponent";
 import useDiscussions from "./../../hooks/useDiscussions";
 import { Pencil } from "lucide-react";
 import useAuth from "./../../hooks/useAuth";

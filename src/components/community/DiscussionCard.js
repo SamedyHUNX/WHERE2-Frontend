@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentSectionComponent from "./CommentSectionComponent";
 import ProfilePicture from "../reusable/PictureUpload";
@@ -34,7 +34,7 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
     ].filter(Boolean);
   }, [discussion.user?.id, localComments]);
 
-  const { photoUrls, isLoading, error } = useFetchBatchPhotos(userIds);
+  const { photoUrls } = useFetchBatchPhotos(userIds);
 
   // Handler for adding new comments
   const handleCommentAdded = (newComment) => {

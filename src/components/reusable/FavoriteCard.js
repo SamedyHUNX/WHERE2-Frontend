@@ -1,31 +1,31 @@
-import { Facebook, Instagram, Twitter, Youtube, Chrome } from 'lucide-react';
+// import { Facebook, Instagram, Twitter, Youtube, Chrome } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cardBody, cardTitle, cardDescription } from './tailwindcardclass/cardClass';
-import EnabledMap from '../../assets/svg/EnabledMap.svg';   //map enabled
-import DisabledMap from '../../assets/svg/DisabledMap.svg';   //map disabled /* please remove comment */
-import BookMark from '../../assets/svg/bookmark.svg';
+// import EnabledMap from '../../assets/svg/EnabledMap.svg';   //map enabled
+// import DisabledMap from '../../assets/svg/DisabledMap.svg';   //map disabled /* please remove comment */
+// import BookMark from '../../assets/svg/bookmark.svg';
 import Button from './ButtonComponent';
-import MiniMap from '../../assets/svg/miniMap.svg'
-import MiniClock from '../../assets/svg/miniClock.svg';
-import Calender from '../../assets/svg/calender.svg';
+// import MiniMap from '../../assets/svg/miniMap.svg'
+// import MiniClock from '../../assets/svg/miniClock.svg';
+// import Calender from '../../assets/svg/calender.svg';
 import { convertToHTML } from '../../utility/markdownConverter/markdownConverter';
 
 const FavoriteCard = ({ title, description, facebookLink, instagramLink, twitterLink, youtubeLink, websiteLink, location, deadLine, timeOut, route, type, position,salary, currency, interest, term, loan_size, size, address,price,redirect}) => {
-    const socialMediaIcons = [
-        { icon: Facebook, linkKey: facebookLink },
-        { icon: Twitter, linkKey: twitterLink },
-        { icon: Instagram, linkKey: instagramLink },
-        { icon: Youtube, linkKey: youtubeLink },
-        { icon: Chrome, linkKey: websiteLink, isExternal: true },
-    ];
-    const links = { facebookLink, twitterLink, youtubeLink, websiteLink, instagramLink };
+    // const socialMediaIcons = [
+    //     { icon: Facebook, linkKey: facebookLink },
+    //     { icon: Twitter, linkKey: twitterLink },
+    //     { icon: Instagram, linkKey: instagramLink },
+    //     { icon: Youtube, linkKey: youtubeLink },
+    //     { icon: Chrome, linkKey: websiteLink, isExternal: true },
+    // ];
+    // const links = { facebookLink, twitterLink, youtubeLink, websiteLink, instagramLink };
 
-    const workDetails = [
-        { icon: MiniClock, linkKey: timeOut },
-        { icon: Calender, linkKey: deadLine },
-        { icon: MiniMap, linkKey: location },
-    ]
+    // const workDetails = [
+    //     { icon: MiniClock, linkKey: timeOut },
+    //     { icon: Calender, linkKey: deadLine },
+    //     { icon: MiniMap, linkKey: location },
+    // ]
 
     return (
         <div className="lg:h-[348px] mb-[64px] border rounded-[50px] bg-white shadow-xl">

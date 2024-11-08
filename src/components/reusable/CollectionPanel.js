@@ -11,7 +11,7 @@ const CollectionPanel = ({ category }) => {
     useEffect(() => {
         dispatch(getFavorite({ category }));
         
-    }, [category]);
+    }, [category, dispatch]);
     return (
         <div className="w-full h-full rounded-3xl shadow-lg border-2">
             <h1 className="text-2xl font-bold mt-[48px] ml-6 text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">Collections</h1>

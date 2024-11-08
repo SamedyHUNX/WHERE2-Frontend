@@ -47,7 +47,7 @@ const SettingPanel = () => {
   });
 
   const { userId, token } = useAuth();
-  const { status, error, message } = useSelector((state) => state.auth);
+  const { status } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(clearAuthState());

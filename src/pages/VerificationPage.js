@@ -1,13 +1,12 @@
 import VerificationComponent from "./../components/authentication/VerificationComponent";
-import Footer from "./../components/reusable/Footer";
-import Navbar from "./../components/reusable/Navbar";
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./../components/reusable/FloatingContact";
 
 const VerificationPage = () => {
     return (
         <>
-            <Navbar/>
             <VerificationComponent />
-            <Footer />
+            {useAuth().isLoggedIn ? "" : <FloatingContact />}
         </>
     );
 };

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import PaginationButton from "./PaginationButton";
 
 // Enable for debugging
-const isDebug = false;
+// const isDebug = false;
 
 /**
  * Pagination Component

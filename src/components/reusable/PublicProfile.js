@@ -1,15 +1,18 @@
 import React from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 import FormInput from "../../components/reusable/InputField";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "./../../hooks/useAuth";
 import { LoadingOverlay } from "../../components/reusable/Loading";
-import PictureUpload from './PhotoUpload';
 import ContainerComponent from './ContainerComponent';
 import ProfilePicture from './PictureUpload';
 import { useParams } from 'react-router-dom';
+
 import Navbar from './../../components/reusable/Navbar';
 import Footer from './Footer';
+
+
 const PublicProfile = ({ userInfo }) => {
+
   const {userId} = useParams()
   const {loading} = useAuth();
 

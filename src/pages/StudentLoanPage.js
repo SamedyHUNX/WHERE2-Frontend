@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import JobList from "../components/job/JobList"
 import Footer from "../components/reusable/Footer"
 import Navbar from "../components/reusable/Navbar"
 import { useEffect } from "react";

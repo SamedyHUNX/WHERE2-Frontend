@@ -11,9 +11,9 @@ import Footer from "./../reusable/Footer";
 import DiscussionContainer from "./../reusable/DiscussionContainer";
 import TextSummary from "./../reusable/TextSummary";
 import config from "./../../config";
-import {
-  Facebook, Twitter, Instagram, ImageIcon, Globe, Send
-} from "lucide-react";
+// import {
+//   Facebook, Twitter, Instagram, ImageIcon, Globe, Send
+// } from "lucide-react";
 import ReferencesSection from "./ReferencesSection";
 
 const HealthArticlePage = () => {
@@ -24,7 +24,7 @@ const HealthArticlePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const currentPath = location.pathname;
+  // const currentPath = location.pathname;
 
   useEffect(() => {
     const fetchArticle = async () => {
