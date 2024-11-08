@@ -7,6 +7,7 @@ import { MessageCircle, X } from 'lucide-react';
 
 const FloatingContact = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -49,7 +50,7 @@ const FloatingContact = () => {
     if (!validateForm()) return;
 
     try {
-      console.log('Form submitted:', formData);
+      setLoading(true);
       const response = await axios.post(config.contact.sendEmail, formData);
 
       if (response.status === 200) {
@@ -57,8 +58,10 @@ const FloatingContact = () => {
       }
 
       setIsOpen(false);
+      setLoading(false);
       setFormData({ fullName: '', phoneNumber: '', email: '', message: '' });
     } catch (error) {
+      setLoading(false);
       console.error('Error submitting form:', error);
     }
   };
@@ -134,12 +137,16 @@ const FloatingContact = () => {
             </div>
 
             <ButtonComponent
-              variant="primary"
+              variant='primary'
               size="medium"
+              rounded={false}
               fullWidth
               type="submit"
+              className={"bg-blue-500"}
             >
-              Start Conversation
+              {
+                loading ? "Sending your message..." : "Start Conversation"
+              }
             </ButtonComponent>
           </form>
         </div>
@@ -148,7 +155,7 @@ const FloatingContact = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-[80px] h-[80px] rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-200"
+        className="w-[80px] h-[80px] rounded-full bg-sky-500 text-white shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-200"
       >
         { isOpen ? <X size={36}/> : <MessageCircle size={36} /> }
       </button>

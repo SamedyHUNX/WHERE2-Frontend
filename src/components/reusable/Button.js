@@ -8,11 +8,12 @@ const ButtonComponent = ({
   height = "auto",
   fullWidth = false,
   disabled = false,
+  rounded = true,
   onClick,
   className,
 }) => {
   const baseStyles =
-    "font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200";
+    `font-semibold ${rounded ? "rounded-full" : ""} focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200`;
 
   const variants = {
     primary: "bg-sky-400 text-white hover:bg-sky-300 focus:ring-sky-500",
