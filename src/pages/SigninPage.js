@@ -3,7 +3,7 @@ import FloatingContact from "./../components/reusable/FloatingContact";
 
 export default function Test() {
     return (
-        <>
+        <div className="bg-[#E6F3F9] w-full h-full">
             <div style={{ 
                 display: 'flex',
                 justifyContent: 'center',
@@ -15,6 +15,6 @@ export default function Test() {
                 <SigninLayout />
             </div>
             <FloatingContact/>
-        </>
+        </div>
     );
 }

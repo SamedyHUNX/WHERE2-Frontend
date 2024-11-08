@@ -103,6 +103,10 @@ const VerificationComponent = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1)
+  }
+
   if (status === "loading") {
     return (
       <LoadingOverlay isFullScreen={true} message="We are verifying your account..." />
@@ -114,10 +118,27 @@ const VerificationComponent = () => {
   }
 
   return (
-    <ContainerComponent title="VERIFY ACCOUNT" className="lg:h-[718px]">
+    <ContainerComponent className="lg:h-[718px]">
+      <div className="h-[50px]">
+                <button
+                  onClick={handleBack}
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  ← Back
+                </button>
+              </div>
+
+              <div className="mb-6">
+            <h2 className="text-2xl font-bold text-center text-gray-800">
+              Verify Your Account
+            </h2>
+            <div className="w-1/4 h-0.5 bg-gray-300 mx-auto mt-4"></div>
+          </div>
+
       <p className="text-sm text-gray-600 text-center mb-6">
         Please enter the verification code sent to <span className="font-bold text-sky-500 underline">{email}</span>
       </p>
+
       <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
         <FormInput
           name="verificationCode"

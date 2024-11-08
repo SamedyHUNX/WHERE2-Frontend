@@ -3,7 +3,7 @@ import FloatingContact from "../components/reusable/FloatingContact";
 
 const ForgetPasswordPage = () => {
     return (
-        <>
+        <div className="bg-[#E6F3F9] w-full h-full">
             {/* <div style={{ 
                 display: 'flex',
                 justifyContent: 'center',
@@ -16,7 +16,7 @@ const ForgetPasswordPage = () => {
             </div> */}
             <ForgetPasswordComponent />
             <FloatingContact/>
-        </>
+        </div>
     )
 }
 

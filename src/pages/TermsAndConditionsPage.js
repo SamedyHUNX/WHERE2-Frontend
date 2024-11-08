@@ -3,10 +3,10 @@ import TermsAndConditionsComponent from "./../components/authentication/TermsAnd
 
 const TermsAndConditionsPage = () => {
     return (
-        <>
+        <div className="bg-[#E6F3F9] w-full h-full">
             <TermsAndConditionsComponent />
             <FloatingContact/>
-        </>
+        </div>
     )
 }
 
