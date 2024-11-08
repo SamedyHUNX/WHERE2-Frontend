@@ -179,9 +179,6 @@ import config from "./../../config"
     "auth/login",
     async ({ email, password }, thunkAPI) => {
       try {
-        if (config.env !== 'production') {
-          console.log("Logging in user:", { email, password });
-        }
         const response = await axios.post(config.auth.loginUrl, {
           email,
           password,
@@ -196,23 +193,17 @@ import config from "./../../config"
           entity,
         };
 
-        if (config.env !== 'production') {
-          console.log("Server response:", response.data);
-          console.log(token, id, userName, entity)
-        }
-
         localStorage.setItem("authData", JSON.stringify(authData));
-        
-        if (config.env !== 'production') {
-          console.log("Login successful. Stored auth data:", authData);
-        }
   
         return { 
           ...authData, 
           user: data.user
         };
       } catch (error) {
-        console.error("Login error:", error.response?.data || error.message);
+
+        if (error.status === 401) {
+          return thunkAPI.rejectWithValue("Invalid email or password");
+        }
         return thunkAPI.rejectWithValue(
           handleAsyncError(error, "Failed to log in. Please try again.")
         );

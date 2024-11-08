@@ -5,38 +5,88 @@ import FormInput from "./../reusable/InputField";
 import ButtonComponent from "./../reusable/Button";
 import ContainerComponent from "./../reusable/ContainerComponent";
 import { login, clearAuthState } from "./../../features/slices/authSlice";
+import { Checkbox, InputLabel } from "@mui/material";
 import { LoadingSpinner, LoadingOverlay } from "./../reusable/Loading.js";
 
-// LOGIN COMPONENTS
+// LOGIN COMPONENT
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error, isAuthenticated } = useSelector((state) => state.auth);
 
+  // Navigate if user is already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-        navigate("/", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
+  // Read email from localStorage if 'remember me' is checked
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true);
+    }
+  }, []);
+
+  // Clear authentication state on form reset or new input
   useEffect(() => {
     dispatch(clearAuthState());
   }, [dispatch, email, password]);
 
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    }
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
+  // Handle email change with validation
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    validateEmail(newEmail);
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      return;
+    }
+
     try {
+      // Store email in localStorage if rememberMe is checked
+      if (rememberMe) {
+        localStorage.setItem("email", email);
+      } else {
+        localStorage.removeItem("email");
+      }
+
       const resultAction = await dispatch(login({ email, password }));
       if (login.fulfilled.match(resultAction)) {
         navigate("/");
       }
     } catch (err) {
-      console.error("Failed to log in. Please try again!");
+      console.error(err);
     }
   };
 
+  // Loading spinner while logging in
   if (status === "loading") {
     return <LoadingOverlay isFullScreen={true} message="We are logging you in..." />;
   }
@@ -49,11 +99,13 @@ const LoginComponent = () => {
           label="Email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
           required
           autoComplete="email"
-          className={error ? "border-rose-400 border-[1px]" : ""}
+          className={`${emailError || error ? "border-rose-400 border-[1px]" : "border-emerald-400 border-[1px]"}`}
         />
+        {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
+        
         <FormInput
           name="password"
           label="Password"
@@ -61,16 +113,31 @@ const LoginComponent = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          autoComplete="password"
+          autoComplete="current-password"
           className={error ? "border-rose-400 border-[1px]" : ""}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
+
+        <div className="flex items-center space-x-2">
+          <Checkbox 
+            id="rememberMe" 
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)} // Changed to 'onChange'
+          />
+          <InputLabel 
+            htmlFor="rememberMe" 
+            className="text-sm text-gray-600 cursor-pointer"
+          >
+            Remember me
+          </InputLabel>
+        </div>
+
         <div className="flex justify-center items-center">
           <ButtonComponent
             variant={"primary"}
             className="mt-2 w-[197px] h-[38px] sm:w-[343px] sm:h-[50px]"
             type="submit"
-            disabled={status === "loading" || status === "succeded"}
+            disabled={status === "loading" || status === "succeeded"} // Fixed typo: 'succeded' to 'succeeded'
           >
             {status === "loading" ? <LoadingSpinner /> : "Login"}
           </ButtonComponent>
@@ -83,7 +150,7 @@ const LoginComponent = () => {
         >
           Forgot Password?
         </Link>
-        <p className="mt-6 text-sm text-gray-600 ">
+        <p className="mt-6 text-sm text-gray-600">
           Don't have an Account?{" "}
           <Link to="/signup" className="text-[rgb(0,122,255)] underline">
             Sign Up
@@ -95,3 +162,4 @@ const LoginComponent = () => {
 };
 
 export default LoginComponent;
+
