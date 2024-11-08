@@ -11,7 +11,6 @@ const PartTimeJobListing = () => {
   const [error, setError] = useState(null);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [showApproved, setShowApproved] = useState(true);
-
   // Pass the update functions to useJobFunctions
   const handleJobUpdate = (jobId, newApprovalStatus) => {
     const updatedJobs = partTimeJobs.map(job =>

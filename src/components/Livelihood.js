@@ -5,9 +5,14 @@ import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
 import { Link } from "react-router-dom";
 import LiveLihood from "../assets/images/new_livelihood.png";
-import Hero from "../layouts/Hero";
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./reusable/FloatingContact";
+
 const Livelihood = () => {
 	const [isMobile, setIsMobile] = useState(false);
+	const { isLoggedIn } = useAuth();
+
+
 	useEffect(() => {
 		const handleResize = () => {
 			setIsMobile(window.innerWidth < 768);
@@ -80,6 +85,7 @@ const Livelihood = () => {
                     </div>
                 </section>
             </div>
+		{ isLoggedIn ? '' : <FloatingContact /> }
         </section>
     );
 };

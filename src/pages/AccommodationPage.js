@@ -10,9 +10,11 @@ import Footer from '../components/reusable/Footer';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 import AccommodationList from '../components/AccommodationList';
-import { fetchAllList } from '../features/slices/paginationSlice';
 
 import { fetchAccommodations } from '../features/slices/accommodationSlice';
+
+import useAuth from './../hooks/useAuth';
+import FloatingContact from './../components/reusable/FloatingContact';
 
 /** Enable for debugging */
 const isDebug = true;
@@ -39,6 +41,7 @@ const AccommodationPage = () => {
                 <AccommodationList accommodations={data} page={page} />
             </ListContainer>
             <Pagination totalPage={totalPages} limit={limit} currentPage={page} category='accommodation'/>
+            {useAuth().isLoggedIn? null : <FloatingContact />}  {/* Show Floating Contact if user is not logged in */}
             <Footer />
         </div>
     )

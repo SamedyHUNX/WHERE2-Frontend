@@ -20,6 +20,9 @@ import SearchBar from '../components/reusable/SearchBar';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 
+import useAuth from './../hooks/useAuth';
+import FloatingContact from './../components/reusable/FloatingContact';
+
 const ScholarshipPage = () => {
     const urlParams = useQueryParams();
 
@@ -30,6 +33,8 @@ const ScholarshipPage = () => {
     const dispatch = useDispatch();
     const { scholarships, loading } = useSelector((state) => state.scholarships);
     const { totalPage } = useSelector((state) => state.pagination);
+
+    const { isLoggedIn } = useAuth();
 
     // scholarship filter options
     const items = [
@@ -98,6 +103,7 @@ const ScholarshipPage = () => {
                     searchQuery={searchQuery} 
                 />
             </ListContainer>
+            { isLoggedIn ? null : <FloatingContact /> }
             <Footer />
         </>
     );

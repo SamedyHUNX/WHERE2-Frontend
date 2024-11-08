@@ -4,6 +4,9 @@ import NavBar from "../components/reusable/Navbar";
 import Footer from "../components/reusable/Footer";
 import WrapperComponent from "../components/reusable/WrapperComponent";
 
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./../components/reusable/FloatingContact";
+
 const bioCard = [
   {
     image: "https://i.imgur.com/ZXLbZE0.png",
@@ -41,6 +44,9 @@ const AboutUsPage = () => {
           </div>
         ))}
       </div>
+
+      {useAuth().isLoggedIn? null : <FloatingContact />} {/* Show Floating Contact if user is not logged in */}
+
       <Footer />
     </>
   );

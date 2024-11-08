@@ -9,7 +9,9 @@ import ListContainer from "../components/reusable/ListContainer";
 import { useLocation } from 'react-router-dom';
 import { LoadingOverlay } from "../components/reusable/Loading";
 import StudentLoanList from "../components/StudentLoanList";
-import NoResults from "../layouts/NoResults";
+
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./../components/reusable/FloatingContact";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -33,6 +35,9 @@ const StudentLoanPage = () => {
             <StudentLoanList studentLoans={data} page={page}/>
             </ListContainer>
             <Pagination totalPage={totalPage} currentPage={page} category= {'student-loan'} route={'studen-loan'} />
+
+            {useAuth().isLoggedIn? null : <FloatingContact />}
+
             <Footer />
         </>
     )

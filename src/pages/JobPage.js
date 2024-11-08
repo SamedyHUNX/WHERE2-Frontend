@@ -9,6 +9,9 @@ import ListContainer from "../components/reusable/ListContainer";
 import { useLocation } from 'react-router-dom';
 import { LoadingOverlay } from "../components/reusable/Loading";
 
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./../components/reusable/FloatingContact";
+
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }  
@@ -32,6 +35,7 @@ const JobPage = () => {
                 <JobList jobs={data} page={page}/>
                 <Pagination totalPage={totalPage} currentPage={page} route={'jobs'} category={"job"} />
             </ListContainer>
+            {useAuth().isLoggedIn? null : <FloatingContact />}  {/* Show Floating Contact if user is not logged in */}
             <Footer />
         </>
     )
