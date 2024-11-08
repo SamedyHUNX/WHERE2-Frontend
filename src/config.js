@@ -129,6 +129,10 @@ const config = {
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,
+  },
+  follow: {
+    follow: (endpoint, targetUserId) => `${API_URL}/api/${endpoint}/${targetUserId}`,
+    unfollow: `${API_URL}/api/unfollow`,
   }
 }
 export default config;

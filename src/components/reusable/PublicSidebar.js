@@ -9,7 +9,15 @@ import {
   MessageCircle,
 } from "lucide-react";
 
+import FollowButton from "./FollowButton";
+import useAuth from "./../../hooks/useAuth";
+import { useParams } from "react-router-dom";
+
 const ProfileSidebar = () => {
+  const { userId: currentUserId } = useAuth();
+
+  const { userId } = useParams();
+
   const menuItems = [
     { icon: <User size={20} />, label: "Profile Overview", isActive: true },
     { icon: <Building2 size={20} />, label: "Universities" },
@@ -39,6 +47,9 @@ const ProfileSidebar = () => {
           <p className="text-sm text-gray-500">Applications</p>
         </div>
       </div>
+
+      {/* Follow Button */}
+      <FollowButton targetUserId={userId} currentUserId={currentUserId} />
 
       {/* Navigation Menu */}
       <nav className="space-y-2">
