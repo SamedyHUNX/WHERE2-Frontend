@@ -21,6 +21,7 @@ import SearchBar from '../components/reusable/SearchBar';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 import FloatingContact from './../components/reusable/FloatingContact';
+import SocialMediaLinks from './../components/reusable/SocialMediaLinks';
 
 /** Enable for debugging */
 const isDebug = false;
@@ -111,6 +112,7 @@ const UniversityPage = () => {
                     category="university"
                     searchQuery={searchQuery}/>
             </ListContainer>
+            <SocialMediaLinks notAuth={true}/>
              <FloatingContact />
             <Footer />
         </>

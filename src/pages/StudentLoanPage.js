@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { LoadingOverlay } from "../components/reusable/Loading";
 import StudentLoanList from "../components/StudentLoanList";
 
-import useAuth from "./../hooks/useAuth";
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 import FloatingContact from "./../components/reusable/FloatingContact";
 
 function useQuery() {
@@ -34,6 +34,8 @@ const StudentLoanPage = () => {
             <StudentLoanList studentLoans={data} page={page}/>
             </ListContainer>
             <Pagination totalPage={totalPage} currentPage={page} category= {'student-loan'} route={'studen-loan'} />
+
+            <SocialMediaLinks notAuth={true}/>
 
             <FloatingContact />
 

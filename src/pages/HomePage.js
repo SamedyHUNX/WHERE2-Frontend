@@ -7,6 +7,7 @@ import WrapperComponent from "./../components/reusable/WrapperComponent";
 import CardFeatureSlider from "./../components/reusable/CardFeatureSlider";
 import SaveSection from "./../components/reusable/Saves";
 import JoinUs from "./../components/reusable/JoinUs";
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 // import Card from "../components/reusable/Card";
 import FloatingContact from "./../components/reusable/FloatingContact"
 
@@ -182,6 +183,7 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
+      <SocialMediaLinks notAuth={true}/>
       {/* <WrapperComponent> */}
       <Hero props={hero1} top={true}>
         <Searchbar 

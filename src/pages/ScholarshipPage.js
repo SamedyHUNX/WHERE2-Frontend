@@ -21,6 +21,7 @@ import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 
 import FloatingContact from './../components/reusable/FloatingContact';
+import SocialMediaLinks from './../components/reusable/SocialMediaLinks';
 
 const ScholarshipPage = () => {
     const urlParams = useQueryParams();
@@ -100,6 +101,7 @@ const ScholarshipPage = () => {
                     searchQuery={searchQuery} 
                 />
             </ListContainer>
+            <SocialMediaLinks notAuth={true}/>
             <FloatingContact />
             <Footer />
         </>

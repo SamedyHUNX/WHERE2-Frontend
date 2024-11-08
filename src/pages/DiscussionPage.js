@@ -5,6 +5,7 @@ import Footer from "./../components/reusable/Footer";
 import Navbar from "./../components/reusable/Navbar";
 import DiscussionContainer from "./../components/reusable/DiscussionContainer";
 import FloatingContact from "./../components/reusable/FloatingContact";
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 
 const DiscussionPage = () => {
   return (
@@ -16,6 +17,7 @@ const DiscussionPage = () => {
       <WrapperComponent>
         <DiscussionContainer />
       </WrapperComponent>
+      <SocialMediaLinks notAuth={true}/>
       <FloatingContact />
       <Footer />
     </>

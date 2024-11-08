@@ -3,7 +3,7 @@ import { Instagram, Facebook, Youtube } from 'lucide-react';
 import { FaTwitter, FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 
 
-const SocialMediaLinks = () => {
+const SocialMediaLinks = ({ notAuth = false }) => {
     const socialLinks = [
       {
         icon: <FaInstagram size={24} />,
@@ -11,7 +11,7 @@ const SocialMediaLinks = () => {
         bgColor: 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500',
       },
       {
-        icon: <FaInstagram size={24} />,
+        icon: <FaFacebookF size={24} />,
         href: 'https://facebook.com/yourpage',
         bgColor: 'bg-blue-600',
       },
@@ -24,10 +24,10 @@ const SocialMediaLinks = () => {
   
     return (
       <div
-        className="fixed z-50
+        className={`fixed z-50
           bottom-4 left-0 right-0 flex justify-center gap-2 
           sm:bottom-8 sm:left-0 sm:right-0 sm:flex-row sm:top-auto sm:-translate-y-0 sm:translate-x-0
-          lg:right-4 lg:left-auto lg:top-1/2 lg:-translate-y-1/2 lg:flex-col"
+          lg:right-4 lg:left-auto lg:top-1/2 lg:-translate-y-1/2 lg:flex-col ${ notAuth ? "sm:hidden" : "" }`}
       >
         {socialLinks.map((social, index) => (
           <a

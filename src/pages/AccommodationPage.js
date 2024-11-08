@@ -14,6 +14,7 @@ import AccommodationList from '../components/AccommodationList';
 import { fetchAccommodations } from '../features/slices/accommodationSlice';
 
 import FloatingContact from './../components/reusable/FloatingContact';
+import SocialMediaLinks from './../components/reusable/SocialMediaLinks';
 
 /** Enable for debugging */
 const isDebug = true;
@@ -41,6 +42,7 @@ const AccommodationPage = () => {
             </ListContainer>
             <Pagination totalPage={totalPages} limit={limit} currentPage={page} category='accommodation'/>
              <FloatingContact />
+             <SocialMediaLinks notAuth={true}/>
             <Footer />
         </div>
     )

@@ -4,6 +4,7 @@ import NavBar from "../components/reusable/Navbar";
 import Footer from "../components/reusable/Footer";
 import WrapperComponent from "../components/reusable/WrapperComponent";
 
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 import FloatingContact from "./../components/reusable/FloatingContact";
 
 const bioCard = [
@@ -44,6 +45,7 @@ const AboutUsPage = () => {
         ))}
       </div>
 
+      <SocialMediaLinks notAuth={true}/>
       <FloatingContact />
 
       <Footer />

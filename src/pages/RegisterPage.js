@@ -1,6 +1,7 @@
 import RegisterComponent from "./../components/authentication/RegisterComponent";
 import Navbar from "./../components/reusable/Navbar";
-import FloatingContact from "../components/reusable/FloatingContact";
+import FloatingContact from "./../components/reusable/FloatingContact";
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 
 const RegisterPage = () => {
     return (
@@ -11,6 +12,7 @@ const RegisterPage = () => {
     >
         <Navbar isBanner={true} />
                 <RegisterComponent />
+                <SocialMediaLinks />
                 <FloatingContact/>
             </div>
     )
