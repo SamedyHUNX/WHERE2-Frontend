@@ -1,6 +1,6 @@
 import React from 'react';
 import { Instagram, Facebook, Youtube } from 'lucide-react';
-import { FaTwitter, FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaFacebookF, FaYoutube, FaTelegramPlane } from "react-icons/fa";
 
 
 const SocialMediaLinks = ({ notAuth = false }) => {
@@ -20,6 +20,11 @@ const SocialMediaLinks = ({ notAuth = false }) => {
         href: 'https://youtube.com/@yourchannel',
         bgColor: 'bg-red-600',
       },
+      {
+        icon: <FaTelegramPlane size={24}/>,
+        href: 'https://t.me/yourchannel',
+        bgColor: 'bg-blue-600',
+      }
     ];
   
     return (

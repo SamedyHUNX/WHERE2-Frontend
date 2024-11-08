@@ -13,7 +13,7 @@ const DetailLayout = ({
   instagramLink, 
   twitterLink, 
   telegramLink,
-  author = "John Doe",
+  author = "WHERE2 Team",
   date = "March 2024",
 }) => {
   const [imageError, setImageError] = useState(false);
@@ -59,7 +59,7 @@ const DetailLayout = ({
 
 
   return (
-    <div className={`max-w-7xl mx-auto px-4 py-16 transition-opacity duration-1000 text-justify ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`lg:w-[80%] sm:max-w-7xl mx-auto px-4 py-16 transition-opacity duration-1000 text-justify ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       {/* Hero Section */}
       <div className="relative mb-12 group mt-[5vh]">
         <div className="relative overflow-hidden rounded-2xl shadow-xl bg-gray-100 cursor-zoom-in"
@@ -85,29 +85,28 @@ const DetailLayout = ({
       </div>
 
       {/* Author and Stats Bar */}
-      <div className="flex justify-between items-center mb-8 px-4 ">
-        <div className="flex items-center gap-4">
+      <div className="flex justify-between items-center mb-8 h-[100px]">
+        <div className="flex items-center gap-4 h-full">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
             {author[0]}
           </div>
           <div>
-            <h3 className="font-medium text-gray-900">{author}</h3>
-            <p className="text-sm text-gray-500">{date}</p>
+            <h3 className="font-semibold text-gray-900 text-2xl tracking-tight">{author}</h3>
+            <p className="text-sm text-gray-500 font-semibold">{date}</p>
           </div>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="grid lg:grid-cols-3 gap-12">
+      <div className="grid lg:grid-cols-3 gap-12 lg:pr-4 sm:px-2">
         <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h1 className="lg:text-4xl text-xl font-bold text-gray-900 tracking-tight">{title}</h1>
+          <div className="flex items-center justify-between h-[100px]">
+            <h1 className="lg:text-4xl sm:text-5xl font-bold text-gray-900 text-justify">{title}</h1>
           </div>
           
-          <div className="prose prose-lg max-w-none tracking-tight">
+          <div className="prose prose-lg max-w-none text-justify tracking-tight">
             {convertToHTML(description)}
           </div>
-
           {/* Interaction Bar */}
         </div>
 
@@ -135,7 +134,7 @@ const DetailLayout = ({
           <RelevantLinks links={socialMediaLinks} />
 
 
-      <div className="h-fit w-full">
+      <div className="w-full h-fit">
         <DiscussionContainer />
       </div>
 
