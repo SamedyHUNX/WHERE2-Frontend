@@ -4,7 +4,6 @@ const fetchProfile = async () => {
     try {
       const { token, userId } = getAuthData();
 
-
       const res = await fetch(config.profile.getMyProfile(userId), {
         headers: {
           "Content-Type": "application/json",

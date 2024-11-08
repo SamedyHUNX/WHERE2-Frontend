@@ -310,7 +310,7 @@ const RegisterComponent = () => {
               </div>
 
               <div className="mb-6">
-            <h2 className="text-3xl font-bold text-center text-gray-800 tacking-tight">
+            <h2 className="text-3xl font-bold text-center text-gray-800 tacking-tighter">
               Create a new account
             </h2>
           </div>

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Profile from "../reusable/Profile";
-import config from "../../config";
 import { LoadingOverlay } from "../reusable/Loading";
 import Navbar from "../reusable/Navbar";
-import Footer from "../reusable/Footer";
 import fetchProfile from "../reusable/functions/FetchProfile";
 
 export const getAuthData = () => {

@@ -8,7 +8,6 @@ import CardFeatureSlider from "./../components/reusable/CardFeatureSlider";
 import SaveSection from "./../components/reusable/Saves";
 import JoinUs from "./../components/reusable/JoinUs";
 // import Card from "../components/reusable/Card";
-import useAuth from "./../hooks/useAuth";
 import FloatingContact from "./../components/reusable/FloatingContact"
 
 // slices
@@ -180,9 +179,6 @@ const featureCards = [
 
 
 const HomePage = () => {
-
-  const { isLoggedIn } = useAuth();
-
   return (
     <>
       <Navbar />
@@ -210,7 +206,7 @@ const HomePage = () => {
         <JoinUs />
       </WrapperComponent>
 
-      { isLoggedIn ? null : <FloatingContact /> }
+       <FloatingContact />
         <Footer />
     </>
   );
