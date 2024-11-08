@@ -6,7 +6,7 @@ import { useQueryParams } from '../hooks/useQueryParams';
 
 import { setTotalPage } from '../features/slices/paginationSlice';
 import { filterByLocation } from '../features/slices/filterSlice';
-import { fetchUniversities, searchUniversities, setUniversities , setLoading } from '../features/slices/universitySlice';
+import { fetchUniversities, searchUniversities, setUniversities , setLoading, fetchFilteredMajor } from '../features/slices/universitySlice';
 
 import { LoadingOverlay } from '../components/reusable/Loading';
 
@@ -35,7 +35,7 @@ const UniversityPage = () => {
 
 
     const dispatch = useDispatch();
-    const { universities, loading, error } = useSelector((state) => state.universities);
+    const { universities, loading, error, filteredUniversity } = useSelector((state) => state.universities);
     const { totalPage } = useSelector((state) => state.pagination);
 
     // university filter options
@@ -84,8 +84,9 @@ const UniversityPage = () => {
         } else {
             dispatch(fetchUniversities({ page }));
         }
+        dispatch(fetchFilteredMajor("Science and Technology"))
     }, [dispatch, page, searchQuery, location]);
-
+console.log("filteredMajor",filteredUniversity)
     return (
         <>
             <Navbar />

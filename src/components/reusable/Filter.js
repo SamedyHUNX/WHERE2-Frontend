@@ -20,7 +20,8 @@ function FilterComponent ({ items , category , location }){
 	const applyFilter = (filters) => {
 		const queryString = Object.entries(filters)
 		  .map(([key, value]) => `${key}=${value}`)
-		  .join("&");
+			.join("&");
+		console.log("queryString",queryString)
 		navigate(`/list/${category}?${queryString}`);
 	};	
 

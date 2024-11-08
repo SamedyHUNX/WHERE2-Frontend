@@ -45,6 +45,15 @@ export const fetchUniversity = createAsyncThunk(
         return response.data;
     }
 );
+export const fetchFilteredMajor = createAsyncThunk(
+    'university/fetchFilteredMajor',
+    async (name) => {
+        const response = await axios.get(config.filterMajor.getMajor(name));
+        const majorId = response.data.majorId;
+        const getFilter = await axios.get(config.filterMajor.getFilterMajor(majorId));
+        return getFilter.data.filteredMajor
+    }
+)
 
 /** 
  * Search universities by query. 
@@ -68,6 +77,7 @@ const universitySlice = createSlice({
         imageLink:'',
         universities: [],
         university: [],
+        filteredUniversity:[],
         loading: false,
         error: null,
     },
@@ -138,7 +148,21 @@ const universitySlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
                 state.universities = [];
+            })
+            .addCase(fetchFilteredMajor.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchFilteredMajor.fulfilled, (state, action) => {
+                state.loading = false;
+                state.filteredUniversity = action.payload;
+            })
+            .addCase(fetchFilteredMajor.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+                state.filteredUniversity = [];
             });
+        
     },
 });
 

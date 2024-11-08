@@ -144,6 +144,10 @@ const config = {
     createAccomodation: `${ API_URL }/api/accommodation/addAccommodation`,
     createCompany: `${API_URL}/api/companies/addCompany`
   },
+  filterMajor: {
+    getFilterMajor: (id) => `${ API_URL }/api/filteredmajor/${id}`,
+    getMajor: (name)=>`${API_URL}/api/filteredmajor/major/${name}`
+  },
   contact: {
     sendEmail: `${API_URL}/api/contact`,
     getAllContact : `${API_URL}/api/admin/contacts`,

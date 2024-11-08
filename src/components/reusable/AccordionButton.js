@@ -5,6 +5,7 @@ const AccordionButton = ({ applyFilter , contentItem }) => {
     function handleClick() {
         // navigate(`/list/university?location=${contentItem}`)
         applyFilter(contentItem)
+        console.log("contentItem",contentItem)
     }
 
     return (
