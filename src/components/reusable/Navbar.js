@@ -23,7 +23,29 @@ const DashboardIcon = ({ username, entity }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ isBanner }) => {
+
+  if (isBanner) {
+    return (
+      <nav className="w-full flex justify-center items-center">
+        <Link to="/" className="text-5xl font-bold tracking-tighter pt-8" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="https://i.imgur.com/Y0bNhPM.png" width={80} height={80} alt="Logo" />
+          <span style={{
+            background: 'linear-gradient(to right, #343434, #64737b)',
+            WebkitBackgroundClip: 'text',
+            color: 'transparent',
+            display: 'inline',
+            letterSpacing: '3px'
+          }}>
+            WHERE2
+          </span>
+        </Link>
+      </nav>
+    );
+  }
+  
+
+
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, username, entity, showDashboard, userId } = useAuth();
   const toggleMenu = () => {
