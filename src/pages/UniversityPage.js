@@ -77,6 +77,7 @@ const UniversityPage = () => {
     useEffect(() => {
         if (searchQuery !== "") {
             dispatch(searchUniversities({ page, query : searchQuery}));
+            
         } else if (location !== "") {
             setLoading(true)
             filterLocation()
