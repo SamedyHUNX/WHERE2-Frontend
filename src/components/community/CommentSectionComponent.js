@@ -152,7 +152,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <PublicProfile userId={comment.user.id} />
+                  <ProfilePicture userId={comment.user.id} />
                   <span
                     className={`text-sm truncate max-w-[200px] ${
                       isHealthPagePath ? "text-gray-300" : "text-gray-600"
@@ -161,6 +161,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
                     {comment.user.profile.userName
                       ? comment.user.profile.userName
                       : comment.user.profile.entity}
+                    <span> says:</span>
                   </span>
                 </div>
                 {canDeleteComment(comment) && (

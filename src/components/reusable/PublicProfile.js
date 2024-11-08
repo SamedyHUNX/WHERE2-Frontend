@@ -5,11 +5,8 @@ import { LoadingOverlay } from "../../components/reusable/Loading";
 import ContainerComponent from "./ContainerComponent";
 import ProfilePicture from "./PictureUpload";
 import { useParams } from "react-router-dom";
-
 import Navbar from "./../../components/reusable/Navbar";
-
 import FloatingContact from "./FloatingContact";
-
 import Footer from "./Footer";
 
 const PublicProfile = ({ userInfo }) => {
