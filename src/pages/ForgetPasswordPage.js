@@ -7,7 +7,7 @@ const ForgetPasswordPage = () => {
     return (
         <>
             <Navbar/>
-            <div style={{ 
+            {/* <div style={{ 
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -16,7 +16,8 @@ const ForgetPasswordPage = () => {
                 background: "black"
             }}>
                 <ForgetPasswordLayout />
-            </div>
+            </div> */}
+            <ForgetPasswordComponent />
         </>
     )
 }

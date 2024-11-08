@@ -63,8 +63,8 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <PublicOnlyROute>
-        {/* <LoginPage /> */}
-        <SigninPage />
+        <LoginPage />
+        {/* <Signin /> */}
       </PublicOnlyROute>
     ),
   },
@@ -72,8 +72,8 @@ const router = createBrowserRouter([
     path: "/signup",
     element: (
     <PublicOnlyROute>
-      {/* <RegisterPage /> */}
-      <SignupPage />
+      <RegisterPage />
+      {/* <Signup /> */}
     </PublicOnlyROute>
    
     ),
