@@ -77,7 +77,7 @@ const Profile = ({ userData, isPublic }) => {
   const ContentComponent = contentComponents[sidebarContent] || (() => null);
 
   return (
-    <div className="flex w-full h-full relative">
+    <div className="flex w-full h-full min-h-[100vh] relative">
       <SidebarContentContext.Provider value={setSidebarContent}>
         {/* Sidebar */}
         <div
@@ -103,11 +103,11 @@ const Profile = ({ userData, isPublic }) => {
 
         {/* Main Content */}
         <div
-          className={`flex-grow overflow-y-scroll h-full ${
+          className={`flex-grow overflow-y-scroll min-h-[100vh] ${
             isMobile ? "relative z-10" : ""
           }`}
         >
-          <div className="sm:pb-[16px] flex flex-col h-full min-h-screen">
+          <div className="sm:pb-[16px] h-full min-h-[100vh]">
             <div className="px-4 h-full min-h-screen">
               {isMobile && !sidebarOpen && (
                 <button
@@ -128,7 +128,10 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
               sidebarContent !== "discussionListing" ? (
-                <CollectionPanel category={sidebarContent} className="h-full" />
+                <CollectionPanel
+                  category={sidebarContent}
+                  className="h-[100vh]"
+                />
               ) : (
                 <ContentComponent userInfo={userData} className="h-full" />
               )}

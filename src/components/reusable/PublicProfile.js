@@ -26,7 +26,7 @@ const PublicProfile = ({ userInfo }) => {
       <Navbar />
       <ContainerComponent>
         <section className="w-full rounded-3xl pb-[64px] ">
-          <div className="lg:w-full lg:pl-[128px] lg:pr-[128px] lg:mx-auto h-full px-4 pb-6 pt-12 sm:px-6 lg:pb-0">
+          <div className="lg:w-full lg:px-[32px] lg:mx-auto h-full pb-6 pt-12 sm:px-6 lg:pb-0">
             <div className="flex items-center justify-center mb-6">
               <ProfilePicture big={true} userId={userId} />
             </div>
@@ -57,43 +57,39 @@ const PublicProfile = ({ userInfo }) => {
                 />
               )}
 
-              <div className="flex flex-col lg:flex-row gap-4">
-                <FormInput
-                  label="First Name"
-                  value={userInfo.firstName}
-                  placeholder="First Name"
-                  className="p-3 sm:p-4"
-                  disabled
-                  rounded
-                />
-                <FormInput
-                  label="Last Name"
-                  value={userInfo.lastName}
-                  placeholder="Last Name"
-                  className="p-3 sm:p-4"
-                  disabled
-                  rounded
-                />
-              </div>
+              <FormInput
+                label="First Name"
+                value={userInfo.firstName}
+                placeholder="First Name"
+                className="p-3 sm:p-4"
+                disabled
+                rounded
+              />
+              <FormInput
+                label="Last Name"
+                value={userInfo.lastName}
+                placeholder="Last Name"
+                className="p-3 sm:p-4"
+                disabled
+                rounded
+              />
 
-              <div className="flex flex-col lg:flex-row gap-4">
-                <FormInput
-                  label="Email"
-                  value={userInfo.email}
-                  type="email"
-                  rounded
-                  disabled
-                  className="p-3 sm:p-4"
-                />
-                <FormInput
-                  label="Phone Number"
-                  value={userInfo.phoneNumber}
-                  type="tel"
-                  rounded
-                  disabled
-                  className="p-3 sm:p-4"
-                />
-              </div>
+              <FormInput
+                label="Email"
+                value={userInfo.email}
+                type="email"
+                rounded
+                disabled
+                className="p-3 sm:p-4"
+              />
+              <FormInput
+                label="Phone Number"
+                value={userInfo.phoneNumber}
+                type="tel"
+                rounded
+                disabled
+                className="p-3 sm:p-4"
+              />
 
               <FormInput
                 label="Location"

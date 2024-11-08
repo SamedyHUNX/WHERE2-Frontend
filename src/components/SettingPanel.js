@@ -4,7 +4,6 @@ import FormInput from "./reusable/InputField";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "./../features/slices/authSlice";
-import { LoadingSpinner } from "./reusable/Loading";
 import useAuth from "./../hooks/useAuth";
 import { EyeIcon, EyeOffIcon, AlertTriangle } from "lucide-react";
 import { clearAuthState, logout } from "./../features/slices/authSlice";
@@ -231,7 +230,7 @@ const SettingPanel = () => {
             <h2 className="text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">
               My Settings
             </h2>
-            <div className="border-b pb-8 mb-8 w-full">
+            <div className="border-b pb-8 w-full p-4 mt-2 border-2 rounded-xl">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span>Change Password</span>
               </h2>
@@ -278,7 +277,7 @@ const SettingPanel = () => {
               </form>
             </div>
 
-            <div className="space-y-6">
+            <div className="p-4 mt-2 border-2 rounded-xl">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span className="text-red-500">Account Deletion</span>
               </h2>
@@ -316,7 +315,7 @@ const SettingPanel = () => {
               </div>
             </div>
 
-            <div className="pt-6">
+            <div className="p-4 mt-2 border-2 rounded-xl">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span className="text-black">Personal Information</span>
               </h2>
