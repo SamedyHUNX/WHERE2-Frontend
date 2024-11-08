@@ -4,13 +4,14 @@ const ContainerComponent = ({
   children,
   auth = false,
   title,
+  width = "",
   className = "",
 }) => {
   return (
     <div
       className={`flex justify-center items-center font-poppins ${
         auth ? "pt-[64px]" : "pt-[100px]"
-      } pb-[64px] relative sm:px-1`}
+      } pb-[64px] relative sm:px-1 ${width}`}
       style={
         auth
           ? {
@@ -21,7 +22,9 @@ const ContainerComponent = ({
       }
     >
       <div
-        className={`flex flex-col justify-evenly w-[50%] sm:w-[95%] min-h-[63vh] sm:h-auto mx-auto p-6 bg-white rounded-3xl border-2 shadow-xl ${className}`}
+        className={`flex flex-col justify-evenly ${
+          width ? "w-full mx-0" : "w-[50%] mx-auto"
+        } sm:w-[95%] min-h-[63vh] sm:h-auto p-6 bg-white rounded-3xl border-2 shadow-xl ${className}`}
       >
         {title && (
           <div className="w-full mb-6">
