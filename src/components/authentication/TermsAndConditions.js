@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonComponent from "./../reusable/Button";
@@ -18,114 +18,152 @@ const termsAndConditions = [
 ];
 
 const TermsAndConditionsComponent = () => {
-  // USED TO ONLY ENABLE THE BUTTON IF THE USER CHECKS THE BOX
   const [agreed, setAgreed] = useState(false);
   const [showLoadingOverlay, setShowLoadingOverlay] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.auth);
+  
+  // Get both status and error from Redux state
+  const { status, error: reduxError } = useSelector((state) => state.auth);
+  const [localError, setLocalError] = useState("");
 
   const registrationData = location.state?.registrationData;
 
+  // Clear error when component unmounts or status changes
+  useEffect(() => {
+    if (status === 'idle') {
+      setLocalError("");
+    }
+  }, [status]);
+
+  // Handle Redux errors
+  useEffect(() => {
+    if (reduxError) {
+      setLocalError(reduxError.message);
+      setShowLoadingOverlay(false);
+    }
+  }, [reduxError]);
+
+  // Check for registration data
+  useEffect(() => {
+    if (!registrationData) {
+      setLocalError("Please fill in your registration details first.");
+      return;
+    }
+  }, [registrationData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (agreed && registrationData) {
-      try {
-        const response = await dispatch(register(registrationData)).unwrap();
-        const email = response.email || registrationData.email;
+    setLocalError(""); // Clear previous errors
 
-        const timer = setTimeout(() => {
-          setShowLoadingOverlay(true);
-          navigate("/signup/verification", { state: { email } });
-        }, 500);
+    // Validation checks
+    if (!registrationData) {
+      setLocalError("Please fill in your registration details first.");
+      return;
+    }
 
-        return () => clearTimeout(timer);
-      } catch (err) {
-        setError(
-          err.message || "Username or email is not available. Please try again."
-        );
-      }
+    if (!agreed) {
+      setLocalError("Please agree to the terms and conditions to proceed.");
+      return;
+    }
+
+    try {
+      setShowLoadingOverlay(true);
+      const result = await dispatch(register(registrationData)).unwrap();
+      
+      // If successful, navigate to verification
+      const email = result.email || registrationData.email;
+      const timer = setTimeout(() => {
+        navigate("/signup/verification", { state: { email } });
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } catch (err) {
+      setShowLoadingOverlay(false);
+      // The error will be handled by the useEffect watching reduxError
     }
   };
 
-  // BACK BUTTON
   const handleBack = () => {
     navigate(-1);
   };
 
-  // SHOWING THE LOADINGOVERLAY COMPONENT WHEN STATUS IS LOADING
   if (status === "loading") {
     return <LoadingOverlay isFullScreen={true} message="We are processing your request..." />;
   }
 
   return (
     <>
-      { showLoadingOverlay && <LoadingOverlay isFullScreen={true} message="We are processing your request..." /> }
-      <ContainerComponent>
-      <div className="mb-4">
-        <button
-          onClick={handleBack}
-          className="text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          ← Back
-        </button>
-      </div>
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-center text-gray-800">
-          Our Terms and Services
-        </h2>
-        <div className="w-1/4 h-0.5 bg-gray-300 mx-auto mt-4"></div>
-      </div>
-
-      <div className="mb-6 overflow-y-auto max-h-[40vh]">
-        <h3 className="font-semibold mb-2">1. Clause 1</h3>
-        <p className="text-sm text-gray-600 mb-4">{termsAndConditions[0].p1}</p>
-
-        <h3 className="font-semibold mb-2">2. Clause 2</h3>
-        <p className="text-sm text-gray-600 mb-4">{termsAndConditions[1].p2}</p>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="flex items-center mb-4">
-          <input
-            type="checkbox"
-            id="agree"
-            className="mr-2"
-            checked={agreed}
-            onChange={(e) => setAgreed(e.target.checked)}
-          />
-          <label htmlFor="agree" className="text-sm text-gray-600">
-            Agree to Terms and Services
-          </label>
-        </div>
-
-        <div className="flex justify-center items-center">
-          <ButtonComponent
-            variant="primary"
-            className="mt-2 w-[197px] sm:w-full h-[38px] sm:w-[343px] sm:h-[50px]"
-            disabled={!agreed || status === "loading" || status === "succeeded"}
-            type="submit"
-          >
-            {status === "loading" ? <LoadingSpinner /> : "Agree & Proceed"}
-          </ButtonComponent>
-        </div>
-      </form>
-
-      {error && (
-        <p className="text-red-500 text-sm text-center mt-4">{error}</p>
+      {showLoadingOverlay && (
+        <LoadingOverlay isFullScreen={true} message="We are processing your request..." />
       )}
+      <ContainerComponent>
+        <div className="mb-4">
+          <button
+            onClick={handleBack}
+            className="text-gray-600 hover:text-gray-800 transition-colors"
+          >
+            ← Back
+          </button>
+        </div>
+        
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-center text-gray-800">
+            Our Terms and Services
+          </h2>
+          <div className="w-1/4 h-0.5 bg-gray-300 mx-auto mt-4"></div>
+        </div>
 
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link to="/login" className="text-sky-500 underline">
-            Log in
-          </Link>
-        </p>
-      </div>
-    </ContainerComponent>
+        <div className="mb-6 overflow-y-auto max-h-[40vh]">
+          <h3 className="font-semibold mb-2">1. Clause 1</h3>
+          <p className="text-sm text-gray-600 mb-4">{termsAndConditions[0].p1}</p>
+
+          <h3 className="font-semibold mb-2">2. Clause 2</h3>
+          <p className="text-sm text-gray-600 mb-4">{termsAndConditions[1].p2}</p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="flex items-center mb-4">
+            <input
+              type="checkbox"
+              id="agree"
+              className="mr-2"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+            />
+            <label htmlFor="agree" className="text-sm text-gray-600">
+              Agree to Terms and Services
+            </label>
+          </div>
+
+          {localError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+              <p className="text-red-600 text-sm text-center">{localError}</p>
+            </div>
+          )}
+
+          <div className="flex justify-center items-center">
+            <ButtonComponent
+              variant="primary"
+              className="mt-2 w-[197px] sm:w-full h-[38px] sm:w-[343px] sm:h-[50px]"
+              disabled={!agreed || status === "loading" || status === "succeeded"}
+              type="submit"
+            >
+              {status === "loading" ? <LoadingSpinner /> : "Agree & Proceed"}
+            </ButtonComponent>
+          </div>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link to="/login" className="text-sky-500 underline">
+              Log in
+            </Link>
+          </p>
+        </div>
+      </ContainerComponent>
     </>
   );
 };

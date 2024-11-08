@@ -30,31 +30,44 @@ import config from "./../../config"
         const response = await axios.post(config.auth.registerUrl, formattedUserData);
         return response.data;
       } catch (error) {
-        if (config.isDevelopment) {
-          if (error.response) {
-            console.error("Registration error details:", {
-              message: error.message,
-              status: error.response.status,
-              headers: error.response.headers,
-              data: error.response.data,
-            });
-          } else if (error.request) {
-            console.error("No response received:", {
-              message: error.message,
-              request: error.request,
-            });
-          } else {
-            console.error("Error during registration request setup:", error.message);
-          }
+        // Handle Axios errors
+        if (error.isAxiosError) {
+          const errorMessage = error.response?.data?.message || // Try to get server message
+                             getErrorMessageFromStatus(error.response?.status) || // Get message based on status
+                             error.message; // Fallback to axios message
+          
+          return thunkAPI.rejectWithValue({
+            status: error.response?.status,
+            message: errorMessage,
+          });
         }
-  
-        return thunkAPI.rejectWithValue(
-          handleAsyncError(error, "Failed to initiate registration. Please try again.")
-        );
+        
+        // Handle other errors
+        return thunkAPI.rejectWithValue({
+          status: 500,
+          message: "An unexpected error occurred during registration.",
+        });
       }
     }
   );
   
+  // Helper function to get error messages based on status codes
+  const getErrorMessageFromStatus = (status) => {
+    switch (status) {
+      case 400:
+        return "Username must be unique. Please try a different one!";
+      case 404:
+        return "The registration service is currently unavailable. Please try again later.";
+      case 409:
+        return "This email is already registered. Please try another.";
+      case 429:
+        return "Too many attempts. Please try again later.";
+      case 500:
+        return "Server error. Please try again later.";
+      default:
+        return null;
+    }
+  };
   
   // SEND VERIFICATION CODE FUNCTION
   export const sendVerificationCode = createAsyncThunk(
