@@ -80,7 +80,7 @@ const ForgetPasswordComponent = () => {
               </div>
 
               <div className="mb-6">
-            <h2 className="text-3xl font-bold text-center text-gray-800 tracking-tight">
+            <h2 className="text-2xl font-bold text-center text-gray-800 tracking-tight">
               Forgot Password
             </h2>
             <div className="w-1/4 h-0.5 bg-gray-300 mx-auto mt-4"></div>

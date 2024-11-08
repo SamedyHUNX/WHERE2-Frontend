@@ -26,7 +26,7 @@ const FormInput = ({
           autoComplete={autoComplete}
           autoCorrect={autoCorrect}
           autoCapitalize={autoCapitalize}
-          className={`mt-3 block w-full rounded-md border-gray-300 h-[50px] shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${className} border-[2px] p-3`}
+          className={`mt-3 block w-full hover:bg-gray-100 rounded-md border-gray-300 h-[50px] shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${className} border-[2px] p-3`}
           {...props}
         />
       </div>

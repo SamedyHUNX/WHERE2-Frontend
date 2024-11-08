@@ -102,7 +102,7 @@ const LoginComponent = () => {
           onChange={handleEmailChange}
           required
           autoComplete="email"
-          className={`${emailError || error ? "border-rose-400 border-[1px]" : "border-emerald-400 border-[1px]"}`}
+          className={`${emailError || error ? "border-rose-400 border-[1px]" : "border-emerald-400 border-[1px]"} hover:bg-gray-100`}
         />
         {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
         
@@ -114,7 +114,7 @@ const LoginComponent = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
           autoComplete="current-password"
-          className={error ? "border-rose-400 border-[1px]" : ""}
+          className={`${error ? "border-rose-400 border-[1px]" : ""} hover:bg-gray-100`}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
 

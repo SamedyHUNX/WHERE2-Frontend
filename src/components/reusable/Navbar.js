@@ -6,6 +6,7 @@ import Menu from "./../../assets/svg/menu.svg";
 import useAuth from "./../../hooks/useAuth";
 import ProfilePicture from "./PictureUpload";
 import ButtonComponent from "./Button";
+import TypewriterEffect from "./../../styles/TypeWriterEffect";
 
 import {  School,  BookOpenTextIcon,  LucideBriefcaseBusiness,  User2,  Activity,  ChartNoAxesCombinedIcon,} from "lucide-react";
 import NavButton from "./NavButton/NavButton";
@@ -24,6 +25,8 @@ const DashboardIcon = ({ username, entity }) => {
 };
 
 const Navbar = ({ isBanner }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn, username, entity, showDashboard, userId } = useAuth();
 
   if (isBanner) {
     return (
@@ -37,17 +40,12 @@ const Navbar = ({ isBanner }) => {
             display: 'inline',
             letterSpacing: '3px'
           }}>
-            WHERE2
+            <TypewriterEffect text={"WHERE2"} />
           </span>
         </Link>
       </nav>
     );
   }
-  
-
-
-  const [isOpen, setIsOpen] = useState(false);
-  const { isLoggedIn, username, entity, showDashboard, userId } = useAuth();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };

@@ -300,7 +300,7 @@ const RegisterComponent = () => {
 
   return (
     <ContainerComponent>
-            <div className="h-[50px]">
+            <div className="h-[50px] pt-2">
                 <button
                   onClick={handleBack}
                   className="text-gray-600 hover:text-gray-800 transition-colors"

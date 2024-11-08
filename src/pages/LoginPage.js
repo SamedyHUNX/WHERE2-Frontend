@@ -1,6 +1,7 @@
 import LoginComponent from "./../components/authentication/LoginComponent";
 import FloatingContact from "./../components/reusable/FloatingContact"
 import Navbar from "./../components/reusable/Navbar"
+import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 
 const LoginPage = () => {
     return (
@@ -10,6 +11,7 @@ const LoginPage = () => {
             }}        
         >
         <Navbar isBanner={true} />
+        <SocialMediaLinks />
         <LoginComponent/>
         <FloatingContact/>
         </div>
