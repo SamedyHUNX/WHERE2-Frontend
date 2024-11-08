@@ -1,64 +1,177 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import FormInput from "./../reusable/InputField";
 import ButtonComponent from "../reusable/Button";
 import ContainerComponent from "./../reusable/ContainerComponent";
 import { clearAuthState } from "./../../features/slices/authSlice";
 import { LoadingOverlay, LoadingSpinner } from "./../reusable/Loading";
-import { MapPin } from "lucide-react";
+import { MapPin, Eye, EyeOff } from "lucide-react";
 import useGeolocation from "./../../hooks/useGeolocation";
 
 // THIS COMPONENT IS USED TO REGISTER USER
 const RegisterComponent = () => {
-  // THERE ARE TWO TYPE OF FORMS: PERSONAL AND BUSSINESSS
+  const location = useLocation();
   const [accountType, setAccountType] = useState("personal");
-  const [formData, setFormData] = useState({
-    entity: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    dateOfBirth: "",
-    location: "",
-    phoneNumber: "",
-    password: "",
-    passwordConfirm: "",
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [touchedFields, setTouchedFields] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const STORAGE_KEY = 'registration_form_data';
+  
+  // Initialize form data with previous values if they exist
+  const [formData, setFormData] = useState(() => {
+    const storedData = localStorage.getItem(STORAGE_KEY);
+    const savedData = storedData ? JSON.parse(storedData) : location.state?.formData || {
+      entity: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      userName: "",
+      dateOfBirth: "",
+      location: "",
+      phoneNumber: "",
+      password: "",
+      passwordConfirm: "",
+    };
+    return savedData;
   });
-  const [error, setError] = useState("");
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, message } = useSelector((state) => state.auth);
 
   const {
-    location,
+    location: geoLocation,
     getLocation,
     isGettingLocation,
     error: locationError,
   } = useGeolocation();
 
   useEffect(() => {
+    return () => {
+      // Only clear if navigating away from registration flow
+      if (!window.location.pathname.includes('terms-and-conditions')) {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('registration_account_type');
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     dispatch(clearAuthState());
   }, [dispatch]);
 
   useEffect(() => {
-    if (location) {
+    if (geoLocation) {
       setFormData((prevData) => ({
         ...prevData,
-        location,
+        location: geoLocation,
       }));
     }
-  }, [location]);
+  }, [geoLocation]);
+
+  // Save form data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+  }, [formData]);
+
+  // Save account type to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('registration_account_type', accountType);
+  }, [accountType]);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateField = (name, value) => {
+    // Return null if field is valid, error message if invalid
+    switch (name) {
+      case 'email':
+        if (!value) return 'Email is required';
+        if (!validateEmail(value)) return 'Please enter a valid email address';
+        return null;
+      
+      case 'password':
+        if (!value) return 'Password is required';
+        if (value.length < 6) return 'Password must be at least 6 characters long';
+        return null;
+      
+      case 'passwordConfirm':
+        if (!value) return 'Please confirm your password';
+        if (value !== formData.password) return 'Passwords do not match';
+        return null;
+      
+      case 'phoneNumber':
+        if (!value) return 'Phone number is required';
+        if (!/^\d{10}$/.test(value.replace(/\D/g, ''))) {
+          return 'Please enter a valid 10-digit phone number';
+        }
+        return null;
+
+      default:
+        if (!value && touchedFields[name]) return 'This field is required';
+        return null;
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    
+    // Update form data
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+    
+    // Mark field as touched
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
+    
+    // Validate field
+    const error = validateField(name, value);
+    
+    // Update validation errors - remove error if field is valid
+    setValidationErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[name] = error;
+      } else {
+        delete newErrors[name];
+      }
+      
+      // Special handling for password confirmation
+      if (name === 'password') {
+        // Revalidate password confirmation if it exists
+        if (formData.passwordConfirm) {
+          const confirmError = validateField('passwordConfirm', formData.passwordConfirm);
+          if (confirmError) {
+            newErrors.passwordConfirm = confirmError;
+          } else {
+            delete newErrors.passwordConfirm;
+          }
+        }
+      }
+      
+      return newErrors;
+    });
   };
 
-  useEffect(() => {
-    dispatch(clearAuthState());
-  }, [dispatch]);
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
+    
+    const error = validateField(name, value);
+    setValidationErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[name] = error;
+      } else {
+        delete newErrors[name];
+      }
+      return newErrors;
+    });
+  };
 
   const validateForm = () => {
     const personalFields = [
@@ -85,33 +198,18 @@ const RegisterComponent = () => {
     const requiredFields =
       accountType === "business" ? businessFields : personalFields;
 
-    const missingFields = requiredFields.filter((field) => !formData[field]);
+    let errors = {};
+    requiredFields.forEach(field => {
+      const fieldErrors = validateField(field, formData[field]);
+      errors = { ...errors, ...fieldErrors };
+    });
 
-    if (missingFields.length > 0) {
-      setError(`Missing required fields: ${missingFields.join(", ")}`);
-      return false;
-    }
-
-    if (formData.password !== formData.passwordConfirm) {
-      setError("Passwords do not match");
-      return false;
-    }
-
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return false;
-    }
-
-    return true;
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
   };
-
-  if (status === "loading") {
-    return <LoadingOverlay isFullScreen={true} message="We are creating your account..."/>
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
 
     if (validateForm()) {
       const registrationData = {
@@ -130,9 +228,61 @@ const RegisterComponent = () => {
           : null,
       };
 
-      navigate("/terms-and-conditions", { state: { registrationData } });
+      // Pass the form data along with the registration data
+      navigate("/terms-and-conditions", { 
+        state: { 
+          registrationData,
+          formData: formData // Save form data for back navigation
+        } 
+      });
     }
   };
+
+  const renderInput = (name, label, type = "text", required = true) => {
+    const hasError = touchedFields[name] && validationErrors[name];
+    const isPassword = type === "password";
+    
+    return (
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <div className="relative">
+          <FormInput
+            name={name}
+            type={isPassword ? (name === "password" ? (showPassword ? "text" : "password") : (showConfirmPassword ? "text" : "password")) : type}
+            value={formData[name]}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            required={required}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            className={`w-full ${hasError ? 'border-red-500' : ''}`}
+          />
+          {isPassword && (
+            <button
+              type="button"
+              onClick={() => name === "password" ? setShowPassword(!showPassword) : setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+            >
+              {(name === "password" ? showPassword : showConfirmPassword) ? 
+                              <Eye className="h-5 w-5 text-gray-500" /> :
+                <EyeOff className="h-5 w-5 text-gray-500" /> 
+              }
+            </button>
+          )}
+        </div>
+        {hasError && (
+          <p className="text-red-500 text-xs mt-1">{validationErrors[name]}</p>
+        )}
+      </div>
+    );
+  };
+
+  if (status === "loading") {
+    return <LoadingOverlay isFullScreen={true} message="We are creating your account..." />;
+  }
 
   if (isGettingLocation) {
     return (
@@ -168,91 +318,21 @@ const RegisterComponent = () => {
           Business
         </button>
       </div>
+      
       <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-        {accountType === "business" && (
-          <FormInput
-            name="entity"
-            label="Enter your entity name"
-            type="text"
-            value={formData.entity}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCapitalize="off"
-            autoCorrect="off"
-          />
-        )}
+        {accountType === "business" && renderInput("entity", "Entity Name")}
+        
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
-          <FormInput
-            name="firstName"
-            label="First Name"
-            type="text"
-            value={formData.firstName}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
-          <FormInput
-            name="lastName"
-            label="Last Name"
-            type="text"
-            value={formData.lastName}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
+          {renderInput("firstName", "First Name")}
+          {renderInput("lastName", "Last Name")}
         </div>
-        {accountType === "personal" && (
-          <FormInput
-            name="userName"
-            label="Username"
-            type="text"
-            value={formData.userName}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
-        )}
-        <FormInput
-          name="email"
-          label="Email"
-          type="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-        />
-        <FormInput
-          name="phoneNumber"
-          label="Phone Number"
-          type="tel"
-          value={formData.phoneNumber}
-          onChange={handleInputChange}
-          required
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-        />
+        
+        {accountType === "personal" && renderInput("userName", "Username")}
+        {renderInput("email", "Email", "email")}
+        {renderInput("phoneNumber", "Phone Number", "tel")}
+        
         <div className="relative">
-          <FormInput
-            name="location"
-            label="Location"
-            type="text"
-            value={formData.location}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
+          {renderInput("location", "Location")}
           <button
             type="button"
             onClick={getLocation}
@@ -263,51 +343,22 @@ const RegisterComponent = () => {
             <MapPin size={20} />
           </button>
         </div>
-        {isGettingLocation && <LoadingOverlay />}
+        
         {locationError && (
           <p className="text-red-500 text-sm">{locationError}</p>
         )}
-        {accountType === "business" && (
-          <FormInput
-            name="dateOfBirth"
-            label="Date of Birth"
-            type="date"
-            value={formData.dateOfBirth}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
-        )}
+        
+        {accountType === "business" && renderInput("dateOfBirth", "Date of Birth", "date")}
+        
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
-          <FormInput
-            name="password"
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
-          <FormInput
-            name="passwordConfirm"
-            label="Confirm Password"
-            type="password"
-            value={formData.passwordConfirm}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
+          {renderInput("password", "Password", "password")}
+          {renderInput("passwordConfirm", "Confirm Password", "password")}
         </div>
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
         {status === "failed" && (
           <p className="text-red-500 text-sm text-center">{message}</p>
         )}
+
         <div className="flex justify-center items-center">
           <ButtonComponent
             variant="primary"

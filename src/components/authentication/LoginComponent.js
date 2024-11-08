@@ -122,7 +122,7 @@ const LoginComponent = () => {
           <Checkbox 
             id="rememberMe" 
             checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)} // Changed to 'onChange'
+            onChange={(e) => setRememberMe(e.target.checked)}
           />
           <InputLabel 
             htmlFor="rememberMe" 
@@ -137,7 +137,7 @@ const LoginComponent = () => {
             variant={"primary"}
             className="mt-2 w-[197px] h-[38px] sm:w-[343px] sm:h-[50px]"
             type="submit"
-            disabled={status === "loading" || status === "succeeded"} // Fixed typo: 'succeded' to 'succeeded'
+            disabled={status === "loading" || status === "succeeded"}
           >
             {status === "loading" ? <LoadingSpinner /> : "Login"}
           </ButtonComponent>
