@@ -199,10 +199,10 @@ const SettingPanel = () => {
         </Alert>
       </Snackbar>
       
-      <div className="w-full mx-auto">
-        <section className="w-full bg-white rounded-3xl pt-[32px] shadow-md border h-screen">
+      <div className="w-full h-fit mx-auto">
+        <section className="w-full bg-white rounded-3xl py-[32px] shadow-md border h-screen">
           <div className="lg:w-full lg:px-16 lg:mx-auto px-4 py-8 sm:px-6">
-          <h2 className="text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">Account Settings</h2>
+          <h2 className="text-3xl underline font-bold text-gray-900 mb-6 tracking-tight">My Settings</h2>
             <div className="border-b pb-8 mb-8 w-full">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span>Change Password</span>
@@ -227,7 +227,7 @@ const SettingPanel = () => {
                     type="submit"
                     disabled={status === "loading"}
                   >
-                    {status === "loading" ? <LoadingSpinner /> : "Change Password"}
+                    {status === "loading" ? "Changing your password..." : "Change Password"}
                   </ButtonComponent>
                 </div>
               </form>
@@ -236,6 +236,35 @@ const SettingPanel = () => {
             <div className="space-y-6">
               <h2 className="text-xl font-medium text-gray-900 my-8">
                 <span className="text-red-500">Account Deletion</span>
+              </h2>
+              <div className="border-2 border-red-100 rounded-lg p-6 bg-red-50">
+                <div className="flex items-start space-x-4">
+                  <div className="mt-1">
+                    <AlertTriangle className="h-6 w-6 text-red-500" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-medium text-red-800">Delete Account</h3>
+                    <p className="mt-2 text-sm text-gray-600">
+                      Once you delete your account, there is no going back. Please be certain.
+                      All of your data including saved preferences, history, and personal information will be permanently removed.
+                    </p>
+                    <div className="mt-4">
+                      <ButtonComponent
+                        variant="danger"
+                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+                        onClick={() => setUiState(prev => ({ ...prev, showDeleteModal: true }))}
+                      >
+                        Delete Account
+                      </ButtonComponent>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <h2 className="text-xl font-medium text-gray-900 my-8">
+                <span className="text-black">Personal Information</span>
               </h2>
               <div className="border-2 border-red-100 rounded-lg p-6 bg-red-50">
                 <div className="flex items-start space-x-4">
