@@ -9,7 +9,7 @@ import DetailLayout from './../layouts/DetailLayout';
 import Navbar from './../components/reusable/Navbar';
 import Footer from './../components/reusable/Footer';
 import { LoadingOverlay } from './../components/reusable/Loading';
-import DiscussionContainer from '../components/reusable/DiscussionContainer';
+import FloatingContact from './../components/reusable/FloatingContact';
 
 const UniversityDetailPage = () => {
     const dispatch = useDispatch();
@@ -42,6 +42,7 @@ const UniversityDetailPage = () => {
                     telegramLink={university.telegram_url}
                 />
             )}
+            <FloatingContact/>
             <Footer />
         </>
     );

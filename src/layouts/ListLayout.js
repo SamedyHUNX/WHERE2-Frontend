@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { removedIsClicked, getFavorite } from '../features/slices/favoriteSlice';
 
 //resuable 

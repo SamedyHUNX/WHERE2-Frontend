@@ -4,7 +4,6 @@ import WrapperComponent from "./../components/reusable/WrapperComponent";
 import Footer from "./../components/reusable/Footer";
 import Navbar from "./../components/reusable/Navbar";
 import DiscussionContainer from "./../components/reusable/DiscussionContainer";
-import useAuth from "./../hooks/useAuth";
 import FloatingContact from "./../components/reusable/FloatingContact";
 
 const DiscussionPage = () => {
@@ -17,7 +16,7 @@ const DiscussionPage = () => {
       <WrapperComponent>
         <DiscussionContainer />
       </WrapperComponent>
-      {useAuth().isLoggedIn? null : <FloatingContact />} {/* Show Floating Contact if user is not logged in */}
+      <FloatingContact />
       <Footer />
     </>
   );

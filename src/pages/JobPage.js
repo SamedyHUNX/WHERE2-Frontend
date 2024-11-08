@@ -35,7 +35,7 @@ const JobPage = () => {
                 <JobList jobs={data} page={page}/>
                 <Pagination totalPage={totalPage} currentPage={page} route={'jobs'} category={"job"} />
             </ListContainer>
-            {useAuth().isLoggedIn? null : <FloatingContact />}  {/* Show Floating Contact if user is not logged in */}
+            <FloatingContact />
             <Footer />
         </>
     )

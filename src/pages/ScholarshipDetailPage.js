@@ -10,6 +10,8 @@ import Navbar from '../components/reusable/Navbar';
 import Footer from '../components/reusable/Footer';
 import { LoadingOverlay } from "../components/reusable/Loading";
 
+import FloatingContact from "./../components/reusable/FloatingContact";
+
 function ScholarDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -41,6 +43,7 @@ function ScholarDetail() {
           telegramLink={scholarship.telegram_url}
         />        
       )}
+      <FloatingContact />
       <Footer />
     </>
   );

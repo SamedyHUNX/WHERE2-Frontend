@@ -5,12 +5,10 @@ import { useState, useEffect } from "react";
 import WrapperComponent from "./reusable/WrapperComponent";
 import { Link } from "react-router-dom";
 import LiveLihood from "../assets/images/new_livelihood.png";
-import useAuth from "./../hooks/useAuth";
 import FloatingContact from "./reusable/FloatingContact";
 
 const Livelihood = () => {
 	const [isMobile, setIsMobile] = useState(false);
-	const { isLoggedIn } = useAuth();
 
 
 	useEffect(() => {
@@ -88,7 +86,7 @@ const Livelihood = () => {
                     </div>
                 </section>
             </div>
-		{ isLoggedIn ? '' : <FloatingContact /> }
+		<FloatingContact />
         </section>
     );
 };

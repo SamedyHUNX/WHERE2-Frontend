@@ -20,7 +20,6 @@ import Filter from '../components/reusable/Filter';
 import SearchBar from '../components/reusable/SearchBar';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
-import useAuth from './../hooks/useAuth';
 import FloatingContact from './../components/reusable/FloatingContact';
 
 /** Enable for debugging */
@@ -33,7 +32,6 @@ const UniversityPage = () => {
     const location = urlParams.get('location') || '';
     const searchQuery = urlParams.get('q') || '';
 
-    const {  isLoggedIn } = useAuth();
 
     const dispatch = useDispatch();
     const { universities, loading, error } = useSelector((state) => state.universities);
@@ -113,7 +111,7 @@ const UniversityPage = () => {
                     category="university"
                     searchQuery={searchQuery}/>
             </ListContainer>
-            {isLoggedIn ? null : <FloatingContact />}
+             <FloatingContact />
             <Footer />
         </>
     );

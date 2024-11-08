@@ -35,7 +35,7 @@ const StudentLoanPage = () => {
             </ListContainer>
             <Pagination totalPage={totalPage} currentPage={page} category= {'student-loan'} route={'studen-loan'} />
 
-            {useAuth().isLoggedIn? null : <FloatingContact />}
+            <FloatingContact />
 
             <Footer />
         </>
