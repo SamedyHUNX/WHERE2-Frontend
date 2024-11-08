@@ -155,7 +155,7 @@ const FloatingContact = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-[80px] h-[80px] rounded-full bg-sky-500 text-white shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all duration-200"
+        className={`w-[80px] h-[80px] rounded-full ${isOpen ? "bg-red-500" : "bg-sky-500"} text-white shadow-lg flex items-center justify-center hover:bg-sky-600 transition-all duration-200`}
       >
         { isOpen ? <X size={36}/> : <MessageCircle size={36} /> }
       </button>
