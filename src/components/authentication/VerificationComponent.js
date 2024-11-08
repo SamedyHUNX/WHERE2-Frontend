@@ -146,7 +146,7 @@ const VerificationComponent = () => {
             type="submit"
             disabled={status === "loading" || status === "succeeded" || !verificationCode}
           >
-            {status === "loading" ? <LoadingOverlay /> : "Verify"}
+            {status === "loading" ? "Verifying..." : "Verify"}
           </ButtonComponent>
         </div>
       </form>
