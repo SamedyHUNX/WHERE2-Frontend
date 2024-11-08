@@ -10,12 +10,13 @@ import config from "./../../config";
 import { Trash } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import PublicProfile from "../reusable/PublicProfile";
 
 const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
   const { isLoggedIn, userId, role, token } = useAuth();
   const location = useLocation();
   const isHealthPagePath = location.pathname.startsWith("/health");
-  
+
   const {
     comments,
     loading: isLoading,
@@ -32,14 +33,16 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
     (newComment) => {
       if (newComment && newComment.id && newComment.content) {
         queryClient.setQueryData(["comments", discussionId], (oldData) => {
-          const updatedComments = oldData ? [...oldData, newComment] : [newComment];
+          const updatedComments = oldData
+            ? [...oldData, newComment]
+            : [newComment];
           return updatedComments;
         });
 
         onCommentAdded(newComment);
         setShowReplyForm(false);
         setIsSuccess(true);
-        
+
         setTimeout(() => {
           setIsSuccess(false);
         }, 3000);
@@ -52,7 +55,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
     async (commentId) => {
       try {
         setDeletingComments((prev) => ({ ...prev, [commentId]: true }));
-        
+
         await axios.delete(config.community.deleteComment(commentId), {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +64,9 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
         });
 
         queryClient.setQueryData(["comments", discussionId], (oldData) => {
-          return oldData ? oldData.filter(comment => comment.id !== commentId) : [];
+          return oldData
+            ? oldData.filter((comment) => comment.id !== commentId)
+            : [];
         });
       } catch (err) {
         console.error("Error deleting comment:", err);
@@ -79,19 +84,21 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
 
   return (
     <div className="mt-6 space-y-8">
-      <h2 className={`text-sm tracking-tighter ${
-        isHealthPagePath ? "text-gray-300" : "text-gray-700"
-      }`}>
+      <h2
+        className={`text-sm tracking-tighter ${
+          isHealthPagePath ? "text-gray-300" : "text-gray-700"
+        }`}
+      >
         Comments ({comments ? comments.length : 0})
       </h2>
-      
+
       {isLoggedIn && !showReplyForm && (
         <div className="w-full flex justify-end">
           <ButtonComponent
             variant={isHealthPagePath ? "ghost-dark" : "ghost"}
             className={`hover:visible text-sm flex ${
-              isHealthPagePath 
-                ? "text-gray-400 hover:text-gray-200" 
+              isHealthPagePath
+                ? "text-gray-400 hover:text-gray-200"
                 : "text-gray-500 hover:text-gray-700"
             }`}
             onClick={() => setShowReplyForm(true)}
@@ -122,9 +129,11 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
         </div>
       )}
       {isLoading && (
-        <div className={`text-sm ${
-          isHealthPagePath ? "text-gray-400" : "text-gray-500"
-        }`}>
+        <div
+          className={`text-sm ${
+            isHealthPagePath ? "text-gray-400" : "text-gray-500"
+          }`}
+        >
           Loading comments...
         </div>
       )}
@@ -137,17 +146,21 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
               <div
                 key={comment.id}
                 className={`p-4 rounded-lg relative ${
-                  isHealthPagePath 
-                    ? "bg-gray-800 hover:bg-gray-700" 
+                  isHealthPagePath
+                    ? "bg-gray-800 hover:bg-gray-700"
                     : "bg-gray-50 hover:bg-gray-100"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <ProfilePicture userId={comment.user.id} size={6} />
-                  <span className={`text-sm truncate max-w-[200px] ${
-                    isHealthPagePath ? "text-gray-300" : "text-gray-600"
-                  }`}>
-                    {comment.user.email}
+                  <PublicProfile userId={comment.user.id} />
+                  <span
+                    className={`text-sm truncate max-w-[200px] ${
+                      isHealthPagePath ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    {comment.user.profile.userName
+                      ? comment.user.profile.userName
+                      : comment.user.profile.entity}
                   </span>
                 </div>
                 {canDeleteComment(comment) && (
@@ -161,13 +174,19 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
                       onClick={() => handleDelete(comment.id)}
                       disabled={deletingComments[comment.id]}
                     >
-                      {deletingComments[comment.id] ? "..." : <Trash size={18}/>}
+                      {deletingComments[comment.id] ? (
+                        "..."
+                      ) : (
+                        <Trash size={18} />
+                      )}
                     </ButtonComponent>
                   </div>
                 )}
-                <div className={`whitespace-pre-wrap break-all w-full pl-4 ${
-                  isHealthPagePath ? "text-gray-200" : "text-gray-700"
-                }`}>
+                <div
+                  className={`whitespace-pre-wrap break-all w-full pl-4 ${
+                    isHealthPagePath ? "text-gray-200" : "text-gray-700"
+                  }`}
+                >
                   {comment.content.split(" ").map((word, index) => (
                     <React.Fragment key={index}>
                       <span className="break-all w-[90%] h-fit">{word}</span>
