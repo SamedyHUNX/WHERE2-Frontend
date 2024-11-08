@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import FormInput from "./../reusable/InputField"
+import ButtonComponent from './Button';
 import config from './../../config';
 import { MessageCircle, X } from 'lucide-react';
 
@@ -11,12 +13,43 @@ const FloatingContact = () => {
     email: '',
     message: ''
   });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Email validation
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Phone validation - accepts multiple formats
+    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+    if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = 'Please enter a valid phone number';
+    }
+
+    // Name validation
+    if (formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Name must be at least 2 characters';
+    }
+
+    // Message validation
+    if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     try {
       console.log('Form submitted:', formData);
-
       const response = await axios.post(config.contact.sendEmail, formData);
 
       if (response.status === 200) {
@@ -32,84 +65,82 @@ const FloatingContact = () => {
 
   return (
     <div className="fixed lg:bottom-[8vh] lg:right-[5vw] sm:bottom-[4vh] sm:right-6 z-50">
-      {/* Contact Form Modal */}
       {isOpen && (
-        <div className="absolute lg:bottom-24 sm:bottom-[6vh] right-0 lg:w-96 sm:w-[350px] h-[32rem] sm:h-[40rem] bg-white rounded-lg shadow-xl transform transition-all duration-300 animate-slide-up">
-          {/* Modal Header */}
+        <div className="absolute lg:bottom-24 sm:bottom-[6vh] right-0 lg:w-96 sm:w-[350px] bg-white rounded-lg shadow-xl transform transition-all duration-300 animate-slide-up">
           <div className="flex justify-between items-center p-4 border-b">
-            <h2 className="text-lg font-semibold">Contact Us</h2>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <X size={20} />
-            </button>
+            <div>
+              <h2 className="text-2xl font-semibold my-[16px]">Contact Us</h2>
+              <p className="text-sm text-gray-600 mt-1">
+                If you have any questions, feel free to contact us. We will reponse back to you as soon as possible.
+              </p>
+            </div>
           </div>
 
-          {/* Form Content */}
           <form onSubmit={handleSubmit} className="p-4 space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                type="text"
-                value={formData.fullName}
-                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                required
-              />
-            </div>
+            <FormInput
+              label={<span>Full Name <span className="text-red-500">*</span></span>}
+              name="fullName"
+              type="text"
+              value={formData.fullName}
+              onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+              required
+              error={errors.fullName}
+            />
+            {errors.fullName && (
+              <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+            )}
+
+            <FormInput
+              label={<span>Phone number <span className="text-red-500">*</span></span>}
+              name="phoneNumber"
+              type="tel"
+              value={formData.phoneNumber}
+              onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+              error={errors.phoneNumber}
+            />
+            {errors.phoneNumber && (
+              <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>
+            )}
+
+            <FormInput
+              label={<span>Email Address <span className="text-red-500">*</span></span>}
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              required
+              error={errors.email}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Phone Number
-              </label>
-              <div className="mt-1 flex rounded-md shadow-sm">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                  +855
-                </span>
-                <input
-                  type="tel"
-                  value={formData.phoneNumber}
-                  onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
-                  className="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Message
+                Message <span className="text-red-500">*</span>
               </label>
               <textarea
                 value={formData.message}
                 onChange={(e) => setFormData({...formData, message: e.target.value})}
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                  errors.message ? 'border-red-500' : ''
+                }`}
                 required
               />
+              {errors.message && (
+                <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+              )}
             </div>
 
-            <button
+            <ButtonComponent
+              variant="primary"
+              size="medium"
+              fullWidth
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Start Conversation
-            </button>
+            </ButtonComponent>
           </form>
         </div>
       )}
