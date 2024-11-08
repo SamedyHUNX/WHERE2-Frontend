@@ -245,32 +245,41 @@ import config from "./../../config"
     "auth/forgotPassword",
     async ({ email }, thunkAPI) => {
       try {
-
-        if (config.env !== 'production') {
-          console.log("Sending forgot password request with email:", email);
-        }
-
         const response = await axios.post(config.auth.forgotPasswordUrl, { email });
-
-        if (config.env !== 'production') {
-          console.log("Server response:", response.data);
-        }
-
         return {
           message: "Password reset email sent. Please check your inbox.",
           resetToken: response.data.token,
         };
       } catch (error) {
-        console.log(error)
+        if (error.isAxiosError) {
+          // Get appropriate error message based on status code
+          const errorMessage = getForgotPasswordError(error.response?.status, email);
+          
+          return thunkAPI.rejectWithValue(errorMessage);
+        }
+        
         return thunkAPI.rejectWithValue(
-          handleAsyncError(
-            error,
-            "An unexpected error occurred. Please try again later."
-          )
+          "Unable to process your request. Please try again later."
         );
       }
     }
   );
+  
+  // Helper function to get specific error messages
+  const getForgotPasswordError = (status, email) => {
+    switch (status) {
+      case 400:
+        return "Invalid email format.";
+      case 404:
+        return `No account found with this email address.`;
+      case 429:
+        return "Too many attempts. Please try again later.";
+      case 500:
+        return "Server error. Please try again later.";
+      default:
+        return "Failed to process password reset request.";
+    }
+  };
   
   // RESET PASSWORD SLICE
   export const resetPassword = createAsyncThunk(
@@ -481,12 +490,13 @@ import config from "./../../config"
         })
         .addCase(forgotPassword.fulfilled, (state, action) => {
           state.status = "succeeded";
+          state.error = null;
           state.message = action.payload.message;
-          state.resetToken = action.payload.resetToken;
         })
         .addCase(forgotPassword.rejected, (state, action) => {
           state.status = "failed";
           state.error = action.payload;
+          state.message = null;
         })
   
         // Reset Password

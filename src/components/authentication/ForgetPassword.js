@@ -6,35 +6,65 @@ import ButtonComponent from "./../reusable/Button";
 import ContainerComponent from "./../reusable/ContainerComponent";
 import { forgotPassword, clearAuthState } from "./../../features/slices/authSlice";
 import { LoadingSpinner, LoadingOverlay } from "./../reusable/Loading";
-import config from "./../../config";
 
 
 // THIS COMPONENT IS USED FOR FORGET PASSWORD FUNCTIONALITY; THE USER CAN TYPE IN HIS EMAIL AND WE WILL SEND HIM A LINK TO RESET HIS PASSWORD
 const ForgetPasswordComponent = () => {
   const [email, setEmail] = useState("");
+  const [localError, setLocalError] = useState("");
   const dispatch = useDispatch();
   const { status, error, message } = useSelector((state) => state.auth);
 
+  // Clear auth state when email changes or component unmounts
   useEffect(() => {
     dispatch(clearAuthState());
+    setLocalError("");
   }, [dispatch, email]);
+
+  // Email validation
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email) {
-      dispatch(forgotPassword({ email }));
+    setLocalError("");
+
+    // Client-side validation
+    if (!email.trim()) {
+      setLocalError("Please enter your email address.");
+      return;
     }
+
+    if (!validateEmail(email)) {
+      setLocalError("Please enter a valid email address.");
+      return;
+    }
+
+    dispatch(forgotPassword({ email }));
   };
 
+  // Show loading overlay
   if (status === "loading") {
-    return <LoadingOverlay isFullScreen={true} message="We are sending a password reset link..."/>
+    return <LoadingOverlay isFullScreen={true} message="We are sending a password reset link..." />;
   }
+
+  // Determine the message to show
+  const getMessage = () => {
+    if (status === 'idle') {
+      return "Enter your email address and we'll send you a link to reset your password.";
+    }
+    if (status === 'succeeded') {
+      return `Reset password email has been sent to ${email}.`;
+    }
+    return "Enter your email address and we'll send you a link to reset your password.";
+  };
 
   return (
     <ContainerComponent title="FORGET PASSWORD">
       <p className="text-sm text-gray-600 text-center mb-6">
-        Enter your email address and we'll send you a link to reset your
-        password.
+        {getMessage()}
       </p>
 
       <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
@@ -46,12 +76,12 @@ const ForgetPasswordComponent = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
           disabled={status === "loading" || status === "succeeded"}
-          className={error ? "border-rose-400 border-[1px]" : ""}
+          className={error || localError ? "border-rose-400 border-[1px]" : ""}
         />
 
-        {error && (
+        {(error || localError) && (
           <div className="text-red-500 text-sm text-center">
-            <p>{`${error} Please check your email or consider signing up.`}</p>
+            <p>{`${error || localError} Please check your email or consider signing up.`}</p>
           </div>
         )}
 

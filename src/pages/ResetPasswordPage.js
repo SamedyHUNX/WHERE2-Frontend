@@ -1,13 +1,11 @@
 import ResetPasswordComponent from "./../components/authentication/ResetPassword";
-import Footer from "./../components/reusable/Footer";
-import Navbar from "./../components/reusable/Navbar";
+import FloatingContact from "./../components/reusable/FloatingContact";
 
 const ResetPasswordPage = () => {
     return (
         <>
-            <Navbar/>
             <ResetPasswordComponent />
-            <Footer/>
+            <FloatingContact/>
         </>
     )
 }

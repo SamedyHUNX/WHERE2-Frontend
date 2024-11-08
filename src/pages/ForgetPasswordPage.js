@@ -1,12 +1,9 @@
 import ForgetPasswordComponent from "./../components/authentication/ForgetPassword";
-import Footer from "./../components/reusable/Footer";
-import Navbar from "./../components/reusable/Navbar";
-import ForgetPasswordLayout from "../layouts/ForgetPasswordLayout";
+import FloatingContact from "../components/reusable/FloatingContact";
 
 const ForgetPasswordPage = () => {
     return (
         <>
-            <Navbar/>
             {/* <div style={{ 
                 display: 'flex',
                 justifyContent: 'center',
@@ -18,6 +15,7 @@ const ForgetPasswordPage = () => {
                 <ForgetPasswordLayout />
             </div> */}
             <ForgetPasswordComponent />
+            <FloatingContact/>
         </>
     )
 }

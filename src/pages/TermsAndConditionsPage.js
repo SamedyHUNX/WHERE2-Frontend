@@ -1,13 +1,11 @@
+import FloatingContact from "../components/reusable/FloatingContact";
 import TermsAndConditionsComponent from "./../components/authentication/TermsAndConditions";
-import Footer from "./../components/reusable/Footer";
-import Navbar from "./../components/reusable/Navbar";
 
 const TermsAndConditionsPage = () => {
     return (
         <>
-            <Navbar/>
             <TermsAndConditionsComponent />
-            <Footer />
+            <FloatingContact/>
         </>
     )
 }
