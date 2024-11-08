@@ -1,13 +1,15 @@
 // components
-import Navbar from "../components/reusable/Navbar";
-import Footer from "../components/reusable/Footer";
-import Hero from "../layouts/Hero";
+import Navbar from "./../components/reusable/Navbar";
+import Footer from "./../components/reusable/Footer";
+import Hero from "./../layouts/Hero";
 import Searchbar from "../components/reusable/SearchBar";
-import WrapperComponent from "../components/reusable/WrapperComponent";
-import CardFeatureSlider from "../components/reusable/CardFeatureSlider";
-import SaveSection from "../components/reusable/Saves";
-import JoinUs from "../components/reusable/JoinUs";
+import WrapperComponent from "./../components/reusable/WrapperComponent";
+import CardFeatureSlider from "./../components/reusable/CardFeatureSlider";
+import SaveSection from "./../components/reusable/Saves";
+import JoinUs from "./../components/reusable/JoinUs";
 // import Card from "../components/reusable/Card";
+import useAuth from "./../hooks/useAuth";
+import FloatingContact from "./../components/reusable/FloatingContact"
 
 // slices
 import { searchUniversities } from "../features/slices/universitySlice";
@@ -178,6 +180,9 @@ const featureCards = [
 
 
 const HomePage = () => {
+
+  const { isLoggedIn } = useAuth();
+
   return (
     <>
       <Navbar />
@@ -204,6 +209,8 @@ const HomePage = () => {
         <CardSlider cards={sponsers} header={"OUR SPONSERS"} ads={sponsers.length > 1}/>
         <JoinUs />
       </WrapperComponent>
+
+      { isLoggedIn ? null : <FloatingContact /> }
         <Footer />
     </>
   );

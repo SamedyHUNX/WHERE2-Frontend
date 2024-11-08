@@ -116,7 +116,6 @@ const PictureUpload = () => {
   return (
     <>
       <AlertContainer />
-      
       <div className="relative">
         <img
           src={`${photoUrl || "/default-profile.jpg"}?t=${Date.now()}`}
