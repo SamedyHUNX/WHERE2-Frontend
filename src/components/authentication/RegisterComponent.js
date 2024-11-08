@@ -280,6 +280,10 @@ const RegisterComponent = () => {
     );
   };
 
+  const handleBack = () => {
+    navigate(-1)
+  }
+
   if (status === "loading") {
     return <LoadingOverlay isFullScreen={true} message="We are creating your account..." />;
   }
@@ -295,7 +299,22 @@ const RegisterComponent = () => {
   }
 
   return (
-    <ContainerComponent title="CREATE ACCOUNT">
+    <ContainerComponent>
+            <div className="h-[50px]">
+                <button
+                  onClick={handleBack}
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  ← Back
+                </button>
+              </div>
+
+              <div className="mb-6">
+            <h2 className="text-3xl font-bold text-center text-gray-800 tacking-tight">
+              Create a new account
+            </h2>
+          </div>
+
       <div className="flex justify-center mb-6 w-full">
         <button
           className={`mr-4 pb-2 ${

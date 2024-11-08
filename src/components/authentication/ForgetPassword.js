@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import FormInput from "./../reusable/InputField";
 import ButtonComponent from "./../reusable/Button";
@@ -14,6 +15,8 @@ const ForgetPasswordComponent = () => {
   const [localError, setLocalError] = useState("");
   const dispatch = useDispatch();
   const { status, error, message } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
 
   // Clear auth state when email changes or component unmounts
   useEffect(() => {
@@ -45,6 +48,10 @@ const ForgetPasswordComponent = () => {
     dispatch(forgotPassword({ email }));
   };
 
+  const handleBack = () => {
+    navigate(-1)
+  }
+
   // Show loading overlay
   if (status === "loading") {
     return <LoadingOverlay isFullScreen={true} message="We are sending a password reset link..." />;
@@ -62,7 +69,24 @@ const ForgetPasswordComponent = () => {
   };
 
   return (
-    <ContainerComponent title="FORGET PASSWORD">
+    <ContainerComponent>
+            <div className="h-[50px]">
+                <button
+                  onClick={handleBack}
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  ← Back
+                </button>
+              </div>
+
+              <div className="mb-6">
+            <h2 className="text-3xl font-bold text-center text-gray-800 tracking-tight">
+              Forgot Password
+            </h2>
+            <div className="w-1/4 h-0.5 bg-gray-300 mx-auto mt-4"></div>
+          </div>
+
+
       <p className="text-sm text-gray-600 text-center mb-6">
         {getMessage()}
       </p>
