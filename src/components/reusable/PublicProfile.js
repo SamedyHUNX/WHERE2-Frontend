@@ -1,18 +1,15 @@
 import React from "react";
 import FormInput from "./../../components/reusable/InputField";
-import useAuth from "./../../hooks/useAuth";
 import { LoadingOverlay } from "../../components/reusable/Loading";
-import ContainerComponent from "./ContainerComponent";
 import ProfilePicture from "./PictureUpload";
 import { useParams } from "react-router-dom";
 import Navbar from "./../../components/reusable/Navbar";
 import FloatingContact from "./FloatingContact";
 import PublicSidebar from "./PublicSidebar";
-import Footer from "./Footer";
 
 const PublicProfile = ({ userInfo }) => {
   const { userId } = useParams();
-  const { loading } = useAuth();
+  const { loading } = { loading: false }; // Mock useAuth
 
   if (loading) {
     return (
@@ -23,115 +20,123 @@ const PublicProfile = ({ userInfo }) => {
     );
   }
 
-  const formattedDate = new Date(userInfo.createdAt).toLocaleDateString(
-    "en-CA"
-  );
+  const formattedDate = new Date(
+    userInfo?.createdAt || new Date()
+  ).toLocaleDateString("en-CA");
 
   return (
     <>
       <Navbar />
-      <div className="w-full flex flex-row py-2">
-        <div className="sm:hidden block w-1/3">
-          <PublicSidebar userInfo={userInfo} />
-        </div>
-        <section className="w-full border-2 border-gray-100 p-8 mt-[64px] shadow-l py-[64px]">
-          <section className="w-full rounded-3xl pb-[64px] ">
-            <div className="lg:w-full lg:px-[32px] lg:mx-auto h-full pb-6 pt-12 sm:px-6 lg:pb-0">
-              <div className="flex items-center justify-center mb-6">
-                <ProfilePicture big={true} userId={userId} />
-              </div>
+      <div className="min-h-screen bg-gray-50 mt-[64px]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-8 py-8">
+            {/* Sidebar - Hidden on mobile, shown on desktop */}
+            <div className="hidden lg:block lg:w-1/4">
+              <PublicSidebar userInfo={userInfo} />
+            </div>
 
-              <p className="text-center mb-6">{userInfo.lastName}</p>
+            {/* Main Content */}
+            <div className="flex-1 bg-white rounded-lg shadow-sm">
+              <div className="p-8">
+                {/* Profile Header */}
+                <div className="flex flex-col items-center space-y-6 pb-8 border-b border-gray-200">
+                  <ProfilePicture big={true} userId={userId} />
+                  <div className="text-center">
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      {userInfo?.firstName} {userInfo?.lastName}
+                    </h1>
+                    {userInfo?.entity && (
+                      <p className="text-gray-500 mt-1">{userInfo.entity}</p>
+                    )}
+                  </div>
+                </div>
 
-              <FormInput
-                label="Bio"
-                value={
-                  userInfo?.bio
-                    ? userInfo.bio
-                    : "This user does not seem to have set any bio..."
-                }
-                placeholder="Tell everyone about yourself..."
-                className="p-3 sm:p-4 h-fit"
-                rounded
-                disabled
-              />
-
-              <div className="space-y-4">
-                {userInfo.entity && (
+                {/* Bio Section */}
+                <div className="mt-8">
                   <FormInput
-                    label="Entity"
-                    value={userInfo.entity}
+                    label="Bio"
+                    value={
+                      userInfo?.bio ||
+                      "This user does not seem to have set any bio..."
+                    }
+                    placeholder="Tell everyone about yourself..."
+                    className="p-4"
+                    rounded
+                    disabled
+                  />
+                </div>
+
+                {/* Profile Information Grid */}
+                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormInput
+                    label="First Name"
+                    value={userInfo?.firstName}
+                    className="p-4"
                     disabled
                     rounded
-                    className="p-3 sm:p-4"
                   />
-                )}
+                  <FormInput
+                    label="Last Name"
+                    value={userInfo?.lastName}
+                    className="p-4"
+                    disabled
+                    rounded
+                  />
+                  <FormInput
+                    label="Email"
+                    value={userInfo?.email}
+                    type="email"
+                    className="p-4"
+                    disabled
+                    rounded
+                  />
+                  <FormInput
+                    label="Phone Number"
+                    value={userInfo?.phoneNumber}
+                    type="tel"
+                    className="p-4"
+                    disabled
+                    rounded
+                  />
+                  <FormInput
+                    label="Location"
+                    value={userInfo?.location}
+                    className="p-4"
+                    disabled
+                    rounded
+                  />
+                  <FormInput
+                    label="Account Creation Date"
+                    value={formattedDate}
+                    className="p-4"
+                    disabled
+                    rounded
+                  />
+                </div>
 
-                <FormInput
-                  label="First Name"
-                  value={userInfo.firstName}
-                  placeholder="First Name"
-                  className="p-3 sm:p-4"
-                  disabled
-                  rounded
-                />
-                <FormInput
-                  label="Last Name"
-                  value={userInfo.lastName}
-                  placeholder="Last Name"
-                  className="p-3 sm:p-4"
-                  disabled
-                  rounded
-                />
-
-                <FormInput
-                  label="Email"
-                  value={userInfo.email}
-                  type="email"
-                  rounded
-                  disabled
-                  className="p-3 sm:p-4"
-                />
-                <FormInput
-                  label="Phone Number"
-                  value={userInfo.phoneNumber}
-                  type="tel"
-                  rounded
-                  disabled
-                  className="p-3 sm:p-4"
-                />
-
-                <FormInput
-                  label="Location"
-                  placeholder="Enter Location"
-                  value={userInfo.location}
-                  disabled
-                  rounded
-                  className="p-3 sm:p-4"
-                />
-
-                <FormInput
-                  label="Account Creation Date"
-                  value={formattedDate}
-                  disabled
-                  rounded
-                  className="p-3 sm:p-4"
-                />
-
-                <FormInput
-                  label="Account Status"
-                  value={userInfo.isActive ? "Active" : "Not Active"}
-                  disabled
-                  rounded
-                  className="p-3 sm:p-4"
-                />
+                {/* Account Status */}
+                <div className="mt-6">
+                  <div
+                    className={`inline-flex items-center px-4 py-2 rounded-full ${
+                      userInfo?.isActive
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    <div
+                      className={`w-2 h-2 rounded-full mr-2 ${
+                        userInfo?.isActive ? "bg-green-500" : "bg-red-500"
+                      }`}
+                    />
+                    {userInfo?.isActive ? "Active Account" : "Inactive Account"}
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
-        </section>
+          </div>
+        </div>
       </div>
       <FloatingContact />
-      <Footer />
     </>
   );
 };
