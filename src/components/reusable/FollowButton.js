@@ -1,36 +1,44 @@
 import React, { useState, useEffect } from "react";
 import {
+  Box,
   Button,
   Typography,
-  Box,
   Snackbar,
   Alert,
   CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import config from "./../../config";
 import axios from "axios";
 import useAuth from "./../../hooks/useAuth";
+import config from "./../../config";
 
 const FollowButton = ({ targetUserId, currentUserId }) => {
   const { token } = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+    type: null, // 'follow' or 'unfollow'
+  });
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  // Add token to dependencies array so the effect runs when token changes
   useEffect(() => {
     if (token && targetUserId) {
       checkFollowStatus();
       getFollowersCount();
     }
-  }, [targetUserId, token]); // Add token as dependency
+  }, [targetUserId, token]);
 
   const checkFollowStatus = async () => {
     if (!token) {
@@ -53,7 +61,6 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
         }
       );
 
-      console.log("Follow Status Response:", response.data); // Debug log
       setIsFollowing(response.data.isFollowing);
     } catch (error) {
       console.error("Error checking follow status:", error.response || error);
@@ -86,7 +93,7 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
     }
   };
 
-  const handleFollow = async () => {
+  const handleFollowClick = () => {
     if (!token) {
       setSnackbar({
         open: true,
@@ -105,7 +112,16 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
       return;
     }
 
+    setConfirmDialog({
+      open: true,
+      type: isFollowing ? "unfollow" : "follow",
+    });
+  };
+
+  const handleConfirmAction = async () => {
+    setConfirmDialog({ open: false, type: null });
     setIsLoading(true);
+
     try {
       const endpoint = isFollowing ? "unfollow" : "follow";
       const url = config.follow.follow(endpoint, targetUserId);
@@ -144,6 +160,10 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
     }
   };
 
+  const handleCloseDialog = () => {
+    setConfirmDialog({ open: false, type: null });
+  };
+
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -163,7 +183,7 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
       <Button
         variant={isFollowing ? "outlined" : "contained"}
         color="primary"
-        onClick={handleFollow}
+        onClick={handleFollowClick}
         disabled={isLoading || targetUserId === currentUserId}
         startIcon={isFollowing ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         sx={{
@@ -190,6 +210,39 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
         {followersCount} followers
       </Typography>
 
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={confirmDialog.open}
+        onClose={handleCloseDialog}
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-description"
+      >
+        <DialogTitle id="confirm-dialog-title">
+          {confirmDialog.type === "follow" ? "Follow User" : "Unfollow User"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirm-dialog-description">
+            {confirmDialog.type === "follow"
+              ? "Are you sure you want to follow this user?"
+              : "Are you sure you want to unfollow this user?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmAction}
+            color={confirmDialog.type === "follow" ? "primary" : "secondary"}
+            variant="contained"
+            autoFocus
+          >
+            {confirmDialog.type === "follow" ? "Follow" : "Unfollow"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
