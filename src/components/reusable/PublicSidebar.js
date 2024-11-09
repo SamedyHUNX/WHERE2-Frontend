@@ -1,22 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ButtonComponent from "./Button";
-import {
-  User,
-  Building2,
-  GraduationCap,
-  Heart,
-  Users,
-  MessageCircle,
-} from "lucide-react";
+import { User, Building2, GraduationCap, Heart, Users } from "lucide-react";
 
 import FollowButton from "./FollowButton";
 import useAuth from "./../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ userInfo }) => {
+  const { userId: targetUserId } = useParams();
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+  });
+
   const { userId: currentUserId } = useAuth();
 
-  const { userId } = useParams();
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch(`/api/users/${targetUserId}`);
+  //       const data = await response.json();
+  //       setUserData(data);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, [targetUserId]);
 
   const menuItems = [
     { icon: <User size={20} />, label: "Profile Overview", isActive: true },
@@ -27,32 +39,26 @@ const ProfileSidebar = () => {
   ];
 
   return (
-    <div className="w-full h-full max-h-[1166px] bg-white shadow-lg rounded-lg pt-[64px] pb-[32px] px-6 mt-[64px] space-y-6">
-      {/* Profile Summary */}
+    <div className="w-full h-full max-h-[1166px] bg-white shadow-lg rounded-lg pt-16 pb-8 px-6 mt-16 space-y-6">
       <div className="flex flex-col items-center space-y-4">
         <div className="text-center">
-          <h2 className="font-semibold text-lg">Hakkerby Chea</h2>
-          <p className="text-sm text-gray-500">@hakkerby01</p>
+          <h2 className="font-semibold text-lg">
+            {userInfo.firstName} {userInfo.lastName}
+          </h2>
+          <p className="text-sm text-gray-500">
+            @{userInfo.userName ? userInfo.userName : userInfo.entity}
+          </p>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-100">
-        <div className="text-center">
-          <p className="font-semibold">150</p>
-          <p className="text-sm text-gray-500">Connections</p>
-        </div>
-        <div className="text-center">
-          <p className="font-semibold">45</p>
-          <p className="text-sm text-gray-500">Applications</p>
-        </div>
+      <div className="text-center">
+        <p className="font-semibold">150</p>
+        <p className="text-sm text-gray-500">Connections</p>
       </div>
 
-      {/* Follow Button */}
-      <FollowButton targetUserId={userId} currentUserId={currentUserId} />
+      <FollowButton targetUserId={targetUserId} currentUserId={currentUserId} />
 
-      {/* Navigation Menu */}
-      <nav className="space-y-2">
+      <nav className="space-y-6">
         {menuItems.map((item, index) => (
           <a
             key={index}
@@ -69,14 +75,9 @@ const ProfileSidebar = () => {
         ))}
       </nav>
 
-      {/* Contact Button */}
-      <ButtonComponent
-        fullWidth="full"
-        rounded={false}
-        className={"flex align-middle justify-center"}
-      >
-        <span>Message</span>
-      </ButtonComponent>
+      <button className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        Message
+      </button>
     </div>
   );
 };

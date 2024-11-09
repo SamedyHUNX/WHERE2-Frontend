@@ -10,7 +10,7 @@ const VisitProfile = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { userId: paramUserId } = useParams();
-  const { isLoggedIn, userId: currentUserId, role, loading } = useAuth();
+  const { isLoggedIn, userId: currentUserId, role, loading, token } = useAuth();
 
   // Use paramUserId if it's present, otherwise fall back to currentUserId
   const targetUserId = paramUserId || currentUserId;
@@ -50,13 +50,16 @@ const VisitProfile = () => {
     // Redirect to login if there's an error or user is not logged in
     if (error || (!loading && !isLoggedIn)) {
       console.error("Redirecting due to error or not logged in:", error);
-      navigate("/login");
+      setTimeout(() => {
+        // Redirect to login page if there's an error or user is not logged in
+        navigate("/login", { replace: true });
+      });
     }
   }, [error, isLoggedIn, loading, navigate]);
 
   // Show loading spinner if still loading or user data is not yet available
   if (loading || !userData) {
-    return <LoadingOverlay message="We are fetching the profile for you..."/>;
+    return <LoadingOverlay message="We are fetching the profile for you..." />;
   }
 
   return (

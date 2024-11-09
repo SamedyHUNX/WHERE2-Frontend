@@ -15,7 +15,12 @@ const PublicProfile = ({ userInfo }) => {
   const { loading } = useAuth();
 
   if (loading) {
-    return <LoadingOverlay message="We are fetching the public profile..." />;
+    return (
+      <LoadingOverlay
+        isFullScreen={true}
+        message="We are fetching the public profile..."
+      />
+    );
   }
 
   const formattedDate = new Date(userInfo.createdAt).toLocaleDateString(
@@ -27,7 +32,7 @@ const PublicProfile = ({ userInfo }) => {
       <Navbar />
       <div className="w-full flex flex-row py-2">
         <div className="sm:hidden block w-1/3">
-          <PublicSidebar />
+          <PublicSidebar userInfo={userInfo} />
         </div>
         <section className="w-full border-2 border-gray-100 p-8 mt-[64px] shadow-l py-[64px]">
           <section className="w-full rounded-3xl pb-[64px] ">

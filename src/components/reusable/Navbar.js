@@ -139,9 +139,13 @@ const Navbar = ({ isBanner }) => {
                 <NavButton key={item.name} linkTo={item.to} name={item.name} />
               ))}
           </div>
-          <div className="flex items-center space-x-4 hover:text-cyan-500">
+          <div className="flex items-center space-x-4">
             {showDashboard && (
-              <DashboardIcon username={username} entity={entity} />
+              <DashboardIcon
+                username={username}
+                entity={entity}
+                className="hover:bg-cyan-500"
+              />
             )}
             {isLoggedIn ? (
               <Link to={`/profile/${encodedIdentifier}`}>

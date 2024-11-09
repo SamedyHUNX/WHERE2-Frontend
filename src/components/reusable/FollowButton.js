@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  IconButton,
   Typography,
   Box,
   Snackbar,
@@ -11,9 +10,11 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import config from "./../../config";
+import axios from "axios";
 import useAuth from "./../../hooks/useAuth";
 
 const FollowButton = ({ targetUserId, currentUserId }) => {
+  const { token } = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,34 +24,78 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
     severity: "success",
   });
 
-  const { token } = useAuth();
-
+  // Add token to dependencies array so the effect runs when token changes
   useEffect(() => {
-    checkFollowStatus();
-    getFollowersCount();
-  }, [targetUserId]);
+    if (token && targetUserId) {
+      checkFollowStatus();
+      getFollowersCount();
+    }
+  }, [targetUserId, token]); // Add token as dependency
 
   const checkFollowStatus = async () => {
+    if (!token) {
+      setSnackbar({
+        open: true,
+        message: "Please log in to follow users",
+        severity: "warning",
+      });
+      return;
+    }
+
     try {
-      const response = await fetch(`/api/follow/check/${targetUserId}`);
-      const data = await response.json();
-      setIsFollowing(data.isFollowing);
+      setIsLoading(true);
+      const response = await axios.get(
+        config.follow.checkStatus(targetUserId),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Follow Status Response:", response.data); // Debug log
+      setIsFollowing(response.data.isFollowing);
     } catch (error) {
-      console.error("Error checking follow status:", error);
+      console.error("Error checking follow status:", error.response || error);
+      setSnackbar({
+        open: true,
+        message: "Error checking follow status",
+        severity: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getFollowersCount = async () => {
+    if (!token) return;
+
     try {
-      const response = await fetch(`/api/follow/count/${targetUserId}`);
-      const data = await response.json();
-      setFollowersCount(data.count);
+      const response = await axios.get(
+        config.follow.getFollowersCount(targetUserId),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setFollowersCount(response.data.results);
     } catch (error) {
-      console.error("Error getting followers count:", error);
+      console.error("Error getting followers count:", error.response || error);
     }
   };
 
   const handleFollow = async () => {
+    if (!token) {
+      setSnackbar({
+        open: true,
+        message: "Please log in to follow users",
+        severity: "warning",
+      });
+      return;
+    }
+
     if (currentUserId === targetUserId) {
       setSnackbar({
         open: true,
@@ -63,17 +108,16 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
     setIsLoading(true);
     try {
       const endpoint = isFollowing ? "unfollow" : "follow";
-      const url = config.follow.follow(endpoint, targetUserId); // Correct API URL
+      const url = config.follow.follow(endpoint, targetUserId);
 
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axios({
+        method: isFollowing ? "DELETE" : "POST",
+        url: url,
         headers: {
-          Authorization: `Bearer ${token}`, // Authorization header
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-
-      if (!response.ok) throw new Error("Failed to update follow status");
 
       setIsFollowing(!isFollowing);
       setFollowersCount((prevCount) =>
@@ -90,7 +134,9 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
     } catch (error) {
       setSnackbar({
         open: true,
-        message: "Error updating follow status. Please try again later.",
+        message:
+          error.response?.data?.message ||
+          "Error updating follow status. Please try again later.",
         severity: "error",
       });
     } finally {
@@ -118,7 +164,7 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
         variant={isFollowing ? "outlined" : "contained"}
         color="primary"
         onClick={handleFollow}
-        disabled={isLoading}
+        disabled={isLoading || targetUserId === currentUserId}
         startIcon={isFollowing ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         sx={{
           width: "100%",
@@ -131,6 +177,8 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
       >
         {isLoading ? (
           <CircularProgress size={24} color="inherit" />
+        ) : targetUserId === currentUserId ? (
+          "This is you"
         ) : isFollowing ? (
           "Following"
         ) : (

@@ -102,9 +102,10 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
     <div
       className={`lg:p-5 sm:p-1 p-2 rounded-lg shadow hover:shadow-lg cursor-pointer relative
         ${isExpanded ? "min-h-fit" : ""}
-        ${isHealthPagePath 
-          ? "bg-gray-900 text-white hover:bg-gray-800" 
-          : "bg-white text-black hover:bg-gray-50"
+        ${
+          isHealthPagePath
+            ? "bg-gray-900 text-white hover:bg-gray-800"
+            : "bg-white text-black hover:bg-gray-50"
         }`}
       onClick={toggleExpand}
     >
@@ -113,10 +114,14 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
       </h3>
 
       {discussion.location && (
-        <div className={`text-sm my-4 text-justify ${
-          isHealthPagePath ? "text-gray-300" : "text-gray-500"
-        }`}>
-          <span className="font-medium tracking-tight pl-4 underline">Location:</span>{" "}
+        <div
+          className={`text-sm my-4 text-justify ${
+            isHealthPagePath ? "text-gray-300" : "text-gray-500"
+          }`}
+        >
+          <span className="font-medium tracking-tight pl-4 underline">
+            Location:
+          </span>{" "}
           {discussion.location}
         </div>
       )}
@@ -131,19 +136,19 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
         {discussion.content}
       </p>
 
-      <div className={`flex justify-between items-center text-sm mb-2 pl-4 ${
-        isHealthPagePath ? "text-gray-400" : "text-gray-500"
-      }`}>
+      <div
+        className={`flex justify-between items-center text-sm mb-2 pl-4 ${
+          isHealthPagePath ? "text-gray-400" : "text-gray-500"
+        }`}
+      >
         {discussion.user && (
           <div
             className={`flex items-center gap-2 cursor-pointer ${
-              isHealthPagePath 
-                ? "hover:text-gray-200" 
-                : "hover:text-gray-700"
+              isHealthPagePath ? "hover:text-gray-200" : "hover:text-gray-700"
             }`}
             onClick={handleUserClick(discussion.user.id)}
           >
-            {isMobile ? <span>By </span> : <span>Posted by </span>}
+            {isMobile ? <span>by </span> : <span>posted by </span>}
             <ProfilePicture
               userId={discussion.user.id}
               photoUrl={photoUrls[discussion.user.id]}
@@ -190,4 +195,3 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
 };
 
 export default DiscussionCard;
-
