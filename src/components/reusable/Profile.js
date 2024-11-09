@@ -1,20 +1,20 @@
 import React, { useState, createContext, useEffect } from "react";
-import Sidebar from "../accountUtilities/Sidebar.js";
-import UniversityListing from "../accountUtilities/sidebarComponents/Developer/UniversityListing.js";
-import AccommodationListing from "../accountUtilities/sidebarComponents/Developer/AccommodationListing.js";
-import UserListing from "../accountUtilities/sidebarComponents/Developer/UsersListing.js";
-import PartTimeJobListing from "../accountUtilities/sidebarComponents/Developer/PartTimeJobListing.js";
-import UserAccount from "../../pages/UserAccount.js";
-import useAuth from "../../hooks/useAuth";
+import Sidebar from "./../accountUtilities/Sidebar.js";
+import UniversityListing from "./../accountUtilities/sidebarComponents/Developer/UniversityListing.js";
+import AccommodationListing from "./../accountUtilities/sidebarComponents/Developer/AccommodationListing.js";
+import UserListing from "./../accountUtilities/sidebarComponents/Developer/UsersListing.js";
+import PartTimeJobListing from "./../accountUtilities/sidebarComponents/Developer/PartTimeJobListing.js";
+import UserAccount from "./../../pages/UserAccount.js";
+import useAuth from "./../../hooks/useAuth";
 import { LoadingOverlay } from "./Loading.js";
 import { ChevronRight } from "lucide-react";
-import AdminDashboard from "../accountUtilities/sidebarComponents/Admin/Dashboard.js";
-import AdminContent from "../accountUtilities/sidebarComponents/Admin/AdminContent.js";
+import AdminDashboard from "./../accountUtilities/sidebarComponents/Admin/Dashboard.js";
+import AdminContent from "./../accountUtilities/sidebarComponents/Admin/AdminContent.js";
 import Logout from "./Logout.js";
 import CollectionPanel from "./CollectionPanel.js";
-import SettingPanel from "../SettingPanel.js";
-import adminContentListing from "../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
-import DiscussionList from "../community/DiscussionList.js";
+import SettingPanel from "./../SettingPanel.js";
+import adminContentListing from "./../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
+import DiscussionList from "./../community/DiscussionList.js";
 
 export const SidebarContentContext = createContext();
 
@@ -34,7 +34,7 @@ const contentComponents = {
   },
   collectionPanel: CollectionPanel,
   setting: SettingPanel,
-  discussionListing : DiscussionList,
+  discussionListing: DiscussionList,
 };
 
 const Profile = ({ userData, isPublic }) => {
@@ -77,7 +77,7 @@ const Profile = ({ userData, isPublic }) => {
   const ContentComponent = contentComponents[sidebarContent] || (() => null);
 
   return (
-    <div className="flex w-full h-full relative">
+    <div className="flex w-full h-full min-h-[100vh] relative">
       <SidebarContentContext.Provider value={setSidebarContent}>
         {/* Sidebar */}
         <div
@@ -103,12 +103,12 @@ const Profile = ({ userData, isPublic }) => {
 
         {/* Main Content */}
         <div
-          className={`flex-grow overflow-y-scroll h-full overflow-y-hidden ${
+          className={`flex-grow overflow-y-scroll min-h-[100vh] ${
             isMobile ? "relative z-10" : ""
           }`}
         >
-          <div className="h-full sm:mb-[16px]">
-            <div className="px-4 h-full">
+          <div className="sm:pb-[16px] h-full min-h-[100vh]">
+            <div className="px-4 h-full min-h-screen">
               {isMobile && !sidebarOpen && (
                 <button
                   onClick={toggleSidebar}
@@ -127,10 +127,13 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "adminContentListing" &&
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
-              sidebarContent !== "discussionListing"? (
-                <CollectionPanel category={sidebarContent} />
+              sidebarContent !== "discussionListing" ? (
+                <CollectionPanel
+                  category={sidebarContent}
+                  className="h-[100vh]"
+                />
               ) : (
-                <ContentComponent userInfo={userData} />
+                <ContentComponent userInfo={userData} className="h-full" />
               )}
             </div>
           </div>

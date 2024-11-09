@@ -5,7 +5,7 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID || "clientId";
 const config = {
   apiUrl: API_URL,
   env: ENV,
-  socketServer: 'ws://localhost:4000',
+  socketServer: "ws://localhost:4000",
   isDevelopment: ENV === "development",
   isProduction: ENV === "production",
   auth: {
@@ -20,8 +20,8 @@ const config = {
     resetPasswordUrl: (token) => `${API_URL}/api/users/resetPassword/${token}`,
     refreshTokenUrl: `${API_URL}/api/users/refreshToken`,
     fetchProfileUrl: (username) => `${API_URL}/api/users/profile/${username}`,
-    getUserRole: `${ API_URL }/api/users/login/getRole`,
-    updatePassword: (userId) => `${ API_URL }/api/users/updatePassword/${userId}`
+    getUserRole: `${API_URL}/api/users/login/getRole`,
+    updatePassword: (userId) => `${API_URL}/api/users/updatePassword/${userId}`,
   },
   user: {
     upload: `${API_URL}/api/upload`,
@@ -32,18 +32,21 @@ const config = {
     getMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
     getPublicProfile: (userId) =>
       `${API_URL}/api/users/profile/public/${userId}`,
-    getAdminContentList : (adminId) => `${API_URL}/api/users/content-list/${adminId}`
+    getAdminContentList: (adminId) =>
+      `${API_URL}/api/users/content-list/${adminId}`,
   },
   analytics: {
     getAllUsers: `${API_URL}/api/users/user-list`,
     deleteUserById: (userId) => `${API_URL}/api/users/delete-user/${userId}`,
-    reactivateUserById: (userId) => `${API_URL}/api/users/reactivate-user/${userId}`
+    reactivateUserById: (userId) =>
+      `${API_URL}/api/users/reactivate-user/${userId}`,
   },
   photo: {
     getS3Url: `${API_URL}/api/user/s3Url`,
     uploadProfilePicture: `${API_URL}/api/user/profile-picture`,
     uploadPublicPhoto: `${API_URL}/api/user/public`,
-    fetchPublicPhotoForPost: (userId, postId) => `${API_URL}/api/user/${userId}/public/${postId}`,
+    fetchPublicPhotoForPost: (userId, postId) =>
+      `${API_URL}/api/user/${userId}/public/${postId}`,
     fetchProfilePicture: (userId) =>
       `${API_URL}/api/user/${userId}/profile-picture`,
     fetchBatchProfilePictures: `${API_URL}/api/user/users/batch-profile-pictures`,
@@ -58,15 +61,17 @@ const config = {
       `${API_URL}/api/discussions/${discussionId}/comments`,
     deleteDiscussion: (discussionId) =>
       `${API_URL}/api/discussion/${discussionId}`,
-    deleteComment: (commentId) => `${API_URL}/api/discussion/comment/${commentId}`,
+    deleteComment: (commentId) =>
+      `${API_URL}/api/discussion/comment/${commentId}`,
   },
- job : {
-  getAllJob: `${API_URL}/api/jobs/job-list`,
-  getAssociatedCompany: (jobId) => `${API_URL}/api/jobs/associatedCompany/${jobId}`,
-  approveJob: (jobId) => `${API_URL}/api/jobs/approve/${jobId}`,
-  disapproveJob : (jobId) => `${API_URL}/api/jobs/disapprove/${jobId}`,
-  getJob: (jobId) => `${API_URL}/api/jobs/${jobId}`,           
-},
+  job: {
+    getAllJob: `${API_URL}/api/jobs/job-list`,
+    getAssociatedCompany: (jobId) =>
+      `${API_URL}/api/jobs/associatedCompany/${jobId}`,
+    approveJob: (jobId) => `${API_URL}/api/jobs/approve/${jobId}`,
+    disapproveJob: (jobId) => `${API_URL}/api/jobs/disapprove/${jobId}`,
+    getJob: (jobId) => `${API_URL}/api/jobs/${jobId}`,
+  },
   favorite: {
     addFavorite: `${API_URL}/api/favorites/addFavorite`,
     getFavorite: (userId, category) =>
@@ -74,15 +79,17 @@ const config = {
     removedFavorite: (cardId, category) =>
       `${API_URL}/api/favorites/${cardId}/${category}`,
   },
-  list:{
+  list: {
     getAllList: (model) => `${API_URL}/api/list/${model}`,
   },
   universities: {
-    getAllUniversity : `${API_URL}/api/list/university`,
-    getUniversityList : `${API_URL}/api/detail/university/university-list`,
-    getUniversityById : `${API_URL}/api/detail/university`,
-    approveUniversity : (universityId) => `${API_URL}/api/university/approve/${universityId}`,
-    disapproveUniversity : (universityId) => `${API_URL}/api/university/disapprove/${universityId}`,
+    getAllUniversity: `${API_URL}/api/list/university`,
+    getUniversityList: `${API_URL}/api/detail/university/university-list`,
+    getUniversityById: `${API_URL}/api/detail/university`,
+    approveUniversity: (universityId) =>
+      `${API_URL}/api/university/approve/${universityId}`,
+    disapproveUniversity: (universityId) =>
+      `${API_URL}/api/university/disapprove/${universityId}`,
   },
   scholarships: {
     getAllScholarships: `${API_URL}/api/list/scholarship`,
@@ -122,13 +129,21 @@ const config = {
     getAllHealthArticles: `${API_URL}/api/health/health-articles`,
     getHealthArticleById: (id) => `${API_URL}/api/health/health-articles/${id}`,
   },
-  contentCreation : {
-    createUniversity : `${API_URL}/api/detail/university/addUniversity`,
-    createJob : `${API_URL}/api/jobs/addJob`,
-    createAccomodation : `${API_URL}`
+  contentCreation: {
+    createUniversity: `${API_URL}/api/detail/university/addUniversity`,
+    createJob: `${API_URL}/api/jobs/addJob`,
+    createAccomodation: `${API_URL}`,
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,
-  }
-}
+  },
+  follow: {
+    follow: (endpoint, targetUserId) =>
+      `${API_URL}/api/${endpoint}/${targetUserId}`,
+    unfollow: (targetUserId) => `${API_URL}/api/unfollow/${targetUserId}`,
+    checkStatus: (targetUserId) =>
+      `${API_URL}/api/followers/check/${targetUserId}`,
+    getFollowersCount: (userId) => `${API_URL}/api/followers/count/${userId}`,
+  },
+};
 export default config;

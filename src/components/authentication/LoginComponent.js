@@ -9,7 +9,7 @@ import { Checkbox, InputLabel } from "@mui/material";
 import { LoadingSpinner, LoadingOverlay } from "./../reusable/Loading.js";
 
 // LOGIN COMPONENT
-const LoginComponent = () => {
+const LoginComponent = ({ auth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -88,11 +88,13 @@ const LoginComponent = () => {
 
   // Loading spinner while logging in
   if (status === "loading") {
-    return <LoadingOverlay isFullScreen={true} message="We are logging you in..." />;
+    return (
+      <LoadingOverlay isFullScreen={true} message="We are logging you in..." />
+    );
   }
 
   return (
-    <ContainerComponent title="LOG IN" className="lg:h-[718px]">
+    <ContainerComponent auth={auth} title="LOG IN" className="lg:h-[718px]">
       <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
         <FormInput
           name="email"
@@ -102,10 +104,16 @@ const LoginComponent = () => {
           onChange={handleEmailChange}
           required
           autoComplete="email"
-          className={`${emailError || error ? "border-rose-400 border-[1px]" : "border-emerald-400 border-[1px]"} hover:bg-gray-100`}
+          className={`${
+            emailError || error
+              ? "border-rose-400 border-[1px]"
+              : "border-emerald-400 border-[1px]"
+          } hover:bg-gray-100`}
         />
-        {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
-        
+        {emailError && (
+          <p className="text-red-500 text-sm mt-1">{emailError}</p>
+        )}
+
         <FormInput
           name="password"
           label="Password"
@@ -114,18 +122,20 @@ const LoginComponent = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
           autoComplete="current-password"
-          className={`${error ? "border-rose-400 border-[1px]" : ""} hover:bg-gray-100`}
+          className={`${
+            error ? "border-rose-400 border-[1px]" : ""
+          } hover:bg-gray-100`}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <div className="flex items-center space-x-2">
-          <Checkbox 
-            id="rememberMe" 
+          <Checkbox
+            id="rememberMe"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
           />
-          <InputLabel 
-            htmlFor="rememberMe" 
+          <InputLabel
+            htmlFor="rememberMe"
             className="text-sm text-gray-600 cursor-pointer"
           >
             Remember me
@@ -162,4 +172,3 @@ const LoginComponent = () => {
 };
 
 export default LoginComponent;
-

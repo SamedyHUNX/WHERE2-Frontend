@@ -21,7 +21,7 @@ const ProfilePicture = ({ userId, big = false, size = 8, onClick }) => {
   if (error) {
     return (
       <div className={`${containerClasses} bg-red-100`}>
-        <User size={big ? 48 : size * 2.5} className="text-red-500" />
+        <User size={big ? 48 : size * 2.5} className="text-black" />
       </div>
     );
   }
