@@ -314,44 +314,6 @@ const SettingPanel = () => {
                 </div>
               </div>
             </div>
-
-            <div className="p-4 mt-2 border-2 rounded-xl">
-              <h2 className="text-xl font-medium text-gray-900 my-8">
-                <span className="text-black">Personal Information</span>
-              </h2>
-              <div className="border-2 border-red-100 rounded-lg p-6 bg-red-50">
-                <div className="flex items-start space-x-4">
-                  <div className="mt-1">
-                    <AlertTriangle className="h-6 w-6 text-red-500" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-medium text-red-800">
-                      Delete Account
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-600">
-                      Once you delete your account, there is no going back.
-                      Please be certain. All of your data including saved
-                      preferences, history, and personal information will be
-                      permanently removed.
-                    </p>
-                    <div className="mt-4">
-                      <ButtonComponent
-                        variant="danger"
-                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
-                        onClick={() =>
-                          setUiState((prev) => ({
-                            ...prev,
-                            showDeleteModal: true,
-                          }))
-                        }
-                      >
-                        Delete Account
-                      </ButtonComponent>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </div>
