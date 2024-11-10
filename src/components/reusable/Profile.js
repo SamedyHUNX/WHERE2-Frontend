@@ -65,7 +65,12 @@ const Profile = ({ userData, isPublic }) => {
   }, [sidebarContent]);
 
   if (loading) {
-    return <LoadingOverlay />;
+    return (
+      <LoadingOverlay
+        isFullScreen={true}
+        message="We are fetching the profile..."
+      />
+    );
   }
 
   if (!role && !isPublic) {

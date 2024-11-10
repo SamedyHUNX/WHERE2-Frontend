@@ -73,7 +73,7 @@ const ProfileSidebar = ({ userInfo }) => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       {/* Sidebar */}
       <div className="w-64 h-screen bg-white shadow-lg rounded-lg pt-8 pb-8 px-4 space-y-6 fixed">
         <div className="flex flex-col items-center space-y-4">

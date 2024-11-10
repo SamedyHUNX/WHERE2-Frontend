@@ -59,7 +59,6 @@ const UserProfile = () => {
         <Profile userData={userData} />  
       </div>
       <FloatingContact />
-      {/* <Footer /> */}
     </>
   );
 };

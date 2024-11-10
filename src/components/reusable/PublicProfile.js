@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormInput from "./../../components/reusable/InputField";
 import { LoadingOverlay } from "../../components/reusable/Loading";
 import ProfilePicture from "./PictureUpload";
@@ -6,10 +6,14 @@ import { useParams } from "react-router-dom";
 import Navbar from "./../../components/reusable/Navbar";
 import FloatingContact from "./FloatingContact";
 import PublicSidebar from "./PublicSidebar";
+import { ChevronRight } from "lucide-react";
+import useIsMobile from "./../../hooks/useIsMobile";
 
 const PublicProfile = ({ userInfo }) => {
   const { userId } = useParams();
   const { loading } = { loading: false }; // Mock useAuth
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { isMobile } = useIsMobile();
 
   if (loading) {
     return (
@@ -24,14 +28,41 @@ const PublicProfile = ({ userInfo }) => {
     userInfo?.createdAt || new Date()
   ).toLocaleDateString("en-CA");
 
+  const sidebarClasses = isMobile
+    ? `fixed left-0 top-0 h-full bg-white z-40 w-64 shadow-lg transform 
+       ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+       transition-transform duration-300 ease-in-out pt-16`
+    : "hidden lg:block lg:w-1/4";
+
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-50 mt-[64px]">
+        {/* Mobile Toggle Button */}
+        {isMobile && (
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="fixed  top-[12vh] left-8 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-transform duration-200 ease-in-out"
+            style={{
+              transform: isSidebarOpen ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          >
+            <ChevronRight className="w-8 h-8 text-gray-600" />
+          </button>
+        )}
+
+        {/* Mobile Sidebar Overlay */}
+        {isMobile && isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 py-8">
-            {/* Sidebar - Hidden on mobile, shown on desktop */}
-            <div className="hidden lg:block lg:w-1/4">
+            {/* Sidebar */}
+            <div className={sidebarClasses}>
               <PublicSidebar userInfo={userInfo} />
             </div>
 
