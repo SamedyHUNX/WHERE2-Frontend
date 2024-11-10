@@ -4,16 +4,6 @@ import FollowButton from "./FollowButton";
 import { useParams } from "react-router-dom";
 import { User, MessageSquareText } from "lucide-react";
 
-// Sub-components for each section
-// const ProfileOverview = () => (
-//   <div className="p-6 bg-white rounded-lg">
-//     <h3 className="text-xl font-semibold mb-4">Profile Overview</h3>
-//     <div className="space-y-4">
-//       <p className="text-gray-600">Welcome to your profile overview!</p>
-//     </div>
-//   </div>
-// );
-
 const Universities = () => (
   <div className="p-6 bg-white rounded-lg">
     <h3 className="text-xl font-semibold mb-4">Universities</h3>
@@ -58,10 +48,7 @@ const ProfileSidebar = ({ userInfo }) => {
   // Define components for each tab
   const TabComponents = {
     profile: () => (
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Profile Overview</h2>
-        {/* Add profile overview content */}
-      </div>
+      <div className="space-y-4">{/* Add profile overview content */}</div>
     ),
     posts: () => (
       <div className="space-y-4">
