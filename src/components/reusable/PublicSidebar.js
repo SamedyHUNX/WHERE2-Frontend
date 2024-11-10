@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import ButtonComponent from "./Button";
 import FollowButton from "./FollowButton";
-import { useParams, useNavigate, Routes, Route } from "react-router-dom";
-import { User, Building2, GraduationCap, Heart, Users } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { User, MessageSquareText } from "lucide-react";
 
 // Sub-components for each section
-const ProfileOverview = () => (
-  <div className="p-6 bg-white rounded-lg">
-    <h3 className="text-xl font-semibold mb-4">Profile Overview</h3>
-    <div className="space-y-4">
-      <p className="text-gray-600">Welcome to your profile overview!</p>
-    </div>
-  </div>
-);
+// const ProfileOverview = () => (
+//   <div className="p-6 bg-white rounded-lg">
+//     <h3 className="text-xl font-semibold mb-4">Profile Overview</h3>
+//     <div className="space-y-4">
+//       <p className="text-gray-600">Welcome to your profile overview!</p>
+//     </div>
+//   </div>
+// );
 
 const Universities = () => (
   <div className="p-6 bg-white rounded-lg">
@@ -53,24 +53,31 @@ const Community = () => (
 const ProfileSidebar = ({ userInfo }) => {
   const { userId: targetUserId } = useParams();
   const { userId: currentUserId } = { userId: "123" }; // Mock useAuth
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
 
+  // Define components for each tab
+  const TabComponents = {
+    profile: () => (
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Profile Overview</h2>
+        {/* Add profile overview content */}
+      </div>
+    ),
+    posts: () => (
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Posts</h2>
+        {/* Add posts content */}
+      </div>
+    ),
+  };
+
   const menuItems = [
-    { icon: <User size={20} />, label: "Profile Overview", path: "profile" },
-    {
-      icon: <Building2 size={20} />,
-      label: "Universities",
-      path: "universities",
-    },
-    {
-      icon: <GraduationCap size={20} />,
-      label: "Scholarships",
-      path: "scholarships",
-    },
-    { icon: <Heart size={20} />, label: "Health", path: "health" },
-    { icon: <Users size={20} />, label: "Community", path: "community" },
+    { icon: <User size={20} />, label: "Profile Overview", id: "profile" },
+    { icon: <MessageSquareText size={20} />, label: "Posts", id: "posts" },
   ];
+
+  // Get the current component based on active tab
+  const CurrentTabComponent = TabComponents[activeTab] || TabComponents.profile;
 
   return (
     <div className="flex w-full">
@@ -100,20 +107,17 @@ const ProfileSidebar = ({ userInfo }) => {
         <nav className="space-y-2">
           {menuItems.map((item) => (
             <button
-              key={item.path}
-              onClick={() => {
-                setActiveTab(item.path);
-                navigate(item.path);
-              }}
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
-                activeTab === item.path
+                activeTab === item.id
                   ? "bg-blue-50 text-blue-600 shadow-sm"
                   : "hover:bg-gray-50 text-gray-700"
               }`}
             >
               {React.cloneElement(item.icon, {
                 className:
-                  activeTab === item.path ? "text-blue-600" : "text-gray-500",
+                  activeTab === item.id ? "text-blue-600" : "text-gray-500",
               })}
               <span className="text-sm font-medium">{item.label}</span>
             </button>
@@ -127,13 +131,7 @@ const ProfileSidebar = ({ userInfo }) => {
 
       {/* Main Content Area */}
       <div className="ml-72 flex-1 p-8">
-        <Routes>
-          <Route path="profile" element={<ProfileOverview />} />
-          <Route path="universities" element={<Universities />} />
-          <Route path="scholarships" element={<Scholarships />} />
-          <Route path="health" element={<Health />} />
-          <Route path="community" element={<Community />} />
-        </Routes>
+        <CurrentTabComponent />
       </div>
     </div>
   );
