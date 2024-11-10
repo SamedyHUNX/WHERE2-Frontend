@@ -23,7 +23,7 @@ const ListingComponent = ({
   };
 
   const handleConfirmAction = () => {
-    const confirmAction = actions.find(action => action.requiresConfirmation);
+    const confirmAction = actions.find((action) => action.requiresConfirmation);
     if (confirmAction) {
       confirmAction.onClick(selectedItemId);
     }
@@ -37,73 +37,99 @@ const ListingComponent = ({
   };
 
   return (
-    <section className="lg:w-full bg-white rounded-lg shadow-lg h-full shadow-lg border-2 border-gray-200 rounded-4xl">
-      <div className="flex justify-between items-center py-5 w-[80%] mx-auto">
-        <h1 className="text-3xl text-blue-600 font-bold">{title}</h1>
-        <div className="flex gap-2 sm:hidden">
-          <div className="bg-gray-600 text-white p-4 rounded-lg w-[160px]">
-            <p className="text-sm">Total {title}</p>
-            <p className="text-4xl font-bold">{totalItems}</p>
-          </div>
-          {additionalStats &&
-            additionalStats.map((stat, index) => (
+    <section className="w-full bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      {/* Header Section */}
+      <div className="px-6 py-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <h1 className="text-2xl lg:text-3xl text-blue-600 font-bold tracking-tight">
+            {title}
+          </h1>
+
+          {/* Stats Cards */}
+          <div className="flex flex-wrap gap-4 w-full lg:w-auto">
+            <div className="bg-gray-700 text-white p-4 rounded-xl shadow-md flex-1 lg:flex-none lg:w-fit">
+              <p className="text-sm font-medium text-gray-200">Total {title}</p>
+              <p className="text-3xl font-bold mt-1">{totalItems}</p>
+            </div>
+
+            {additionalStats?.map((stat, index) => (
               <div
                 key={index}
-                className="bg-blue-600 text-white p-4 rounded-lg w-[160px]"
+                className="bg-blue-600 text-white p-4 rounded-xl shadow-md flex-1 lg:flex-none lg:w-fit"
               >
-                <p className="text-sm">{stat.label}</p>
-                <p className="text-4xl font-bold">{stat.value}</p>
+                <p className="text-sm font-medium text-blue-100">
+                  {stat.label}
+                </p>
+                <p className="text-3xl font-bold mt-1">{stat.value}</p>
               </div>
             ))}
+          </div>
         </div>
       </div>
-      <table className="w-[90%] mx-auto">
-        <thead>
-          <tr className="text-center h-full">
-            {columns.map((column, index) => (
-              <th key={index} className="pb-4">
-                {column}
-              </th>
-            ))}
-            <th className="pb-4">Action</th>
-          </tr>
-        </thead>
-        <tbody className="w-full h-full">
-          {data.map((item) => (
-            <tr key={item.id} className="border-t h-full">
-              {columns.map((column, index) => (
-                <td
-                  key={index}
-                  className="py-4 text-center h-full truncate max-w-[150px]"
+
+      {/* Table Section */}
+      <div className="overflow-x-auto">
+        <div className="inline-block min-w-full align-middle">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                {columns.map((column, index) => (
+                  <th
+                    key={index}
+                    className="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider text-center"
+                  >
+                    {column}
+                  </th>
+                ))}
+                <th className="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider text-center">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data.map((item) => (
+                <tr
+                  key={item.id}
+                  className="hover:bg-gray-50 transition-colors"
                 >
-                  {item[column]}
-                </td>
-              ))}
-              <td className="py-4">
-                <div className="flex gap-4 sm:gap-1 justify-center">
-                  {actions.map((action, index) => (
-                    <ButtonComponent
+                  {columns.map((column, index) => (
+                    <td
                       key={index}
-                      variant={action.variant}
-                      onClick={() => handleAction(action, item.id)}
+                      className="px-6 py-4 text-sm text-gray-600 text-center whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]"
                     >
-                      {action.icon}
-                      {action.label}
-                    </ButtonComponent>
+                      {item[column]}
+                    </td>
                   ))}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {actions.map((action, index) => (
+                        <ButtonComponent
+                          key={index}
+                          variant={action.variant}
+                          onClick={() => handleAction(action, item.id)}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-sm"
+                        >
+                          {action.icon}
+                          <span className="hidden sm:inline">
+                            {action.label}
+                          </span>
+                        </ButtonComponent>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <DeleteConfirmationModal
         show={showModal}
         onClose={handleCloseModal}
         onConfirm={handleConfirmAction}
-        warningMsg={"Are you sure you want to perform this action?"}
-        type={"Confirm"}
+        warningMsg="Are you sure you want to perform this action?"
+        type="Confirm"
       />
     </section>
   );
