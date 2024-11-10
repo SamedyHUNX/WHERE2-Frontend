@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FormInput from "./../../components/reusable/InputField";
-import { LoadingOverlay } from "../../components/reusable/Loading";
+import { LoadingOverlay } from "./../../components/reusable/Loading";
 import ProfilePicture from "./PictureUpload";
 import { useParams } from "react-router-dom";
 import Navbar from "./../../components/reusable/Navbar";
@@ -11,7 +11,7 @@ import useIsMobile from "./../../hooks/useIsMobile";
 
 const PublicProfile = ({ userInfo }) => {
   const { userId } = useParams();
-  const { loading } = { loading: false }; // Mock useAuth
+  const { loading } = { loading: false };
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { isMobile } = useIsMobile();
 

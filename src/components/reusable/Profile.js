@@ -117,7 +117,7 @@ const Profile = ({ userData, isPublic }) => {
               {isMobile && !sidebarOpen && (
                 <button
                   onClick={toggleSidebar}
-                  className="fixed left-4 z-20 p-3 text-black bg-white rounded-full shadow-md"
+                  className="fixed left-6 z-20 p-3 text-black bg-white rounded-full shadow-md"
                 >
                   <ChevronRight size={24} />
                 </button>

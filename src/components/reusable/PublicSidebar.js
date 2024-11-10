@@ -3,6 +3,8 @@ import ButtonComponent from "./Button";
 import FollowButton from "./FollowButton";
 import { useParams } from "react-router-dom";
 import { User, MessageSquareText } from "lucide-react";
+import CollectionPanel from "./CollectionPanel";
+import PublicProfile from "./PublicProfile";
 
 const Universities = () => (
   <div className="p-6 bg-white rounded-lg">
@@ -47,13 +49,10 @@ const ProfileSidebar = ({ userInfo }) => {
 
   // Define components for each tab
   const TabComponents = {
-    profile: () => (
-      <div className="space-y-4">{/* Add profile overview content */}</div>
-    ),
+    profile: () => <div className="space-y-4"></div>,
     posts: () => (
       <div className="space-y-4">
         <h2 className="text-2xl font-bold">Posts</h2>
-        {/* Add posts content */}
       </div>
     ),
   };
