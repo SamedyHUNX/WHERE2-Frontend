@@ -133,10 +133,7 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
               sidebarContent !== "discussionListing" ? (
-                <CollectionPanel
-                  category={sidebarContent}
-                  className="h-[100vh]"
-                />
+                <CollectionPanel category={sidebarContent} className="h-full" />
               ) : (
                 <ContentComponent userInfo={userData} className="h-full" />
               )}
