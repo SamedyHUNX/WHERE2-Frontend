@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { User, MessageSquareText, ChevronRight } from 'lucide-react';
 import ButtonComponent from './Button';
+import { LoadingOverlay } from './Loading';
 import useIsMobile from './../../hooks/useIsMobile';
 import useAuth from './../../hooks/useAuth';
 import Navbar from './Navbar';
@@ -101,7 +102,7 @@ const PublicProfilePage = ({ userInfo }) => {
   
     // Updated sidebar classes to handle mobile transitions
     const sidebarClasses = isMobile
-      ? `fixed left-0 top-0 h-full bg-white z-40 w-64 shadow-lg transform 
+      ? `fixed left-0 top-0 h-full bg-white z-40 w-64 shadow-lg transform mt-[64px] 
          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
          transition-transform duration-300 ease-in-out pt-16`
       : "w-64 h-screen bg-white shadow-lg rounded-lg pt-8 pb-8 px-4 space-y-6";
@@ -109,7 +110,7 @@ const PublicProfilePage = ({ userInfo }) => {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-gray-50 mt-[96px]">
+        <div className="min-h-screen bg-gray-50 mt-[64px]">
           {/* Mobile Toggle Button */}
           {isMobile && (
             <button
@@ -138,7 +139,7 @@ const PublicProfilePage = ({ userInfo }) => {
             <div className={sidebarClasses}>
               <div className="flex flex-col items-center space-y-4">
                 <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
-                  <User />
+                  <User size={36}/>
                 </div>
                 <div className="text-center">
                   <h2 className="font-semibold text-lg">
@@ -219,12 +220,7 @@ const PublicProfilePage = ({ userInfo }) => {
   
     if (loading) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading profile...</p>
-          </div>
-        </div>
+        <LoadingOverlay isFullScreen={true} message='We are fetching the profile...'/>
       );
     }
   
