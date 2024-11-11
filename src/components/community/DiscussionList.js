@@ -55,6 +55,7 @@ const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView, userId }) 
         </h2>
         <ButtonComponent
           variant="primary"
+          rounded={false}
           className={`${
             isDiscussionsPath
               ? "w-[197px] sm:w-full h-[38px] lg:w-[343px] sm:h-[50px]"
