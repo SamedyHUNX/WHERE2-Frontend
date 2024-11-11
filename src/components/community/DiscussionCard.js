@@ -53,7 +53,7 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
   // Navigate to user profile on click
   const handleUserClick = (userId) => (e) => {
     e.stopPropagation();
-    navigate(`/user/${userId}`);
+    navigate(`/public/user/${userId}`);
   };
 
   // Expand or collapse the discussion card

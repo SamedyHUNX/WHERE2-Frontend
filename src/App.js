@@ -38,7 +38,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 // import SigninPage from "./pages/SigninPage";
 // import SignupPage from "./pages/SignupPage";
 import FloatingContact from "./components/reusable/FloatingContact";
-import PublicProfilePage from "./components/reusable/PublicProfilePage";
+import PublicProfileContainer from "./components/reusable/PublicProfilePage";
 
 
 const queryClient = new QueryClient();
@@ -115,7 +115,7 @@ const router = createBrowserRouter([
     element: <Navigate to="/discussions" replace />,
   },
   { path: "/health", element: <LoggedInOnlyRoute><HealthPage /></LoggedInOnlyRoute> },
-  // { path: "/user/:userId", element: <VisitProfile /> },
+  { path: "/user/:userId", element: <VisitProfile /> },
   {
     path: "/universities",
     element: <UniversityPage />,
@@ -163,7 +163,7 @@ const router = createBrowserRouter([
   { path: "/health/article/:id", element: <HealthArticlePage /> },
   { path: "/about-us", element: <AboutUsPage />},
   { path: '/contact-us', element: <FloatingContact />},
-  { path: '/user/:userId', element: <PublicProfilePage/> }
+  { path: '/public/user/:userId', element: <PublicProfileContainer/> }
 ]);
 
 function App() {

@@ -30,7 +30,7 @@ const DiscussionCard = ({ discussion }) => {
 
   const handleUserClick = (userId) => (e) => {
     e.stopPropagation();
-    navigate(`/user/${userId}`);
+    navigate(`/public/user/${userId}`);
   };
 
   const toggleExpand = () => {
