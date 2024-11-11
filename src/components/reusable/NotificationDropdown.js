@@ -92,13 +92,13 @@ const NotificationDropdown = () => {
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={user?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={followerUser?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
                   <span className="font-medium">
-                    {`${user?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`}
+                    {`${followerUser?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`}
                   </span>
                   <span className="ml-1">sent you a message:</span>
                   <p className="text-sm text-gray-600 mt-1">{metadata?.messagePreview}</p>
