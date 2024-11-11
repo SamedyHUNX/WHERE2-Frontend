@@ -15,6 +15,7 @@ import CollectionPanel from "./CollectionPanel.js";
 import SettingPanel from "./../SettingPanel.js";
 import adminContentListing from "./../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
 import DiscussionList from "./../community/DiscussionList.js";
+import MessageListing from "../accountUtilities/sidebarComponents/Developer/MessageListing.js";
 
 export const SidebarContentContext = createContext();
 
@@ -35,6 +36,7 @@ const contentComponents = {
   collectionPanel: CollectionPanel,
   setting: SettingPanel,
   discussionListing: DiscussionList,
+  messageListing : MessageListing
 };
 
 const Profile = ({ userData, isPublic }) => {
