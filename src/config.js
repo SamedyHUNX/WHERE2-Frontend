@@ -148,6 +148,11 @@ const config = {
   messages: {
     getMessages: (userId) => `${API_URL}/api/user/message/${userId}`,
     send: `${API_URL}/api/user/message/`,
+  },
+  notifications: {
+    getNotifications: (userId) => `${API_URL}/api/user/notification/${userId}`,
+    markAsRead: (notificationId) =>
+      `${API_URL}/api/user/notification/mark-as-read/${notificationId}`,
   }
 };
 export default config;

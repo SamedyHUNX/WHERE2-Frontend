@@ -7,6 +7,7 @@ import useAuth from "./../../hooks/useAuth";
 import ProfilePicture from "./PictureUpload";
 import ButtonComponent from "./Button";
 import TypewriterEffect from "./../../styles/TypeWriterEffect";
+import NotificationDropdown from "./NotificationDropdown";
 
 import {
   School,
@@ -147,6 +148,9 @@ const Navbar = ({ isBanner }) => {
                 className="hover:bg-cyan-500"
               />
             )}
+            {
+              isLoggedIn && <NotificationDropdown/>
+            }
             {isLoggedIn ? (
               <Link to={`/profile/${encodedIdentifier}`}>
                 <ProfilePicture userId={userId} />
