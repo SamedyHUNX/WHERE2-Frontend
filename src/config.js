@@ -153,7 +153,8 @@ const config = {
     getNotifications: `${API_URL}/api/notifications`,
     markAsRead:
       `${API_URL}/api/notifications/read`,
-    readAll: `${API_URL}/api/notifications/read-all`
+    readAll: `${API_URL}/api/notifications/read-all`,
+    delete: (notificationId) => `${API_URL}/api/notifications/${notificationId}l`
   }
 };
 export default config;
