@@ -12,6 +12,7 @@ import FloatingContact from './FloatingContact';
 import config from '../../config';
 import axios from 'axios';
 import DiscussionList from './../community/DiscussionList';
+import MessageBox from './MessageBox';
 
 const PublicProfilePage = ({ userInfo }) => {
     const { userId: targetUserId } = useParams();
@@ -19,6 +20,7 @@ const PublicProfilePage = ({ userInfo }) => {
     const [activeTab, setActiveTab] = useState("profile");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { isMobile } = useIsMobile();
+    const [ showMessages, setShowMessages ] = useState(false);
   
     const formattedDate = new Date(
       userInfo?.createdAt || new Date()
@@ -177,9 +179,17 @@ const PublicProfilePage = ({ userInfo }) => {
                 ))}
               </nav>
   
-              <ButtonComponent className="w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <ButtonComponent
+              className="w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={() => setShowMessages(true)}>
                 Message
               </ButtonComponent>
+                    {showMessages && (
+                <MessageBox 
+                receiverId={targetUserId} 
+                onClose={() => setShowMessages(false)}
+                />
+            )}
             </div>
   
             {/* Main Content - Adjusted margin for mobile */}
