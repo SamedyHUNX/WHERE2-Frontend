@@ -144,7 +144,7 @@ const MessagesContent = ({ targetUserId }) => {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)]">
+    <div className="flex flex-col pt-[32px] h-[calc(100vh-200px)]">
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 ? (
           <div className="text-center text-gray-500">
