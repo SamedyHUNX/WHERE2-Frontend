@@ -29,7 +29,7 @@ const NotificationDropdown = () => {
       fetchNotifications();
       const interval = setInterval(fetchNotifications, 30000);
       return () => clearInterval(interval);
-    }, []);
+    }, [token]);
   
     const markAsRead = async (notificationId) => {
       try {
@@ -69,20 +69,22 @@ const NotificationDropdown = () => {
   
     const NotificationItem = ({ notification }) => {
       const getNotificationContent = () => {
-        const { type, metadata } = notification;
+        const { type, metadata, user } = notification;
         
         switch (type) {
           case 'follow':
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={metadata?.follower?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={user?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
-                  <span className="font-medium">{metadata?.follower?.name || 'Someone'}</span>
-                  <span className="ml-1">started following you</span>
+                  <span className="font-medium">
+                    {`${user?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`}
+                  </span>
+                  <span className="ml-1">{notification.content}</span>
                 </div>
               </div>
             );
@@ -90,12 +92,14 @@ const NotificationDropdown = () => {
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={metadata?.sender?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={user?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
-                  <span className="font-medium">{metadata?.sender?.name || 'Someone'}</span>
+                  <span className="font-medium">
+                    {`${user?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`}
+                  </span>
                   <span className="ml-1">sent you a message:</span>
                   <p className="text-sm text-gray-600 mt-1">{metadata?.messagePreview}</p>
                 </div>

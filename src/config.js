@@ -150,7 +150,7 @@ const config = {
     send: `${API_URL}/api/user/message/`,
   },
   notifications: {
-    getNotifications: (userId) => `${API_URL}/api/user/notification/${userId}`,
+    getNotifications: `${API_URL}/api/notifications`,
     markAsRead: (notificationId) =>
       `${API_URL}/api/user/notification/mark-as-read/${notificationId}`,
   }
