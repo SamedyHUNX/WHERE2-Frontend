@@ -83,15 +83,14 @@ const MessagesContent = ({ targetUserId }) => {
   const MessageBubble = ({ message }) => {
     const isCurrentUser = message.senderId === currentUserId;
     
-    // Safely access nested properties
-    const senderProfile = message.sender?.profile || {};
-    const receiverProfile = message.receiver?.profile || {};
-    const profile = isCurrentUser ? senderProfile : receiverProfile;
+    // For incoming messages (not current user), show sender's profile
+    // For outgoing messages (current user), show receiver's profile
+    const profileToShow = message.sender?.profile || {};
     
     // Fallback values for profile data
-    const firstName = profile.firstName || 'User';
-    const lastName = profile.lastName || '';
-    const profilePictureUrl = profile.profilePictureUrl || '/api/placeholder/32/32';
+    const firstName = profileToShow.firstName || 'User';
+    const lastName = profileToShow.lastName || '';
+    const profilePictureUrl = profileToShow.profilePictureUrl || '/api/placeholder/32/32';
     
     return (
       <div className={`flex items-start space-x-2 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
