@@ -95,7 +95,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
       </h2>
 
       {isLoggedIn && !showReplyForm && (
-        <div className={`w-full flex justify-end ${publicProfilePath ? "hidden" : ""}`}>
+        <div className={`w-full flex justify-end`}>
           <ButtonComponent
             variant={isHealthPagePath ? "ghost-dark" : "ghost"}
             className={`hover:visible text-sm flex ${
@@ -156,15 +156,17 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
                 <div className="flex items-center gap-2 mb-2">
                   <ProfilePicture userId={comment.user.id} />
                   <span
-                    className={`text-sm truncate max-w-[200px] ${
-                      isHealthPagePath ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    {comment.user.profile.userName
-                      ? comment.user.profile.userName
-                      : comment.user.profile.entity ? comment.user.profile.entity : comment.user.profile.email}
-                    <span> says:</span>
-                  </span>
+  className={`text-sm truncate max-w-[200px] ${
+    isHealthPagePath ? "text-gray-300" : "text-gray-600"
+  }`}
+>
+  {comment.user?.profile?.userName
+    ? comment.user.profile.userName
+    : comment.user?.profile?.entity
+    ? comment.user.profile.entity
+    : comment.user?.profile?.email || "Unknown User"}
+  <span> says:</span>
+</span>
                 </div>
                 {canDeleteComment(comment) && (
                   <div
