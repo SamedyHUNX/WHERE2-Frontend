@@ -136,7 +136,7 @@ const NotificationDropdown = () => {
         </button>
   
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border overflow-hidden z-50">
+          <div className="absolute right-0 mt-2 w-[25vw] bg-white rounded-lg shadow-lg border overflow-hidden z-50">
             <div className="p-4 border-b flex justify-between items-center">
               <h3 className="font-medium">Notifications</h3>
               {unreadCount > 0 && (
