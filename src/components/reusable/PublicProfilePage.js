@@ -11,7 +11,7 @@ import ProfilePicture from './PictureUpload';
 import FloatingContact from './FloatingContact';
 import config from '../../config';
 import axios from 'axios';
-import DiscussionContainer from './DiscussionContainer';
+import DiscussionList from './../community/DiscussionList';
 
 const PublicProfilePage = ({ userInfo }) => {
     const { userId: targetUserId } = useParams();
@@ -90,7 +90,7 @@ const PublicProfilePage = ({ userInfo }) => {
     const PostsContent = () => (
       <div className="p-2">
         <h2 className="text-2xl font-bold mt-4 mb-6 underline mx-4 tracking-tight">All Posts from this user</h2>
-        <DiscussionContainer/>
+        <DiscussionList userId={targetUserId}/>
       </div>
     );
   

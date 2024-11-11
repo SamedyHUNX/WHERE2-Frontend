@@ -10,26 +10,27 @@ const useDiscussions = (pathname, userId = null) => {
 
   const fetchDiscussions = async () => {
     let url = config.community.getDiscussions;
-
     const isDashboardForDeveloper = location.pathname.startsWith("/profile") && role === "developer";
+    const publicProfilePath = location.pathname.startsWith("/public");
     
-    // For developer dashboard, fetch all discussions
-    // For other paths, fetch discussions specific to the pathname
+    // Adjust URL for pathname if not in developer dashboard
     if (!isDashboardForDeveloper) {
       url += `?pathname=${encodeURIComponent(pathname)}`;
     }
 
     try {
-      const response = await axios.post(url, { isDashboardForDeveloper });
-      // Check if response data structure matches expectations
+      const response = await axios.post(url, { isDashboardForDeveloper, publicProfilePath, userId });
+
+      // Validate response structure
       if (!response.data || !response.data.data || !response.data.data.discussions) {
         throw new Error('Invalid response structure');
       }
 
-      // If it's the developer dashboard, we might want to filter or sort the discussions
+      const discussions = response.data.data.discussions;
+
+      // Filter discussions if on the developer dashboard
       if (isDashboardForDeveloper) {
-        const allDiscussions = response.data.data.discussions;
-        return allDiscussions.filter(discussion => (
+        return discussions.filter(discussion => (
           discussion.developerOnly ||
           discussion.createdBy?.role === "developer" ||
           discussion.tags?.includes("technical") ||
@@ -37,16 +38,16 @@ const useDiscussions = (pathname, userId = null) => {
         ));
       }
 
-      return response.data.data.discussions;
+      return discussions;
     } catch (err) {
       console.error('Error fetching discussions:', err);
       throw err;
     }
   };
 
-  // Use useQuery with the object-based API
+  // Use `useQuery` with the extended queryKey
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['discussions', pathname, role], // Added role to queryKey
+    queryKey: ['discussions', pathname, role, userId], // Added `userId` to queryKey
     queryFn: fetchDiscussions,
     enabled: !!pathname,
   });

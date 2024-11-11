@@ -8,10 +8,10 @@ import useDiscussions from "./../../hooks/useDiscussions";
 import { Pencil } from "lucide-react";
 import useAuth from "./../../hooks/useAuth";
 
-const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView }) => {
+const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView, userId }) => {
   const location = useLocation();
   const { discussions, loading, error, setDiscussions, refetch } =
-    useDiscussions(location.pathname);
+    useDiscussions(location.pathname, userId);
   const { role } = useAuth();
 
   const isDashboardForDeveloper =
