@@ -11,6 +11,7 @@ import ProfilePicture from './PictureUpload';
 import FloatingContact from './FloatingContact';
 import config from '../../config';
 import axios from 'axios';
+import DiscussionContainer from './DiscussionContainer';
 
 const PublicProfilePage = ({ userInfo }) => {
     const { userId: targetUserId } = useParams();
@@ -55,7 +56,7 @@ const PublicProfilePage = ({ userInfo }) => {
             { label: "Location", value: userInfo?.location },
             { label: "Account Creation Date", value: formattedDate }
           ].map((field) => (
-            <div key={field.label} className="space-y-2">
+            <div key={field.label} className="space-y-4">
               <label className="block text-sm font-medium text-gray-700">
                 {field.label}
               </label>
