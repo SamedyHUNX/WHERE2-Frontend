@@ -99,6 +99,7 @@ const PublicProfilePage = ({ userInfo }) => {
   
     const CurrentTabComponent = TabComponents[activeTab] || TabComponents.profile;
   
+    // Updated sidebar classes to handle mobile transitions
     const sidebarClasses = isMobile
       ? `fixed left-0 top-0 h-full bg-white z-40 w-64 shadow-lg transform 
          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
@@ -113,12 +114,14 @@ const PublicProfilePage = ({ userInfo }) => {
           {isMobile && (
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="fixed top-20 left-8 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-transform duration-200 ease-in-out"
-              style={{
-                transform: isSidebarOpen ? "rotate(180deg)" : "rotate(0deg)",
-              }}
+              className="fixed top-24 left-6 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors duration-200 ease-in-out"
             >
-              <ChevronRight className="w-8 h-8 text-gray-600" />
+              <ChevronRight 
+                size={36}
+                className={`w-6 h-6 text-gray-600 transform transition-transform duration-200 ease-in-out ${
+                  isSidebarOpen ? 'rotate-180' : ''
+                }`}
+              />
             </button>
           )}
   
@@ -131,7 +134,7 @@ const PublicProfilePage = ({ userInfo }) => {
           )}
   
           <div className="flex">
-            {/* Sidebar */}
+            {/* Sidebar - Now always rendered but transformed off-screen on mobile when closed */}
             <div className={sidebarClasses}>
               <div className="flex flex-col items-center space-y-4">
                 <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
@@ -153,7 +156,10 @@ const PublicProfilePage = ({ userInfo }) => {
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
-                    onClick={() => setActiveTab(item.id)}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      if (isMobile) setIsSidebarOpen(false);
+                    }}
                     className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
                       activeTab === item.id
                         ? "bg-blue-50 text-blue-600 shadow-sm"
@@ -174,8 +180,8 @@ const PublicProfilePage = ({ userInfo }) => {
               </ButtonComponent>
             </div>
   
-            {/* Main Content */}
-            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-8"}`}>
+            {/* Main Content - Adjusted margin for mobile */}
+            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-8"} p-4`}>
               <div className="bg-white rounded-lg shadow-sm">
                 <CurrentTabComponent />
               </div>
