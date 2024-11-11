@@ -89,7 +89,7 @@ const PublicProfilePage = ({ userInfo }) => {
   
     const PostsContent = () => (
       <div className="p-8">
-        <h2 className="text-2xl font-bold mb-6">Posts</h2>
+        <h2 className="text-2xl font-bold mt-4 mb-6 underline">Posts</h2>
         <DiscussionContainer/>
       </div>
     );
