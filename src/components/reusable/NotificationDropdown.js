@@ -69,20 +69,20 @@ const NotificationDropdown = () => {
   
     const NotificationItem = ({ notification }) => {
       const getNotificationContent = () => {
-        const { type, metadata, user } = notification;
+        const { type, metadata, followerUser, user } = notification;
         
         switch (type) {
           case 'follow':
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={user?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={followerUser?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
                   <span className="font-medium">
-                    {`${user?.profile?.firstName || ''} ${user?.profile?.lastName || ''}`}
+                    {`${followerUser?.profile?.firstName || ''} ${followerUser?.profile?.lastName || ''}`}
                   </span>
                   <span className="ml-1">{notification.content}</span>
                 </div>
@@ -171,6 +171,6 @@ const NotificationDropdown = () => {
         )}
       </div>
     );
-  };
+};
   
-  export default NotificationDropdown;
+export default NotificationDropdown;
