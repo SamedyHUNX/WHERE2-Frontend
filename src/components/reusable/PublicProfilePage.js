@@ -90,7 +90,7 @@ const PublicProfilePage = ({ userInfo }) => {
     const PostsContent = () => (
       <div className="p-8">
         <h2 className="text-2xl font-bold mb-6">Posts</h2>
-        {/* Add posts content here */}
+        <DiscussionContainer/>
       </div>
     );
   
