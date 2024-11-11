@@ -72,7 +72,7 @@ const NotificationDropdown = () => {
     };
 
     const handleDelete = async (notificationId, e) => {
-      e.stopPropagation(); // Prevent notification click event from firing
+      e.stopPropagation();
       
       setDeletingNotifications(prev => ({
         ...prev,
