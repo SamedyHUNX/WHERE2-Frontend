@@ -145,5 +145,8 @@ const config = {
       `${API_URL}/api/followers/check/${targetUserId}`,
     getFollowersCount: (userId) => `${API_URL}/api/followers/count/${userId}`,
   },
+  messages: {
+    getMessages: (userId) => `${API_URL}/api/user/message/${userId}`,
+  }
 };
 export default config;

@@ -12,7 +12,8 @@ import FloatingContact from './FloatingContact';
 import config from './../../config';
 import axios from 'axios';
 import DiscussionList from './../community/DiscussionList';
-import MessageBox from './MessageBox';
+// import MessageBox from './MessageContent';
+import MessagesContent from './MessageContent';
 
 const PublicProfilePage = ({ userInfo }) => {
     const { userId: targetUserId } = useParams();
@@ -29,6 +30,7 @@ const PublicProfilePage = ({ userInfo }) => {
     const menuItems = [
       { icon: <User size={20} />, label: "Profile Overview", id: "profile" },
       { icon: <MessageSquareText size={20} />, label: "Posts", id: "posts" },
+      { icon: <MessageSquareText size={20} />, label: "Messages", id: "messages" },
     ];
   
     const MainProfileContent = () => (
@@ -99,6 +101,7 @@ const PublicProfilePage = ({ userInfo }) => {
     const TabComponents = {
       profile: MainProfileContent,
       posts: PostsContent,
+      messages: () => <MessagesContent targetUserId={targetUserId}/>
     };
   
     const CurrentTabComponent = TabComponents[activeTab] || TabComponents.profile;
@@ -181,15 +184,10 @@ const PublicProfilePage = ({ userInfo }) => {
   
               <ButtonComponent
               className="w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              onClick={() => setShowMessages(true)}>
-                Message
-              </ButtonComponent>
-                    {showMessages && (
-                <MessageBox 
-                receiverId={targetUserId} 
-                onClose={() => setShowMessages(false)}
-                />
-            )}
+              onClick={() => setActiveTab('messages')} // Update to switch to messages tab
+            >
+              Message
+            </ButtonComponent>
             </div>
   
             {/* Main Content - Adjusted margin for mobile */}
