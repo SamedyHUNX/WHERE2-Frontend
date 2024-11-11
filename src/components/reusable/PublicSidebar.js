@@ -3,8 +3,6 @@ import ButtonComponent from "./Button";
 import FollowButton from "./FollowButton";
 import { useParams } from "react-router-dom";
 import { User, MessageSquareText } from "lucide-react";
-import CollectionPanel from "./CollectionPanel";
-import PublicProfile from "./PublicProfile";
 
 const Universities = () => (
   <div className="p-6 bg-white rounded-lg">
@@ -66,7 +64,7 @@ const ProfileSidebar = ({ userInfo }) => {
   const CurrentTabComponent = TabComponents[activeTab] || TabComponents.profile;
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full h-full">
       {/* Sidebar */}
       <div className="w-64 h-screen bg-white shadow-lg rounded-lg pt-8 pb-8 px-4 space-y-6 fixed">
         <div className="flex flex-col items-center space-y-4">

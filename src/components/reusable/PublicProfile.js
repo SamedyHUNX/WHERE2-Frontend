@@ -32,7 +32,7 @@ const PublicProfile = ({ userInfo }) => {
     ? `fixed left-0 top-0 h-full bg-white z-40 w-64 shadow-lg transform 
        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
        transition-transform duration-300 ease-in-out pt-16`
-    : "hidden lg:block lg:w-1/4";
+    : "hidden lg:block lg:w-full max-w-[400px]";
 
   return (
     <>
@@ -59,7 +59,7 @@ const PublicProfile = ({ userInfo }) => {
           />
         )}
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 py-8">
             {/* Sidebar */}
             <div className={sidebarClasses}>

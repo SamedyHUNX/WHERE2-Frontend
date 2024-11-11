@@ -147,3 +147,64 @@ const Profile = ({ userData, isPublic }) => {
 };
 
 export default Profile;
+
+// import React, {createContext} from "react";
+// import ProfileLayout from "./../accountUtilities/sidebarComponents/User/ProfileLayout";
+// import Sidebar from "./../accountUtilities/Sidebar.js";
+// import useAuth from "./../../hooks/useAuth";
+// import UniversityListing from "./../accountUtilities/sidebarComponents/Developer/UniversityListing.js";
+// import AccommodationListing from "./../accountUtilities/sidebarComponents/Developer/AccommodationListing.js";
+// import UserListing from "./../accountUtilities/sidebarComponents/Developer/UsersListing.js";
+// import UserAccount from "./../../pages/UserAccount.js";
+// import PartTimeJobListing from "./../accountUtilities/sidebarComponents/Developer/PartTimeJobListing.js";
+// import AdminDashboard from "./../accountUtilities/sidebarComponents/Admin/Dashboard.js";
+// import adminContentListing from "./../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
+// import AdminContent from "./../accountUtilities/sidebarComponents/Admin/AdminContent.js";
+// import Logout from "./Logout.js";
+// import CollectionPanel from "./CollectionPanel.js";
+// import SettingPanel from "./../SettingPanel.js";
+// import DiscussionList from "./../community/DiscussionList.js";
+
+// export const SidebarContentContext = createContext();
+
+// const contentComponents = {
+//   schoolList: UniversityListing,
+//   account: UserAccount,
+//   userList: UserListing,
+//   jobList: PartTimeJobListing,
+//   adminContentListing: adminContentListing,
+//   accommodationList: AccommodationListing,
+//   adminDashboard: AdminDashboard,
+//   adminContent: AdminContent,
+//   logOut: ({ userInfo }) => {
+//     // Clear sidebarContent from localStorage when rendering Logout component
+//     localStorage.removeItem("sidebarContent");
+//     return <Logout userInfo={userInfo} />;
+//   },
+//   collectionPanel: CollectionPanel,
+//   setting: SettingPanel,
+//   discussionListing: DiscussionList,
+// };
+
+// const Profile = ({ userData, isPublic }) => {
+//   const { role, loading } = useAuth();
+
+//   return (
+//     <ProfileLayout
+//       sidebarComponent={Sidebar}
+//       contentComponents={contentComponents}
+//       userData={userData}
+//       userRole={role}
+//       isPublic={isPublic}
+//       loading={loading}
+//       loadingMessage="We are fetching the profile..."
+//       // Optional: customize other props
+//       mobileBreakpoint={980}
+//       sidebarWidth="w-64"
+//       defaultContent="account"
+//       persistContentKey="sidebarContent"
+//     />
+//   );
+// };
+
+// export default Profile;
