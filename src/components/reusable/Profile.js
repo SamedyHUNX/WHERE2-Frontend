@@ -132,6 +132,7 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "adminContentListing" &&
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
+              sidebarContent !== "messageListing" &&
               sidebarContent !== "discussionListing" ? (
                 <CollectionPanel category={sidebarContent} className="h-full" />
               ) : (
