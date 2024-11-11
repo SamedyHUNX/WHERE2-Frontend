@@ -3,7 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Send } from 'lucide-react';
 import useAuth from './../../hooks/useAuth';
+import FormInput from './InputField';
 import config from './../../config';
+import ButtonComponent from './Button';
 
 const MessagesContent = ({ targetUserId }) => {
   const [messages, setMessages] = useState([]);
@@ -160,20 +162,20 @@ const MessagesContent = ({ targetUserId }) => {
 
       <form onSubmit={sendMessage} className="p-4 border-t bg-white">
         <div className="flex space-x-2">
-          <input
+          <FormInput
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Type a message..."
           />
-          <button
+          <ButtonComponent
             type="submit"
             disabled={!newMessage.trim() || loading}
-            className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-blue-500 mt-2 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Send size={20} />
-          </button>
+            <Send size={24} />
+          </ButtonComponent>
         </div>
       </form>
     </div>
