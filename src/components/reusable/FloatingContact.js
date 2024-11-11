@@ -55,10 +55,10 @@ const FloatingContact = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
-    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-    if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = "Please enter a valid phone number";
-    }
+    // const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+    // if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
+    //   newErrors.phoneNumber = "Please enter a valid phone number";
+    // }
 
     if (formData.fullName.trim().length < 2) {
       newErrors.fullName = "Name must be at least 2 characters";
