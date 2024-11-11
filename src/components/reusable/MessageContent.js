@@ -112,7 +112,7 @@ const MessagesContent = ({ targetUserId }) => {
           <div
             className={`p-3 rounded-lg ${
               isCurrentUser
-                ? 'bg-blue-500 text-white'
+                ? 'bg-sky-500 text-white'
                 : 'bg-gray-100'
             }`}
           >
