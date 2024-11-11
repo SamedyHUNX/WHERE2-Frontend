@@ -38,7 +38,7 @@ export const useUniversityFunctions = (onUniversityUpdate) => {
         const baseActions = [
             {
                 variant: "ghost",
-                icon: null,
+                icon: <Eye/>,
                 label: "View",
                 onClick: (id) => handleView(id),
             }
