@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentSectionComponent from "./CommentSectionComponent";
-import ProfilePicture from "../reusable/PictureUpload";
+import ProfilePicture from "./../reusable/PictureUpload";
 import { useFetchBatchPhotos } from "./../../hooks/useFetchPhoto";
 import useIsMobile from "./../../hooks/useIsMobile";
 import useAuth from "./../../hooks/useAuth";
