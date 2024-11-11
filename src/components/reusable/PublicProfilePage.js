@@ -9,7 +9,7 @@ import Navbar from './Navbar';
 import FollowButton from './FollowButton';
 import ProfilePicture from './PictureUpload';
 import FloatingContact from './FloatingContact';
-import config from '../../config';
+import config from './../../config';
 import axios from 'axios';
 import DiscussionList from './../community/DiscussionList';
 import MessageBox from './MessageBox';
@@ -118,7 +118,7 @@ const PublicProfilePage = ({ userInfo }) => {
           {isMobile && (
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="fixed top-24 left-6 z-50 p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors duration-200 ease-in-out"
+              className="fixed top-24 left-6 z-20 p-3 text-black bg-white rounded-full shadow-md"
             >
               <ChevronRight 
                 size={36}
