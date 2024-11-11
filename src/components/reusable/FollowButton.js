@@ -198,7 +198,7 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
         {isLoading ? (
           <CircularProgress size={24} color="inherit" />
         ) : targetUserId === currentUserId ? (
-          "This is you"
+          "This is you!"
         ) : isFollowing ? (
           "Following"
         ) : (

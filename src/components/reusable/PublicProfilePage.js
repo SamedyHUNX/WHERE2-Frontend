@@ -164,15 +164,15 @@ const PublicProfilePage = ({ userInfo }) => {
                       setActiveTab(item.id);
                       if (isMobile) setIsSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 ${
+                    className={`w-full flex items-center space-x-3 p-4 rounded-lg transition-all duration-200 ${
                       activeTab === item.id
-                        ? "bg-blue-50 text-blue-600 shadow-sm"
+                        ? "bg-cyan-100 text-black shadow-sm"
                         : "hover:bg-gray-50 text-gray-700"
                     }`}
                   >
                     {React.cloneElement(item.icon, {
                       className:
-                        activeTab === item.id ? "text-blue-600" : "text-gray-500",
+                        activeTab === item.id ? "text-black" : "text-gray-500",
                     })}
                     <span className="text-sm font-medium">{item.label}</span>
                   </button>
