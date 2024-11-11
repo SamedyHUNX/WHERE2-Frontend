@@ -9,13 +9,15 @@ import { Reply } from "lucide-react";
 import config from "./../../config";
 import { Trash } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import useIsMobile from "./../../hooks/useIsMobile";
 import axios from "axios";
-import PublicProfile from "../reusable/PublicProfile";
 
 const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
   const { isLoggedIn, userId, role, token } = useAuth();
   const location = useLocation();
   const isHealthPagePath = location.pathname.startsWith("/health");
+  const publicProfilePath = location.pathname.startsWith("/public");
+  const { isMobile } = useIsMobile();
 
   const {
     comments,
@@ -93,7 +95,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
       </h2>
 
       {isLoggedIn && !showReplyForm && (
-        <div className="w-full flex justify-end">
+        <div className={`w-full flex justify-end ${publicProfilePath ? "hidden" : ""}`}>
           <ButtonComponent
             variant={isHealthPagePath ? "ghost-dark" : "ghost"}
             className={`hover:visible text-sm flex ${
@@ -104,7 +106,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
             onClick={() => setShowReplyForm(true)}
           >
             <Reply className="mt-1" size={18} />
-            <span className="mt-1 mr-1">reply</span>
+            <span className={`mt-1 mr-1 ${isMobile ? "hidden" : ""}`}>reply</span>
           </ButtonComponent>
         </div>
       )}
@@ -160,7 +162,7 @@ const CommentSectionComponent = ({ discussionId, onCommentAdded }) => {
                   >
                     {comment.user.profile.userName
                       ? comment.user.profile.userName
-                      : comment.user.profile.entity}
+                      : comment.user.profile.entity ? comment.user.profile.entity : comment.user.profile.email}
                     <span> says:</span>
                   </span>
                 </div>

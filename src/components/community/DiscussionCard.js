@@ -157,7 +157,7 @@ const DiscussionCard = ({ discussion, onDeleteSuccess }) => {
             <span>
               {discussion.user?.profile?.entity
                 ? discussion.user.profile.entity
-                : discussion.user?.profile?.userName}
+                : discussion.user?.profile?.userName ? discussion.user.profile.userName : discussion.user?.profile?.email}
             </span>
           </div>
         )}
