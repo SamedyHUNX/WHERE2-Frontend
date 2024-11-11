@@ -4,7 +4,7 @@ import axios from "axios";
 import config from "./../config";
 import useAuth from './useAuth';
 
-const useDiscussions = (pathname) => {
+const useDiscussions = (pathname, userId = null) => {
   const location = useLocation();
   const { role } = useAuth();
 

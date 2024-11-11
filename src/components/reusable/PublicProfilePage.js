@@ -103,7 +103,7 @@ const PublicProfilePage = ({ userInfo }) => {
   
     // Updated sidebar classes to handle mobile transitions
     const sidebarClasses = isMobile
-      ? `fixed left-0 top-0 h-full bg-white w-[50vw] z-40 w-64 shadow-lg transform mt-[64px] 
+      ? `fixed left-0 top-0 h-full bg-white w-[50vw] z-40 w-64 shadow-lg transform mt-[64px] shadow-md
          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
          transition-transform duration-300 ease-in-out pt-16 px-4`
       : "w-[25vw] h-screen bg-white shadow-lg rounded-lg pt-8 pb-8 px-4 space-y-8";

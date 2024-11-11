@@ -29,7 +29,7 @@ const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView }) => {
   if (loading) {
     return (
       <LoadingOverlay
-        className="abosolute min-h-screen"
+        isFullScreen={true}
         message="We are fetching..."
       />
     );
