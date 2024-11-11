@@ -18,29 +18,26 @@ const MessagesContent = ({ targetUserId }) => {
   };
 
   useEffect(() => {
-    if (!token) return; // Wait for token to be available
-  
+    if (!token) return;
+    
     fetchMessages();
     const interval = setInterval(fetchMessages, 10000);
-  
+    
     return () => clearInterval(interval);
-  }, [targetUserId, token]); // Include `token` as a dependency
-  
+  }, [targetUserId, token]);
+
   const fetchMessages = async () => {
     if (!token) {
       console.error("Token is not available");
       return;
     }
-  
+
     try {
       setLoading(true);
-  
-      console.log("Token:", token); // Check if token is available here
-  
       const response = await axios.get(config.messages.getMessages(targetUserId), {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       if (response.data.success) {
         setMessages(response.data.data);
         setError(null);
@@ -84,22 +81,31 @@ const MessagesContent = ({ targetUserId }) => {
   };
 
   const MessageBubble = ({ message }) => {
-    const isCurrentUser = message.sender.id === currentUserId;
-    const profile = isCurrentUser ? message.sender.profile : message.receiver.profile;
+    const isCurrentUser = message.senderId === currentUserId;
+    
+    // Safely access nested properties
+    const senderProfile = message.sender?.profile || {};
+    const receiverProfile = message.receiver?.profile || {};
+    const profile = isCurrentUser ? senderProfile : receiverProfile;
+    
+    // Fallback values for profile data
+    const firstName = profile.firstName || 'User';
+    const lastName = profile.lastName || '';
+    const profilePictureUrl = profile.profilePictureUrl || '/api/placeholder/32/32';
     
     return (
       <div className={`flex items-start space-x-2 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
         {!isCurrentUser && (
           <img 
-            src={profile.profilePictureUrl || '/api/placeholder/32/32'} 
-            alt={`${profile.firstName} ${profile.lastName}`}
+            src={profilePictureUrl}
+            alt={`${firstName} ${lastName}`}
             className="w-8 h-8 rounded-full"
           />
         )}
         <div className={`max-w-[70%] ${isCurrentUser ? 'order-1' : 'order-2'}`}>
           {!isCurrentUser && (
             <div className="text-sm text-gray-600 mb-1">
-              {profile.firstName} {profile.lastName}
+              {firstName} {lastName}
             </div>
           )}
           <div
@@ -117,8 +123,8 @@ const MessagesContent = ({ targetUserId }) => {
         </div>
         {isCurrentUser && (
           <img 
-            src={profile.profilePictureUrl || '/api/placeholder/32/32'} 
-            alt={`${profile.firstName} ${profile.lastName}`}
+            src={profilePictureUrl}
+            alt={`${firstName} ${lastName}`}
             className="w-8 h-8 rounded-full"
           />
         )}

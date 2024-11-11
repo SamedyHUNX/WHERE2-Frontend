@@ -147,6 +147,7 @@ const config = {
   },
   messages: {
     getMessages: (userId) => `${API_URL}/api/user/message/${userId}`,
+    send: `${API_URL}/api/user/message/`,
   }
 };
 export default config;
