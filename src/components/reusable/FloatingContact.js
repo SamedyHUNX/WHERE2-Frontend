@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FormInput from "./../reusable/InputField";
-import { Alert, AlertTitle } from "@mui/material";
 import ButtonComponent from "./Button";
 import config from "./../../config";
 import useAuth from "./../../hooks/useAuth";
@@ -9,7 +8,7 @@ import fetchProfile from "./functions/FetchProfile";
 import { MessageCircle, X } from "lucide-react";
 
 const FloatingContact = () => {
-  const { token, isLoggedIn, role } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [userData, setUserData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
