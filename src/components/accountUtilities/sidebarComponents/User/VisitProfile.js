@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { LoadingOverlay } from "./../../../reusable/Loading";
 import useAuth from "./../../../../hooks/useAuth";
 import FetchProfile from "./../../../reusable/functions/ViewProfile";
-import PublicProfile from "./../../../reusable/PublicProfile";
+import PublicProfilePage from "./../../../reusable/PublicProfilePage"
 
 const VisitProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -64,7 +64,7 @@ const VisitProfile = () => {
 
   return (
     <>
-      <PublicProfile userInfo={userData} />
+      <PublicProfilePage userInfo={userData} />
     </>
   );
 };

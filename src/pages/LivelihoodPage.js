@@ -1,7 +1,7 @@
 import Livelihood from "../components/Livelihood"
 import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
-import Footer from "../components/reusable/Footer"
-import Navbar from "../components/reusable/Navbar"
+import Footer from "./../components/reusable/Footer"
+import Navbar from "./../components/reusable/Navbar"
 
 const LivelihoodPage = () => {
     return (

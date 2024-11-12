@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Bell } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { Bell, Trash } from "lucide-react";
 import axios from 'axios';
 import useAuth from "./../../hooks/useAuth"
 import config from './../../config';
+import ButtonComponent from './Button';
 
 const NotificationDropdown = () => {
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [deletingNotifications, setDeletingNotifications] = useState({});
     const { token } = useAuth();
+    const navigate = useNavigate();
   
     const fetchNotifications = async () => {
       try {
@@ -29,11 +33,11 @@ const NotificationDropdown = () => {
       fetchNotifications();
       const interval = setInterval(fetchNotifications, 30000);
       return () => clearInterval(interval);
-    }, []);
+    }, [token]);
   
     const markAsRead = async (notificationId) => {
       try {
-        await axios.put('/api/notifications/read', {
+        await axios.put(config.notifications.markAsRead, {
           notificationIds: [notificationId]
         }, {
           headers: { Authorization: `Bearer ${token}` }
@@ -54,7 +58,7 @@ const NotificationDropdown = () => {
   
     const markAllAsRead = async () => {
       try {
-        await axios.put('/api/notifications/read-all', {}, {
+        await axios.put(config.notifications.readAll, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -66,23 +70,73 @@ const NotificationDropdown = () => {
         console.error('Error marking all notifications as read:', error);
       }
     };
+
+    const handleDelete = async (notificationId, e) => {
+      e.stopPropagation();
+      
+      setDeletingNotifications(prev => ({
+        ...prev,
+        [notificationId]: true
+      }));
+      
+      try {
+        await axios.delete(`${config.notifications.delete(notificationId)}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        setNotifications(prevNotifications =>
+          prevNotifications.filter(notification => notification.id !== notificationId)
+        );
+        
+        if (!notifications.find(n => n.id === notificationId)?.read) {
+          setUnreadCount(prev => Math.max(0, prev - 1));
+        }
+      } catch (error) {
+        console.error('Error deleting notification:', error);
+      } finally {
+        setDeletingNotifications(prev => ({
+          ...prev,
+          [notificationId]: false
+        }));
+      }
+    };
+
+    const handleNotificationClick = async (notification) => {
+      await markAsRead(notification.id);
+      setIsOpen(false);
+      
+      switch (notification.type) {
+        case 'follow':
+          navigate(`/public/user/${notification.followerUser.id}`);
+          break;
+        case 'message':
+          navigate(`/public/user/${notification.followerUser.id}`);
+          break;
+        default:
+          if (notification.metadata?.userId) {
+            navigate(`/public/user/${notification.metadata.userId}`);
+          }
+      }
+    };
   
     const NotificationItem = ({ notification }) => {
       const getNotificationContent = () => {
-        const { type, metadata } = notification;
+        const { type, metadata, followerUser, user } = notification;
         
         switch (type) {
           case 'follow':
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={metadata?.follower?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={followerUser?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
-                  <span className="font-medium">{metadata?.follower?.name || 'Someone'}</span>
-                  <span className="ml-1">started following you</span>
+                  <span className="font-medium">
+                    {`${followerUser?.profile?.firstName || ''} ${followerUser?.profile?.lastName || ''}`}
+                  </span>
+                  <span className="ml-1">{notification.content}</span>
                 </div>
               </div>
             );
@@ -90,12 +144,14 @@ const NotificationDropdown = () => {
             return (
               <div className="flex items-center space-x-2">
                 <img
-                  src={metadata?.sender?.profilePictureUrl || '/api/placeholder/32/32'}
+                  src={followerUser?.profile?.profilePictureUrl || '/api/placeholder/32/32'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
                 <div>
-                  <span className="font-medium">{metadata?.sender?.name || 'Someone'}</span>
+                  <span className="font-medium">
+                    {`${followerUser?.profile?.firstName || ''} ${followerUser?.profile?.lastName || ''}`}
+                  </span>
                   <span className="ml-1">sent you a message:</span>
                   <p className="text-sm text-gray-600 mt-1">{metadata?.messagePreview}</p>
                 </div>
@@ -110,12 +166,28 @@ const NotificationDropdown = () => {
         <div
           className={`p-4 hover:bg-gray-50 cursor-pointer ${
             !notification.read ? 'bg-blue-50' : ''
-          }`}
-          onClick={() => markAsRead(notification.id)}
+          } flex justify-between items-start`}
+          onClick={() => handleNotificationClick(notification)}
         >
-          {getNotificationContent()}
-          <div className="text-xs text-gray-500 mt-1">
-            {new Date(notification.createdAt).toLocaleTimeString()}
+          <div className="flex-1">
+            {getNotificationContent()}
+            <div className="text-xs text-gray-500 mt-1">
+              {new Date(notification.createdAt).toLocaleTimeString()}
+            </div>
+          </div>
+          <div className="ml-4" onClick={e => e.stopPropagation()}>
+            <ButtonComponent
+              variant="danger"
+              size="small"
+              onClick={(e) => handleDelete(notification.id, e)}
+              disabled={deletingNotifications[notification.id]}
+            >
+              {deletingNotifications[notification.id] ? (
+                "..."
+              ) : (
+                <Trash size={18} />
+              )}
+            </ButtonComponent>
           </div>
         </div>
       );
@@ -136,7 +208,7 @@ const NotificationDropdown = () => {
         </button>
   
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-[25vw] bg-white rounded-lg shadow-lg border overflow-hidden z-50">
+          <div className="absolute right-0 mt-2 w-[30vw] bg-white rounded-lg shadow-lg border overflow-hidden z-50">
             <div className="p-4 border-b flex justify-between items-center">
               <h3 className="font-medium">Notifications</h3>
               {unreadCount > 0 && (
@@ -167,6 +239,6 @@ const NotificationDropdown = () => {
         )}
       </div>
     );
-  };
+};
   
-  export default NotificationDropdown;
+export default NotificationDropdown;
