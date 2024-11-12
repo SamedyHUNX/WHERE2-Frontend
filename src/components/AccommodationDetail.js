@@ -34,11 +34,11 @@ const AccommodationDetail = () => {
   return (
 
     <main>    
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50 pt-[100px]">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-[10vh]">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {accommodation.type}
           </h1>
           <div className="flex items-center text-gray-600">
