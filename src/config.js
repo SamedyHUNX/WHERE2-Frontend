@@ -30,8 +30,10 @@ const config = {
   },
   profile: {
     getMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
+    updateMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
     getPublicProfile: (userId) =>
       `${API_URL}/api/users/public/${userId}`,
+
     getAdminContentList: (adminId) =>
       `${API_URL}/api/users/content-list/${adminId}`,
   },
