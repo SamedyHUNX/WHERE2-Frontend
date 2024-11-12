@@ -52,12 +52,12 @@ const PublicProfilePage = ({ userInfo }) => {
         {/* Profile Information Grid */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
   {[
-    { label: "Bio", value: userInfo?.bio },
+    { label: "Bio", value: userInfo?.bio ? userInfo.bio : "Not provided" },
     { label: "Email", value: userInfo?.email },
     { label: "First Name", value: userInfo?.firstName },
     { label: "Last Name", value: userInfo?.lastName },
     { label: "Username or Entity name", value: userInfo?.userName ? userInfo.userName : userInfo?.entity ? userInfo.entity : 'Not provided' },
-    { label: "Gender", value: userInfo?.gender },
+    { label: "Gender", value: userInfo?.gender ? userInfo.gender : "Not specified" },
     { 
       label: "Date of Birth", 
       value: userInfo?.dateOfBirth 
@@ -75,7 +75,7 @@ const PublicProfilePage = ({ userInfo }) => {
       <label className="block text-sm font-medium text-gray-700">
         {field.label}
       </label>
-      <div className="p-4 bg-gray-50 rounded-lg">
+      <div className="p-4 bg-gray-50 rounded-lg text-gray-500 tracking-tight">
         {field.value}
       </div>
     </div>
