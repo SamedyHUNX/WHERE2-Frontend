@@ -19,7 +19,7 @@ const PublicProfile = ({ userInfo }) => {
     return (
       <LoadingOverlay
         isFullScreen={true}
-        message="We are fetching the public profile..."
+        message="We are getting the profile..."
       />
     );
   }
