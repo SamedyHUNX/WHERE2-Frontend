@@ -49,6 +49,14 @@ const UserAccount = ({ userInfo }) => {
     }
   }, [loading, role, isLoggedIn, token, navigate]);
 
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, [token]);
+
   // Update location field when geolocation is received
   useEffect(() => {
     if (geoLocation && isEditing) {
@@ -277,7 +285,7 @@ const UserAccount = ({ userInfo }) => {
               options={[
                 { value: 'male', label: 'Male' },
                 { value: 'female', label: 'Female' },
-                { value: 'other', label: 'Other' },
+                { value: 'others', label: 'Others' },
                 { value: 'Not specified', label: 'Not specified' }
               ]}
             />
