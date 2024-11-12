@@ -52,7 +52,7 @@ const AccommodationList = ({ accommodations, page }) => {
                 isHeartClicked = {isClicked[accommodation.id]}
                 route={`/detail/accommodation/${ accommodation.id }`}
                     />
-                    </WrapperComponent>)
+                </WrapperComponent>)
         
     })}
     </>
