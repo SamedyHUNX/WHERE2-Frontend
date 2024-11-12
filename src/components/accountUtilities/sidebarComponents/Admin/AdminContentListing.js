@@ -3,11 +3,31 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
 import config from '../../../../config';
 import axios from 'axios';
+import {
+  Box,
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Chip,
+  Grid,
+  Skeleton,
+  Paper,
+  Divider,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
+import {
+  School,
+  Work,
+  ArrowForward,
+  Add as AddIcon,
+} from '@mui/icons-material';
 
 const AdminContentListing = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { userId } = useAuth();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,50 +50,181 @@ const AdminContentListing = () => {
     navigate(`/detail/${postType}/${id}`);
   };
 
-  return (
-    <section className="lg:w-full sm:w-[100%] sm:mr-[32px] bg-white rounded-lg shadow-lg h-full">
-      <div className="flex justify-between items-center py-5 w-[80%] mx-auto">
-        <h1 className="text-3xl text-blue-600 font-bold">Your content</h1>
-      </div>
+  const getPostTypeIcon = (type) => {
+    return type === 'university' ? (
+      <School fontSize="small" sx={{ mr: 1 }} />
+    ) : (
+      <Work fontSize="small" sx={{ mr: 1 }} />
+    );
+  };
 
-      {loading ? (
-        <div className="w-[80%] mx-auto py-8 text-center">
-          <div className="animate-pulse text-gray-500">Loading contents...</div>
-        </div>
+  const getPostTypeColor = (type) => {
+    return type === 'university' ? 'primary' : 'secondary';
+  };
+
+  if (loading) {
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Box sx={{ mb: 4 }}>
+          <Skeleton variant="text" width={300} height={60} />
+        </Box>
+        {[1, 2, 3].map((n) => (
+          <Card key={n} sx={{ mb: 2 }}>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Skeleton variant="text" width="60%" height={40} />
+                  <Skeleton variant="text" width="80%" height={60} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        ))}
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Paper 
+        elevation={0} 
+        sx={{ 
+          p: 3, 
+          mb: 4, 
+          borderRadius: 2,
+          backgroundColor: 'background.paper' 
+        }}
+      >
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: 2
+        }}>
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            sx={{ 
+              fontWeight: 'bold',
+              color: 'primary.main'
+            }}
+          >
+            Your Content
+          </Typography>
+          <Tooltip title="Add new content">
+            <IconButton 
+              color="primary" 
+              onClick={() => {
+                localStorage.setItem('sidebarContent', 'adminContent');
+                window.location.reload();
+              }}              
+              sx={{ 
+                backgroundColor: 'primary.light',
+                '&:hover': {
+                  backgroundColor: 'primary.main',
+                  color: 'white'
+                }
+              }}
+            >
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        <Divider />
+      </Paper>
+
+      {posts.length === 0 ? (
+        <Paper 
+          sx={{ 
+            p: 4, 
+            textAlign: 'center',
+            backgroundColor: 'grey.50'
+          }}
+        >
+          <Typography color="text.secondary" variant="h6">
+            No content found. Start creating some content!
+          </Typography>
+        </Paper>
       ) : (
-        <div className="w-[80%] mx-auto pb-8">
-          {posts.length === 0 ? (
-            <div className="text-center text-gray-500 py-8">
-              No content found. Start creating some content!
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {posts.map((post) => (
-                <div
-                  key={`${post.postType}-${post.id}`}
-                  onClick={() => handlePostClick(post.postType, post.id)}
-                  className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h2 className="text-xl font-semibold text-gray-800 mb-2">
+        <Grid container spacing={3}>
+          {posts.map((post) => (
+            <Grid item xs={12} key={`${post.postType}-${post.id}`}>
+              <Card 
+                sx={{
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 4,
+                    '& .arrow-icon': {
+                      transform: 'translateX(4px)',
+                    }
+                  }
+                }}
+                onClick={() => handlePostClick(post.postType, post.id)}
+              >
+                <CardContent>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start' 
+                  }}>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography 
+                        variant="h5" 
+                        component="h2" 
+                        gutterBottom
+                        sx={{ 
+                          fontWeight: 600,
+                          color: 'text.primary',
+                          display: 'flex',
+                          alignItems: 'center'
+                        }}
+                      >
+                        {getPostTypeIcon(post.postType)}
                         {post.title || 'Untitled'}
-                      </h2>
-                      <p className="text-gray-600 line-clamp-2">
+                      </Typography>
+                      <Typography 
+                        variant="body1" 
+                        color="text.secondary"
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                        }}
+                      >
                         {post.description || 'No description available'}
-                      </p>
-                    </div>
-                    <span className="ml-4 px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
-                      {post.postType === 'university' ? 'University' : 'Job'}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+                      </Typography>
+                    </Box>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: 2 
+                    }}>
+                      <Chip
+                        label={post.postType === 'university' ? 'University' : 'Job'}
+                        color={getPostTypeColor(post.postType)}
+                        size="small"
+                        sx={{ minWidth: 90 }}
+                      />
+                      <ArrowForward 
+                        className="arrow-icon"
+                        sx={{ 
+                          color: 'primary.main',
+                          transition: 'transform 0.2s ease-in-out'
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       )}
-    </section>
+    </Container>
   );
 };
 
