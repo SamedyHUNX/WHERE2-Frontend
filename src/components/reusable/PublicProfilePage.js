@@ -202,7 +202,7 @@ const PublicProfilePage = ({ userInfo }) => {
             </div>
   
             {/* Main Content - Adjusted margin for mobile */}
-            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-8"} p-2 pl-0`}>
+            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-3"} p-2 pl-3`}>
               <div className="bg-white rounded-lg shadow-sm">
                 <CurrentTabComponent />
               </div>
