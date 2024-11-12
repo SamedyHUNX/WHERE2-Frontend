@@ -43,7 +43,7 @@ const DiscussionList = ({ isCreatingDiscussion, toggleDiscussionView, userId }) 
     <div
       className={`${
         isHealthPagePath ? "text-white mt-[0]" : ""
-      } w-[90%] py-4 px-3 mx-auto min-h-full my-[32px] shadow-md`}
+      } w-full py-2 px-6 mx-auto min-h-full my-[32px] shadow-md`}
     >
       <div className="flex justify-between h-full items-center">
         <h2 className={`text-xl font-semibold mt-4 tracking-tight`}>
