@@ -137,7 +137,7 @@ const config = {
   contact: {
     sendEmail: `${API_URL}/api/contact`,
     getAllContact : `${API_URL}/api//admin/contacts`,
-    markAsRead : (contactId) =>  `${API_URL}/api//admin/contacts/${contactId}/read`
+    markAsRead : (messageId) =>  `${API_URL}/api/admin/contacts/${messageId}/read`
   },
   follow: {
     follow: (endpoint, targetUserId) =>
