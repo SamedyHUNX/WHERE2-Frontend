@@ -4,8 +4,6 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// import Card from "./components/reusable/Card";
-// import SearchBar from "./components/reusable/SearchBar";
 import HomePage from "./pages/HomePage";
 import UserProfile from "./components/accountUtilities/UserProfile";
 import LoginPage from "./pages/LoginPage";
@@ -34,9 +32,6 @@ import UniversityDetailPage from "./pages/UniversityDetailPage";
 import LoggedInOnlyRoute from "./components/routes/LoggedInRoute";
 import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
-// import ContactForm from "./components/reusable/ContactForm";
-// import SigninPage from "./pages/SigninPage";
-// import SignupPage from "./pages/SignupPage";
 import FloatingContact from "./components/reusable/FloatingContact";
 import PublicProfileContainer from "./components/reusable/PublicProfilePage";
 
