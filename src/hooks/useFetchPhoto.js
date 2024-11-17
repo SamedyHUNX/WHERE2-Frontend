@@ -60,7 +60,11 @@ export const useUploadPhoto = (userId) => {
 
     try {
       // OBTAINING DATA FROM BACKEND (BACKEND API IS STORED IN config.js)
-      const { data: s3Data } = await axios.post(config.photo.getS3Url, { folder });
+      const { data: s3Data } = await axios.post(config.photo.getS3Url,
+        {
+          contentType: file.type,
+          folder
+        });
 
       if (!s3Data || !s3Data.url) {
         throw new Error("Invalid S3 pre-signed URL received");
@@ -69,6 +73,7 @@ export const useUploadPhoto = (userId) => {
       await axios.put(s3Data.url, file, {
         headers: {
           "Content-Type": file.type,
+          "Access-Control-Allow-Origin": "*"
         },
       });
 
