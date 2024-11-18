@@ -36,7 +36,10 @@ export const fetchUniversity = createAsyncThunk(
     'universities/fetchUniversity',
     async (id) => {
         const response = await axios.get(`${config.universities.getUniversityById}/${id}`);
-        return response.data.list;
+
+        console.log(response.data)
+
+        return response.data;
     }
 );
 

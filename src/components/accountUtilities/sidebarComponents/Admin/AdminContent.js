@@ -22,7 +22,7 @@ const entityConfig = {
       { name: 'name', label: 'University Name', type: 'text' },
       { name: 'description', label: 'University Description', type: 'textarea' },
       { name: 'location', label: 'Location', type: 'text' },
-      {name : 'image_url' , label: 'Image URL', type: 'text'}
+      { name : 'image_url' , label: 'Image URL', type: 'text'},
     ],
   },
   'Job offer': {
@@ -63,7 +63,6 @@ const AdminEditor = () => {
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
 
-
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
     { title: 'Facebook', url: '' },
@@ -74,9 +73,8 @@ const AdminEditor = () => {
   const entityDataKey = `${entity}Data`;
 
   useEffect(() => {
-    const newUuid = uuidv4();  // Generate a new UUID
-    setPostId(newUuid);      // Set the generated UUID to state
-    console.log('Generated UUID:', newUuid);
+    const newUuid = uuidv4();
+    setPostId(newUuid);
 
     const savedData = JSON.parse(localStorage.getItem(entityDataKey));
     if (savedData) {
@@ -106,7 +104,6 @@ const AdminEditor = () => {
     setFormData({});
   };
 
-  // const formType = localStorage.getItem('formType');
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -131,6 +128,7 @@ const AdminEditor = () => {
       website: links.find(link => link.title === 'Website')?.url || '',
       image_alt: formData[entityConfig[entity].fields[0].name],
       userId: parseInt(userId),
+      postId
     };
 
     // Special case for Job offer due to different data structure
