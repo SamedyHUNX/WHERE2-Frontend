@@ -23,7 +23,7 @@ const UniversityDetailPage = () => {
     }, [dispatch, id]);
 
     if (isLoading) {
-        return <LoadingOverlay />;
+        return <LoadingOverlay isFullScreen={true} message='We are fetching the university...'/>;
     }
 
     // Check for image in the university's details (university.list.image_url)

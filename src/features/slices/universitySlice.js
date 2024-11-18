@@ -17,6 +17,9 @@ export const fetchUniversities = createAsyncThunk(
         try {
             const response = await axios.get(`${config.universities.getAllUniversity}?page=${page}`);
             dispatch(setTotalPage(response.data.pagination.totalPages || 1));
+
+            console.log(response.data.list)
+
             const approvedUniversities = response.data.list
             return approvedUniversities;
         } catch (error) {
