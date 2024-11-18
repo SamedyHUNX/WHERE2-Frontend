@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../../hooks/useAuth';
-import config from '../../../../config';
+import useAuth from './../../../../hooks/useAuth';
+import config from './../../../../config';
 import axios from 'axios';
 import {
   Box,

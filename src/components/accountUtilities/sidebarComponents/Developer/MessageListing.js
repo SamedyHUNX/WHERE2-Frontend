@@ -24,6 +24,7 @@ import {
 } from "@mui/icons-material";
 import config from "../../../../config";
 import { MailCheck } from "lucide-react";
+import useAuth from "./../../../../hooks/useAuth"
 
 const MessageListing = () => {
   const [messages, setMessages] = useState([]);
@@ -32,10 +33,17 @@ const MessageListing = () => {
   const [activeTab, setActiveTab] = useState('pending');
   const { contactId } = useParams();
 
+  const { token } = useAuth();
+
   const messagesList = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(config.contact.getAllContact);
+      const response = await axios.get(config.contact.getAllContact, {
+        headers: {
+          "Authorization": `Bearer ${token}`, // Include token here
+          "Content-Type": "application/json"
+        }
+      });
       setMessages(response.data.data.contacts);
       setError(null);
     } catch (error) {
@@ -45,14 +53,20 @@ const MessageListing = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    messagesList();
-  }, []);
-
+  
   const markAsRead = async (messageId) => {
     try {
-      await axios.patch(config.contact.markAsRead(messageId));
+      await axios.patch(
+        config.contact.markAsRead(messageId),
+        {},
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+  
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
           msg.id === messageId ? { ...msg, status: 'read' } : msg
@@ -62,6 +76,13 @@ const MessageListing = () => {
       console.error("Error marking message as read:", error);
     }
   };
+  
+  useEffect(() => {
+    if (token) {
+      messagesList();
+    }
+  }, [token]);
+
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {

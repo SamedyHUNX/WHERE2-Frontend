@@ -4,42 +4,6 @@ import FollowButton from "./FollowButton";
 import { useParams } from "react-router-dom";
 import { User, MessageSquareText } from "lucide-react";
 
-const Universities = () => (
-  <div className="p-6 bg-white rounded-lg">
-    <h3 className="text-xl font-semibold mb-4">Universities</h3>
-    <div className="space-y-4">
-      <p className="text-gray-600">Explore universities and programs.</p>
-    </div>
-  </div>
-);
-
-const Scholarships = () => (
-  <div className="p-6 bg-white rounded-lg">
-    <h3 className="text-xl font-semibold mb-4">Scholarships</h3>
-    <div className="space-y-4">
-      <p className="text-gray-600">Find scholarship opportunities.</p>
-    </div>
-  </div>
-);
-
-const Health = () => (
-  <div className="p-6 bg-white rounded-lg">
-    <h3 className="text-xl font-semibold mb-4">Health</h3>
-    <div className="space-y-4">
-      <p className="text-gray-600">Health resources and information.</p>
-    </div>
-  </div>
-);
-
-const Community = () => (
-  <div className="p-6 bg-white rounded-lg">
-    <h3 className="text-xl font-semibold mb-4">Community</h3>
-    <div className="space-y-4">
-      <p className="text-gray-600">Connect with your community.</p>
-    </div>
-  </div>
-);
-
 const ProfileSidebar = ({ userInfo }) => {
   const { userId: targetUserId } = useParams();
   const { userId: currentUserId } = { userId: "123" }; // Mock useAuth

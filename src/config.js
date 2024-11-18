@@ -30,8 +30,10 @@ const config = {
   },
   profile: {
     getMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
+    updateMyProfile: (userId) => `${API_URL}/api/users/profile/${userId}`,
     getPublicProfile: (userId) =>
       `${API_URL}/api/users/public/${userId}`,
+
     getAdminContentList: (adminId) =>
       `${API_URL}/api/users/content-list/${adminId}`,
   },
@@ -135,7 +137,7 @@ const config = {
   contact: {
     sendEmail: `${API_URL}/api/contact`,
     getAllContact : `${API_URL}/api//admin/contacts`,
-    markAsRead : (contactId) =>  `${API_URL}/api//admin/contacts/${contactId}/read`
+    markAsRead : (messageId) =>  `${API_URL}/api/admin/contacts/${messageId}/read`
   },
   follow: {
     follow: (endpoint, targetUserId) =>
@@ -150,9 +152,11 @@ const config = {
     send: `${API_URL}/api/user/message/`,
   },
   notifications: {
-    getNotifications: (userId) => `${API_URL}/api/user/notification/${userId}`,
-    markAsRead: (notificationId) =>
-      `${API_URL}/api/user/notification/mark-as-read/${notificationId}`,
+    getNotifications: `${API_URL}/api/notifications`,
+    markAsRead:
+      `${API_URL}/api/notifications/read`,
+    readAll: `${API_URL}/api/notifications/read-all`,
+    delete: (notificationId) => `${API_URL}/api/notifications/${notificationId}l`
   }
 };
 export default config;

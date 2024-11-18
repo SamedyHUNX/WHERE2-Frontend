@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { User, MessageSquareText, ChevronRight } from 'lucide-react';
+import { User, MessageSquareText, ChevronRight, Rss } from 'lucide-react';
 import ButtonComponent from './Button';
 import { LoadingOverlay } from './Loading';
 import useIsMobile from './../../hooks/useIsMobile';
@@ -12,7 +12,6 @@ import FloatingContact from './FloatingContact';
 import config from './../../config';
 import axios from 'axios';
 import DiscussionList from './../community/DiscussionList';
-// import MessageBox from './MessageContent';
 import MessagesContent from './MessageContent';
 
 const PublicProfilePage = ({ userInfo }) => {
@@ -29,12 +28,12 @@ const PublicProfilePage = ({ userInfo }) => {
   
     const menuItems = [
       { icon: <User size={20} />, label: "Profile Overview", id: "profile" },
-      { icon: <MessageSquareText size={20} />, label: "Posts", id: "posts" },
+      { icon: <Rss size={20} />, label: "Posts", id: "posts" },
       { icon: <MessageSquareText size={20} />, label: "Messages", id: "messages" },
     ];
   
     const MainProfileContent = () => (
-      <div className="p-8">
+      <div className="p-8 pl-4">
         {/* Profile Header */}
         <div className="flex flex-col items-center space-y-6 pb-8 border-b border-gray-200">
           <div className="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center">
@@ -52,24 +51,36 @@ const PublicProfilePage = ({ userInfo }) => {
   
         {/* Profile Information Grid */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { label: "First Name", value: userInfo?.firstName },
-            { label: "Last Name", value: userInfo?.lastName },
-            { label: "Email", value: userInfo?.email },
-            { label: "Phone Number", value: userInfo?.phoneNumber },
-            { label: "Location", value: userInfo?.location },
-            { label: "Account Creation Date", value: formattedDate }
-          ].map((field) => (
-            <div key={field.label} className="space-y-4">
-              <label className="block text-sm font-medium text-gray-700">
-                {field.label}
-              </label>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                {field.value || "Not provided"}
-              </div>
-            </div>
-          ))}
-        </div>
+  {[
+    { label: "Bio", value: userInfo?.bio ? userInfo.bio : "Not provided" },
+    { label: "Email", value: userInfo?.email },
+    { label: "First Name", value: userInfo?.firstName },
+    { label: "Last Name", value: userInfo?.lastName },
+    { label: "Username or Entity name", value: userInfo?.userName ? userInfo.userName : userInfo?.entity ? userInfo.entity : 'Not provided' },
+    { label: "Gender", value: userInfo?.gender ? userInfo.gender : "Not specified" },
+    { 
+      label: "Date of Birth", 
+      value: userInfo?.dateOfBirth 
+        ? new Date(userInfo.dateOfBirth).toLocaleDateString("en-CA") 
+        : "Not provided" 
+    },
+    { label: "Phone Number", value: userInfo?.phoneNumber },
+    { label: "Location", value: userInfo?.location },
+    { 
+      label: "Account Creation Date", 
+      value: formattedDate || "Not provided" 
+    }
+  ].map((field) => (
+    <div key={field.label} className="space-y-4">
+      <label className="block text-sm font-medium text-gray-700">
+        {field.label}
+      </label>
+      <div className="p-4 bg-gray-50 rounded-lg text-gray-500 tracking-tight">
+        {field.value}
+      </div>
+    </div>
+  ))}
+</div>
   
         {/* Account Status */}
         <div className="mt-6">
@@ -191,7 +202,7 @@ const PublicProfilePage = ({ userInfo }) => {
             </div>
   
             {/* Main Content - Adjusted margin for mobile */}
-            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-8"} p-4`}>
+            <div className={`flex-1 ${isMobile ? "ml-0" : "ml-3"} p-2 pl-3`}>
               <div className="bg-white rounded-lg shadow-sm">
                 <CurrentTabComponent />
               </div>

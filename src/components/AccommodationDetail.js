@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchAccommodation } from "../features/slices/accommodationSlice";
+import { fetchAccommodation } from "./../features/slices/accommodationSlice";
 import { LoadingOverlay } from "./reusable/Loading";
 import { MapPin, Phone, Home, DollarSign, Bed, Square, Calendar } from "lucide-react";
-import { convertToHTML } from "../utility/markdownConverter/markdownConverter";
+import { convertToHTML } from "./../utility/markdownConverter/markdownConverter";
 import DiscussionContainer from "./reusable/DiscussionContainer";
+import ButtonComponent from "./reusable/Button";
 const AccommodationDetail = () => {
   const param = useParams();
   const dispatch = useDispatch();
@@ -33,11 +34,11 @@ const AccommodationDetail = () => {
   return (
 
     <main>    
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50 pt-[100px]">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 mt-[10vh]">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {accommodation.type}
           </h1>
           <div className="flex items-center text-gray-600">
@@ -142,15 +143,15 @@ const AccommodationDetail = () => {
                   </div>
                 </div>
               </div>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg mt-6 hover:bg-blue-700 transition-colors">
+              <ButtonComponent className="w-full bg-blue-600 text-white py-3 rounded-lg mt-6 hover:bg-blue-700 transition-colors">
                 Contact Owner
-              </button>
+              </ButtonComponent>
             </div>
           </div>
         </div>
+        <DiscussionContainer/>
       </div>
     <div>
-    <DiscussionContainer/>
     </div>
     </div>
     </main>

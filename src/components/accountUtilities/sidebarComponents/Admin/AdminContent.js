@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { PlusCircle, Save, Image, Link, FileText } from 'lucide-react';
-import ButtonComComponent from '../../../reusable/ButtonComponent';
+import ButtonComComponent from './../../../reusable/ButtonComponent';
 import axios from 'axios';
-import config from '../../../../config';
-import DropdownComponent from '../../../reusable/DropdownComponent';
-import useAuth from '../../../../hooks/useAuth';
+import config from './../../../../config';
+import DropdownComponent from './../../../reusable/DropdownComponent';
+import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
-import PublicPhotoUpload from '../../../reusable/PublicPhotoUpload';
+import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 
 const dropdownItems = [
   { label: 'University' },
