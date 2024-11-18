@@ -246,13 +246,13 @@ import config from "./../../config"
     async ({ email }, thunkAPI) => {
       try {
         const response = await axios.post(config.auth.forgotPasswordUrl, { email });
+
         return {
           message: "Password reset email sent. Please check your inbox.",
           resetToken: response.data.token,
         };
       } catch (error) {
         if (error.isAxiosError) {
-          // Get appropriate error message based on status code
           const errorMessage = getForgotPasswordError(error.response?.status, email);
           
           return thunkAPI.rejectWithValue(errorMessage);
