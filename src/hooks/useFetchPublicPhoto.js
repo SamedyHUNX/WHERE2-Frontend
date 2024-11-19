@@ -88,8 +88,10 @@ export const useUploadPublicPhoto = () => {
       await axios.put(s3Data.url, file, {
         headers: {
           "Content-Type": file.type,
-          "Access-Control-Allow-Origin": "*"
+          "Access-Control-Allow-Origin": "*",
+          Authorization: undefined
         },
+        withCredentials: false,
         onUploadProgress: (progressEvent) => {
           const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
           setUploadProgress(progress);

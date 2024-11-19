@@ -83,7 +83,7 @@ const PublicPhotoUpload = ({ postId }) => {
         id="public"
         type="file"
         onChange={handleFileChange}
-        accept="image/*"
+        accept=".jpg,.jpeg"
         className="hidden"
       />
       {isUploading && (
