@@ -66,7 +66,7 @@ const AdminEditor = () => {
   const [postId, setPostId] = useState('');
   const { imageLink } = useSelector(state => state.universities);
 
-console.log("imageLink in adminAcc",imageLink)
+
 
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
@@ -173,7 +173,7 @@ console.log("imageLink in adminAcc",imageLink)
     localStorage.setItem(entityDataKey, JSON.stringify(data));
   };
 
-  console.log('entity:',entity)
+
   if (entity === 'Accommodation') return <AccommodationListing />;
 
   return (
