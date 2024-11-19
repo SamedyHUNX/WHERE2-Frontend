@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Profile from "../reusable/Profile";
-import { LoadingOverlay } from "../reusable/Loading";
-import Navbar from "../reusable/Navbar";
-import fetchProfile from "../reusable/functions/FetchProfile";
+import Profile from "./../reusable/Profile";
+import { LoadingOverlay } from "./../reusable/Loading";
+import Navbar from "./../reusable/Navbar";
+import fetchProfile from "./../reusable/functions/FetchProfile";
 import FloatingContact from "./../reusable/FloatingContact";
 
 export const getAuthData = () => {
