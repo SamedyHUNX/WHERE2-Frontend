@@ -7,7 +7,9 @@ import DropdownComponent from './../../../reusable/DropdownComponent';
 import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
-
+import { useFetchPublicPhoto } from '../../../../hooks/useFetchPublicPhoto';
+import { useSelector } from 'react-redux';
+import AccommodationListing from '../Developer/AccommodationListing';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -22,7 +24,7 @@ const entityConfig = {
       { name: 'name', label: 'University Name', type: 'text' },
       { name: 'description', label: 'University Description', type: 'textarea' },
       { name: 'location', label: 'Location', type: 'text' },
-      { name : 'image_url' , label: 'Image URL', type: 'text'},
+      // {name : 'image_url' , label: 'Image URL', type: 'text'}
     ],
   },
   'Job offer': {
@@ -62,6 +64,9 @@ const AdminEditor = () => {
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
+  const { imageLink } = useSelector(state => state.universities);
+
+
 
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
@@ -126,6 +131,7 @@ const AdminEditor = () => {
       instagram_url: links.find(link => link.title === 'Instagram')?.url || '',
       telegram_url: links.find(link => link.title === 'Telegram')?.url || '',
       website: links.find(link => link.title === 'Website')?.url || '',
+      image_url: imageLink,
       image_alt: formData[entityConfig[entity].fields[0].name],
       userId: parseInt(userId),
       postId
@@ -166,6 +172,9 @@ const AdminEditor = () => {
     localStorage.setItem(entityDataKey, JSON.stringify(data));
   };
 
+
+  if (entity === 'Accommodation') return <AccommodationListing />;
+
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
       <DropdownComponent items={dropdownItems} onItemClick={selectEntity} />
@@ -174,13 +183,15 @@ const AdminEditor = () => {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {entity === 'Job offer'?null:
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <Image size={24} className="mr-2" />
             {entity} Image
           </h2>
           <PublicPhotoUpload postId={postId}/>
-        </div>
+        </div>}
+
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <FileText size={24} className="mr-2" />

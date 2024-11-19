@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { useFetchPhoto, useUploadPhoto } from "./../../hooks/useFetchPhoto";
 
 const MAX_FILE_SIZE = 500 * 1024;
-const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/jpg'];
+const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/jpg','image/png'];
 
 const PictureUpload = () => {
   const { userId } = useAuth();

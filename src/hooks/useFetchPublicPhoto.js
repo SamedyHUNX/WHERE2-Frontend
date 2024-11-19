@@ -17,9 +17,7 @@ export const useFetchPublicPhoto = (userId, postId) => {
     setError(null);
 
     try {
-      const response = await axios.get(`${config.photo.getPublicPhoto}`, {
-        params: { userId, postId }
-      });
+      const response = await axios.get(`${config.photo.fetchPublicPhotoForPost(userId,postId)}`);
 
       if (response.data?.imageUrl) {
         // Add cache-busting parameter
@@ -77,7 +75,7 @@ export const useUploadPublicPhoto = () => {
 
     try {
       // Step 1: Get S3 pre-signed URL
-      const { data: s3Data } = await axios.post(config.photo.getS3Url, { 
+      const { data: s3Data } = await axios.post(config.photo.getS3Url, {
         folder,
         contentType: file.type
       });
@@ -90,8 +88,10 @@ export const useUploadPublicPhoto = () => {
       await axios.put(s3Data.url, file, {
         headers: {
           "Content-Type": file.type,
-          "Access-Control-Allow-Origin": "*"
+          "Access-Control-Allow-Origin": "*",
+          Authorization: undefined
         },
+        withCredentials: false,
         onUploadProgress: (progressEvent) => {
           const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
           setUploadProgress(progress);
@@ -100,7 +100,8 @@ export const useUploadPublicPhoto = () => {
 
       // Step 3: Construct the final image URL
       const urlParts = new URL(s3Data.url);
-      const imageUrl = `${urlParts.protocol}//${urlParts.host}${urlParts.pathname}`;
+      const imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
+      console.log("imageUR>",imageUrl)
 
       // Step 4: Update backend with the new image URL
       const response = await axios.post(config.photo.uploadPublicPhoto, {
