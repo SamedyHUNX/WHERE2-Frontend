@@ -10,6 +10,7 @@ import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 import { useFetchPublicPhoto } from '../../../../hooks/useFetchPublicPhoto';
 import { useSelector } from 'react-redux';
 import AccommodationListing from '../Developer/AccommodationListing';
+import PublicMultipleUpload from '../../../reusable/PublicMultipleUpload';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -173,7 +174,7 @@ const AdminEditor = () => {
   };
 
 
-  if (entity === 'Accommodation') return <AccommodationListing />;
+  // if (entity === 'Accommodation') return <AccommodationListing />;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
@@ -188,10 +189,12 @@ const AdminEditor = () => {
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <Image size={24} className="mr-2" />
             {entity} Image
-          </h2>
-          <PublicPhotoUpload postId={postId}/>
-        </div>
-        ) : null}
+            </h2>
+            {entity === 'Accommodation' ? <PublicMultipleUpload postId={postId}/>:
+            <PublicPhotoUpload postId={postId}/>
+          }
+    
+        </div>}
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
