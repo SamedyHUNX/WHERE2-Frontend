@@ -27,6 +27,7 @@ const RegisterComponent = ({ auth }) => {
       ? JSON.parse(storedData)
       : location.state?.formData || {
           entity: "",
+          entityType: "",
           firstName: "",
           lastName: "",
           email: "",
@@ -115,6 +116,12 @@ const RegisterComponent = ({ auth }) => {
         }
         return null;
 
+        case "entityType":
+        if (accountType === "business" && !value) {
+          return "Entity type is required";
+        }
+        return null;
+
       default:
         if (!value && touchedFields[name]) return "This field is required";
         return null;
@@ -190,6 +197,7 @@ const RegisterComponent = ({ auth }) => {
     ];
     const businessFields = [
       "entity",
+      "entityType", // Add new field to required business fields
       "firstName",
       "lastName",
       "location",
@@ -227,6 +235,7 @@ const RegisterComponent = ({ auth }) => {
         password: formData.password,
         passwordConfirm: formData.passwordConfirm,
         entity: formData.entity,
+        entityType: formData.entityType, // Include entity type in registration data
         formType: accountType,
         dateOfBirth: formData.dateOfBirth
           ? new Date(formData.dateOfBirth).toISOString().split("T")[0]
@@ -237,7 +246,7 @@ const RegisterComponent = ({ auth }) => {
       navigate("/terms-and-conditions", {
         state: {
           registrationData,
-          formData: formData, // Save form data for back navigation
+          formData: formData,
         },
       });
     }
@@ -246,6 +255,7 @@ const RegisterComponent = ({ auth }) => {
   const renderInput = (name, label, type = "text", required = true) => {
     const hasError = touchedFields[name] && validationErrors[name];
     const isPassword = type === "password";
+
 
     return (
       <div className="relative">
@@ -295,6 +305,42 @@ const RegisterComponent = ({ auth }) => {
         </div>
         {hasError && (
           <p className="text-red-500 text-xs mt-1">{validationErrors[name]}</p>
+        )}
+      </div>
+    );
+  };
+
+  const renderEntityTypeDropdown = () => {
+    const hasError = touchedFields.entityType && validationErrors.entityType;
+    const entityTypeOptions = [
+      { value: "company", label: "Company" },
+      { value: "university", label: "University" },
+      { value: "other", label: "Other" },
+    ];
+
+    return (
+      <div className="relative">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Entity Type <span className="text-red-500">*</span>
+        </label>
+        <select
+          name="entityType"
+          value={formData.entityType}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          className={`w-full px-3 py-2 border rounded-md ${
+            hasError ? "border-red-500" : "border-gray-300"
+          }`}
+        >
+          <option value="">Select Entity Type</option>
+          {entityTypeOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {hasError && (
+          <p className="text-red-500 text-xs mt-1">{validationErrors.entityType}</p>
         )}
       </div>
     );
@@ -364,7 +410,12 @@ const RegisterComponent = ({ auth }) => {
       </div>
 
       <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-        {accountType === "business" && renderInput("entity", "Entity Name")}
+      {accountType === "business" && (
+          <>
+            {renderInput("entity", "Entity Name")}
+            {renderEntityTypeDropdown()}
+          </>
+        )}
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
           {renderInput("firstName", "First Name")}
