@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaInstagram, FaFacebookF, FaYoutube, FaTelegramPlane } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaYoutube, FaTelegramPlane , FaTiktok} from "react-icons/fa";
 // import { faTikTok } from '@fortawesome/free-brands-svg-icons';
 
 const SocialMediaLinks = ({ notAuth = false }) => {
@@ -21,7 +21,7 @@ const SocialMediaLinks = ({ notAuth = false }) => {
     },
     {
       icon: <FaTelegramPlane size={24}/>,
-      href: 'https://t.me/yourchannel',
+      href: 'https://www.facebook.com/profile.php?id=61565344985554',
       bgColor: 'bg-blue-600',
     },
     // {

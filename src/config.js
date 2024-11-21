@@ -73,6 +73,7 @@ const config = {
     approveJob: (jobId) => `${API_URL}/api/jobs/approve/${jobId}`,
     disapproveJob: (jobId) => `${API_URL}/api/jobs/disapprove/${jobId}`,
     getJob: (jobId) => `${API_URL}/api/jobs/${jobId}`,
+    deleteJob : (jobId) => `${API_URL}/api/jobs/delete/${jobId}`,
   },
   favorite: {
     addFavorite: `${API_URL}/api/favorites/addFavorite`,
@@ -90,6 +91,7 @@ const config = {
     getUniversityById : `${API_URL}/api/detail/university`,
     approveUniversity : (universityId) => `${API_URL}/api/detail/university/approve/${universityId}`,
     disapproveUniversity : (universityId) => `${API_URL}/api/detail/university/disapprove/${universityId}`,
+    deleteUniversity : (universityId) => `${API_URL}/api/detail/university/delete/${universityId}`,
   },
   scholarships: {
     getAllScholarships: `${API_URL}/api/list/scholarship`,

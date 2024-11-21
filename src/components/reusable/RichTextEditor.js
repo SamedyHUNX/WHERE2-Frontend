@@ -1,106 +1,140 @@
-import React, { useState } from 'react';
-import { Bold, Link as LinkIcon, List } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import { TRANSFORMERS } from '@lexical/markdown';
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $getSelection, $isRangeSelection, $getRoot } from 'lexical';
+import { $createLinkNode } from '@lexical/link';
+import { Bold, Italic, Underline, Link } from 'lucide-react';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 
-const RichTextEditor = ({ value, onChange }) => {
-  const [text, setText] = useState(value || '');
-  const [selection, setSelection] = useState({ start: 0, end: 0 });
-
-  const handleTextChange = (e) => {
-    const newText = e.target.value;
-    setText(newText);
-    onChange(newText);
-  };
-
-  const saveSelection = () => {
-    const textarea = document.getElementById('rich-textarea');
-    setSelection({
-      start: textarea.selectionStart,
-      end: textarea.selectionEnd
+const ToolbarPlugin = () => {
+  const [editor] = useLexicalComposerContext();
+  
+  const formatText = (format) => {
+    editor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        selection.formatText(format);
+      }
     });
   };
 
-  const insertFormatting = (format) => {
-    const textarea = document.getElementById('rich-textarea');
-    const start = selection.start;
-    const end = selection.end;
-    const currentText = textarea.value;
-    let newText = '';
-
-    switch (format) {
-      case 'bold':
-        newText = currentText.slice(0, start) + '**' + 
-                  currentText.slice(start, end) + '**' + 
-                  currentText.slice(end);
-        break;
-      case 'link':
+  const insertLink = () => {
+    editor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
         const url = prompt('Enter URL:');
         if (url) {
-          newText = currentText.slice(0, start) + '[' + 
-                    currentText.slice(start, end) + '](' + url + ')' + 
-                    currentText.slice(end);
+          selection.insertNodes([$createLinkNode(url, {
+            rel: 'noopener noreferrer',
+            target: '_blank',
+          })]);
         }
-        break;
-      case 'bullet':
-        // Split selected text into lines and add bullets
-        const selectedText = currentText.slice(start, end);
-        const bulletedText = selectedText
-          .split('\n')
-          .map(line => line.trim() ? '- ' + line : line)
-          .join('\n');
-        newText = currentText.slice(0, start) + bulletedText + currentText.slice(end);
-        break;
-      default:
-        return;
-    }
-
-    setText(newText);
-    onChange(newText);
+      }
+    });
   };
 
   return (
-    <div className="w-full">
-      <div className="flex gap-2 mb-2 p-2 bg-gray-100 rounded">
+    <div className="toolbar">
+      <div className="flex items-center space-x-2 p-2 border-b border-gray-200">
         <button
-          onClick={() => insertFormatting('bold')}
-          className="p-2 hover:bg-gray-200 rounded"
-          title="Bold"
+          onClick={() => formatText('bold')}
+          className="p-2 rounded hover:bg-gray-100"
+          type="button"
         >
-          <Bold size={16} />
+          <Bold className="w-4 h-4" />
         </button>
         <button
-          onClick={() => insertFormatting('link')}
-          className="p-2 hover:bg-gray-200 rounded"
-          title="Insert Link"
+          onClick={() => formatText('italic')}
+          className="p-2 rounded hover:bg-gray-100"
+          type="button"
         >
-          <LinkIcon size={16} />
+          <Italic className="w-4 h-4" />
         </button>
         <button
-          onClick={() => insertFormatting('bullet')}
-          className="p-2 hover:bg-gray-200 rounded"
-          title="Bullet List"
+          onClick={() => formatText('underline')}
+          className="p-2 rounded hover:bg-gray-100"
+          type="button"
         >
-          <List size={16} />
+          <Underline className="w-4 h-4" />
         </button>
-      </div>
-      <textarea
-        id="rich-textarea"
-        value={text}
-        onChange={handleTextChange}
-        onSelect={saveSelection}
-        rows={4}
-        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        placeholder="Enter description (supports markdown formatting)"
-      />
-      <div className="mt-2 text-sm text-gray-500">
-        Formatting tips:
-        <ul className="list-disc ml-4">
-          <li>Use **text** for bold</li>
-          <li>Click link button to add URLs</li>
-          <li>Select text and click bullet for lists</li>
-        </ul>
+        <button
+          onClick={insertLink}
+          className="p-2 rounded hover:bg-gray-100"
+          type="button"
+        >
+          <Link className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
 };
 
-export default RichTextEditor;
+const LexicalEditor = ({ onChange, initialValue = "" }) => {
+  const initialConfig = {
+    namespace: 'MyEditor',
+    onError(error) {
+      console.error(error);
+    },
+    editorState: initialValue,
+    theme: {
+      root: 'p-4 border border-gray-300 rounded-lg min-h-[200px] focus:outline-none focus:ring-2 focus:ring-indigo-500',
+      link: 'cursor-pointer text-blue-500 hover:text-blue-600 underline',
+      text: {
+        bold: 'font-bold',
+        italic: 'italic',
+        underline: 'underline',
+        strikethrough: 'line-through',
+        underlineStrikethrough: 'underline line-through',
+      },
+    },
+  };
+
+  const handleEditorChange = (editorState, editor) => {
+    editor.update(() => {
+      const rawText = $getRoot().getTextContent();
+      if (onChange) {
+        onChange(rawText);
+      }
+    });
+  };
+
+  return (
+    <div className="lexical-editor">
+      <LexicalComposer initialConfig={initialConfig}>
+        <div className="editor-container">
+          <ToolbarPlugin />
+          <div className="editor-inner">
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable className="editor-input" />
+              }
+              placeholder={
+                <div className="editor-placeholder text-gray-400">
+                  Enter your text here...
+                </div>
+              }
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            <OnChangePlugin onChange={handleEditorChange} />
+            <HistoryPlugin />
+            <AutoFocusPlugin />
+            <ListPlugin />
+            <LinkPlugin />
+            <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          </div>
+        </div>
+      </LexicalComposer>
+    </div>
+  );
+};
+
+export default LexicalEditor;
