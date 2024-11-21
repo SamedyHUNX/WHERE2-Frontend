@@ -181,7 +181,6 @@ const AdminEditor = () => {
           </h2>
           <PublicPhotoUpload postId={postId}/>
         </div>
-
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <FileText size={24} className="mr-2" />
