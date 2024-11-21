@@ -16,6 +16,7 @@ import SettingPanel from "./../SettingPanel.js";
 import adminContentListing from "./../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
 import DiscussionList from "./../community/DiscussionList.js";
 import MessageListing from "../accountUtilities/sidebarComponents/Developer/MessageListing.js";
+import FollowersList from "./FollowersList.js";
 
 export const SidebarContentContext = createContext();
 
@@ -28,15 +29,16 @@ const contentComponents = {
   accommodationList: AccommodationListing,
   adminDashboard: AdminDashboard,
   adminContent: AdminContent,
+  followersContent: FollowersList,
+  collectionPanel: CollectionPanel,
+  setting: SettingPanel,
+  discussionListing: DiscussionList,
+  messageListing : MessageListing,
   logOut: ({ userInfo }) => {
     // Clear sidebarContent from localStorage when rendering Logout component
     localStorage.removeItem("sidebarContent");
     return <Logout userInfo={userInfo} />;
   },
-  collectionPanel: CollectionPanel,
-  setting: SettingPanel,
-  discussionListing: DiscussionList,
-  messageListing : MessageListing
 };
 
 const Profile = ({ userData, isPublic }) => {
@@ -135,7 +137,8 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
               sidebarContent !== "messageListing" &&
-              sidebarContent !== "discussionListing" ? (
+              sidebarContent !== "discussionListing" &&
+              sidebarContent !== "followersContent" ? (
                 <CollectionPanel category={sidebarContent} className="h-full" />
               ) : (
                 <ContentComponent userInfo={userData} className="h-full" />

@@ -146,6 +146,7 @@ const config = {
     checkStatus: (targetUserId) =>
       `${API_URL}/api/followers/check/${targetUserId}`,
     getFollowersCount: (userId) => `${API_URL}/api/followers/count/${userId}`,
+    // getFollwers: (userId) => `${API_URL}/api/users/${userId}/followers`,
   },
   messages: {
     getMessages: (userId) => `${API_URL}/api/user/message/${userId}`,

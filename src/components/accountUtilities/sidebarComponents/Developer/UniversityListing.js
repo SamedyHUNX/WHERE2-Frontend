@@ -57,7 +57,7 @@ const UniversityListing = () => {
   }, []);
 
   if (loading) {
-    return <LoadingOverlay />;
+    return <LoadingOverlay isFullScreen={true} message="Loading..."/>;
   }
 
   if (error) {

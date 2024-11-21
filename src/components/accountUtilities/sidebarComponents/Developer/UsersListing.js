@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ListingComponent from "../../../reusable/ListingComponent";
-import { useUserFunctions } from '../../../reusable/functions/UserFunction';
-import config from "../../../../config";
-import { LoadingOverlay } from "../../../reusable/Loading";
-import ButtonComponent from "../../../reusable/Button";
+import ListingComponent from "./../../../reusable/ListingComponent";
+import { useUserFunctions } from './../../../reusable/functions/UserFunction';
+import config from "./../../../../config";
+import { LoadingOverlay } from "./../../../reusable/Loading";
+import ButtonComponent from "./../../../reusable/Button";
 
 const UserListing = () => {
   const [users, setUsers] = useState([]);
