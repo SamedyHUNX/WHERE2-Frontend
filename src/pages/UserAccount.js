@@ -7,9 +7,11 @@ import { LoadingOverlay } from "./../components/reusable/Loading";
 import VisitorTracker from "./../components/reusable/VisitorTracker";
 import PictureUpload from "./../components/reusable/PhotoUpload";
 import useGeolocation from "./../hooks/useGeolocation";
+import ButtonComponentComponent from "../components/reusable/ButtonComponent";
 import axios from "axios";
 import config from "./../config";
 import * as yup from 'yup';
+import ButtonComponent from "../components/reusable/Button";
 
 const updateProfileSchema = yup.object().shape({
   phoneNumber: yup.string().trim().matches(/^\+?[\d\s-()]{10,}$/, 'Invalid phone number format'),
@@ -164,27 +166,29 @@ const UserAccount = ({ userInfo }) => {
 
       <section className="w-full h-full bg-white rounded-3xl mb-[32px] shadow-md border">
         <div className="lg:w-full lg:py-[128px] lg:mx-auto h-full min-h-fit px-4 lg:px-[64px] pb-12 sm:px-6 lg:pb-0">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col items-center justify-between mb-6 space-y-2">
             <div className="flex items-center justify-center">
               <PictureUpload userId={userInfo.id} folder={'profile-picture'} />
             </div>
+            <p className="text-center mb-3">{userInfo.firstName ? userInfo.firstName : userInfo.userName}</p>
             {!isEditing ? (
-              <button
+              <ButtonComponent
                 onClick={handleEdit}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
                 Edit Profile
-              </button>
+              </ButtonComponent>
             ) : (
               <div className="flex gap-2">
-                <button
+                <ButtonComponent
                   onClick={handleCancel}
                   className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                  variant="danger"
                   disabled={isSaving}
                 >
                   Cancel
-                </button>
-                <button
+                </ButtonComponent>
+                <ButtonComponent
                   onClick={handleSave}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
                   disabled={isSaving}
@@ -197,12 +201,12 @@ const UserAccount = ({ userInfo }) => {
                   ) : (
                     'Save Changes'
                   )}
-                </button>
+                </ButtonComponent>
               </div>
             )}
+          
           </div>
 
-          <p className="text-center mb-3">{userInfo.firstName ? userInfo.firstName : userInfo.userName}</p>
 
           {validationErrors.api && (
             <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
@@ -318,10 +322,10 @@ const UserAccount = ({ userInfo }) => {
                 error={validationErrors.location}
               />
               {isEditing && (
-                <button
+                <ButtonComponent
                   onClick={handleLocationUpdate}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-blue-600 hover:text-blue-700"
-                  type="button"
+                  className="absolute right-1 top-[70%] transform -translate-y-1/2 p-2 text-blue-600 hover:text-blue-700"
+                  type="ButtonComponent"
                   disabled={isGettingLocation}
                 >
                   {isGettingLocation ? (
@@ -329,7 +333,7 @@ const UserAccount = ({ userInfo }) => {
                   ) : (
                     <MapPin className="h-5 w-5" />
                   )}
-                </button>
+                </ButtonComponent>
               )}
             </div>
 

@@ -52,9 +52,9 @@ import config from "../../config";
     }
   
     const jobHighlights = [
-      { icon: <Clock className="w-5 h-5" />, label: "Job Type", value: company?.data?.job_type || "Part Time" },
-      { icon: <DollarSign className="w-5 h-5" />, label: "Salary", value: company?.data?.salary || "Competitive" },
-      { icon: <Briefcase className="w-5 h-5" />, label: "Experience", value: company?.data?.experience || "Negotiation" },
+      { icon: <Clock className="w-5 h-5" />, label: "Work Hour", value: company?.data?.work_hour || "" },
+      { icon: <DollarSign className="w-5 h-5" />, label: "Salary", value: company?.data?.salary},
+      { icon: <Briefcase className="w-5 h-5" />, label: "Position", value: company?.data?.position || "" },
     ];
   
     const contact = (

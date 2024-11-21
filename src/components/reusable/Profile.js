@@ -16,6 +16,7 @@ import SettingPanel from "./../SettingPanel.js";
 import adminContentListing from "./../accountUtilities/sidebarComponents/Admin/AdminContentListing.js";
 import DiscussionList from "./../community/DiscussionList.js";
 import MessageListing from "../accountUtilities/sidebarComponents/Developer/MessageListing.js";
+import FollowersFollowing from "../accountUtilities/Followers.js";
 import FollowersList from "./FollowersList.js";
 
 export const SidebarContentContext = createContext();
@@ -29,6 +30,8 @@ const contentComponents = {
   accommodationList: AccommodationListing,
   adminDashboard: AdminDashboard,
   adminContent: AdminContent,
+  followers : FollowersFollowing,
+  // following : Following,
   followersContent: FollowersList,
   collectionPanel: CollectionPanel,
   setting: SettingPanel,
@@ -137,8 +140,9 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "accommodationList" &&
               sidebarContent !== "adminDashboard" &&
               sidebarContent !== "messageListing" &&
-              sidebarContent !== "discussionListing" &&
-              sidebarContent !== "followersContent" ? (
+              sidebarContent !== "followers" &&
+              sidebarContent !== "following" &&
+              sidebarContent !== "discussionListing" ? (
                 <CollectionPanel category={sidebarContent} className="h-full" />
               ) : (
                 <ContentComponent userInfo={userData} className="h-full" />
