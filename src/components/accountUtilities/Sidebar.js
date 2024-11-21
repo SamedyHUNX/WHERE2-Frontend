@@ -123,6 +123,7 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
           { label: 'Student Loan', icon: <BadgeDollarSignIcon />, onClick: () => handleItemClick("loan", "loan") }
         ]
       },
+      { label: 'Followers/Following', icon: <Heart className="h-5 w-5" /> , onClick: () => handleItemClick("followers", "followers")  },
       { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5" />, onClick: () => handleItemClick("setting", "setting") },
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut") },
     ],
@@ -130,9 +131,10 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
       { label: 'Profile', icon: <UserCircleIcon className="h-5 w-5" /> , onClick: () => handleItemClick("account", "account") },
       { label: 'Content', icon: <DocumentDuplicateIcon className="h-5 w-5" />, onClick: () => handleItemClick("adminContent", "adminContent") },
       { label: 'View your posts', icon: <PanelsLeftBottom className="h-5 w-5" /> , onClick: () => handleItemClick("adminContentListing", "adminContentListing")  },
-      { label: 'Dashboard', icon: <ChartNoAxesColumnIncreasingIcon className="h-5 w-5" /> , onClick: () => handleItemClick("adminDashboard", "adminDashboard") },
+      { label: 'Followers/Following', icon: <Heart className="h-5 w-5" /> , onClick: () => handleItemClick("followers", "followers")  },
       { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5"/> , onClick: () => handleItemClick("setting", "setting")  },
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut")  },
+
     ],
     developer: [
       { label: 'Account', icon: <User className="w-5 h-5" />, onClick: () => handleItemClick("account", "account") },
@@ -143,6 +145,7 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
       { label: 'Dashboard', icon: <ChartNoAxesColumnIncreasingIcon className="h-5 w-5" /> , onClick: () => handleItemClick("developerDashboard", "adminDashboard") },
       {label : "View discussion", icon: <MessageCircleMoreIcon/> , onClick: () => handleItemClick("discussionListing" , "discussionListing") },
       { label : "All Messages", icon: <MessagesSquare/> , onClick: () => handleItemClick("messageListing" , "messageListing") },
+      { label: 'Followers/Following', icon: <Heart className="h-5 w-5" /> , onClick: () => handleItemClick("followers", "followers")  },
       { label: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5" />, onClick: () => handleItemClick("setting", "setting") },
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut")},
     ]
