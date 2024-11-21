@@ -3,6 +3,7 @@ import axios from 'axios';
 import config from "../../config";
 import { setTotalPage } from './paginationSlice';
 import { setIsLoading } from './favoriteSlice';
+import { SatelliteAlt } from '@mui/icons-material';
 
 /** 
  * Fetch all universities with pagination. 
@@ -17,7 +18,9 @@ export const fetchUniversities = createAsyncThunk(
         try {
             const response = await axios.get(`${config.universities.getAllUniversity}?page=${page}`);
             dispatch(setTotalPage(response.data.pagination.totalPages || 1));
-            // const approvedUniversities = response.data.list.filter(university => university.isApproved);
+
+            console.log(response.data.list)
+
             const approvedUniversities = response.data.list
             return approvedUniversities;
         } catch (error) {
@@ -36,7 +39,10 @@ export const fetchUniversity = createAsyncThunk(
     'universities/fetchUniversity',
     async (id) => {
         const response = await axios.get(`${config.universities.getUniversityById}/${id}`);
-        return response.data.list;
+
+        console.log(response.data)
+
+        return response.data;
     }
 );
 
@@ -59,6 +65,7 @@ export const searchUniversities = createAsyncThunk(
 const universitySlice = createSlice({
     name: 'universities',
     initialState: {
+        imageLink:'',
         universities: [],
         university: [],
         loading: false,
@@ -70,6 +77,9 @@ const universitySlice = createSlice({
         },
         setLoading: (state, action) => {
             state.loading = action.payload;
+        },
+        setImageUrl: (state, action) => {
+            state.imageLink = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -129,5 +139,5 @@ const universitySlice = createSlice({
     },
 });
 
-export const { setUniversities, setLoading } = universitySlice.actions;
+export const { setUniversities, setLoading,setImageUrl } = universitySlice.actions;
 export default universitySlice.reducer;

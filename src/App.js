@@ -3,7 +3,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-
+import CookieConsent from "react-cookie-consent";
 import HomePage from "./pages/HomePage";
 import UserProfile from "./components/accountUtilities/UserProfile";
 import LoginPage from "./pages/LoginPage";
@@ -165,7 +165,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+      <CookieConsent
+        style={{ display: "grid", padding: "10px",margin:"8px",maxWidth:"350px"}}
+        buttonStyle={{color:"white", backgroundColor:"rgb(56 189 248)",padding:"10px",float:"right"}}
+      > <div className="pt-8 content-center">
+              <b >We Use Cookies</b>
+              <p>Cookies help us deliver the best experience on our website. By using our website, you agree to the use of cookies. <u>Find out how we use cookies.</u></p>
+      </div>
+      </CookieConsent>
+      </QueryClientProvider>
   );
 }
 

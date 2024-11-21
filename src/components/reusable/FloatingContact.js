@@ -54,11 +54,6 @@ const FloatingContact = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-    // if (formData.phoneNumber && !phoneRegex.test(formData.phoneNumber)) {
-    //   newErrors.phoneNumber = "Please enter a valid phone number";
-    // }
-
     if (formData.fullName.trim().length < 2) {
       newErrors.fullName = "Name must be at least 2 characters";
     }
@@ -116,7 +111,7 @@ const FloatingContact = () => {
       {/* Alert Box at the top-right of the screen */}
       {alert.show && (
         <div
-          className={`fixed top-[8vh] right-[5vw] z-50 p-4 rounded-md shadow-lg max-w-xs ${
+          className={`fixed top-[10vh] right-[5vw] z-50 p-4 rounded-md shadow-lg max-w-xs ${
             alert.type === "success"
               ? "bg-sky-500 text-white"
               : "bg-red-500 text-white"
@@ -129,7 +124,7 @@ const FloatingContact = () => {
 
       <div className="fixed lg:bottom-[4vh] lg:right-[5vw] sm:bottom-[4vh] sm:right-6 z-50">
         {isOpen && (
-          <div className="absolute lg:bottom-24 sm:bottom-[6vh] right-0 lg:w-96 sm:w-[350px] bg-white rounded-lg shadow-xl transform transition-all duration-300 animate-slide-up">
+          <div className="absolute lg:bottom-24 sm:bottom-[6vh] right-0 lg:w-96 sm:w-[250px] bg-white rounded-lg shadow-xl transform transition-all duration-300 animate-slide-up">
             <div className="flex justify-between items-center p-4 border-b">
               <div>
                 <h2 className="text-2xl font-semibold my-[16px]">Contact Us</h2>
@@ -239,7 +234,7 @@ const FloatingContact = () => {
         {/* Floating Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-[80px] h-[80px] rounded-full ${
+          className={`lg:w-[80px] lg:h-[80px] sm:w-[60px] sm:h-[60px] rounded-full ${
             isOpen ? "bg-red-500" : "bg-sky-500"
           } text-white shadow-lg flex items-center justify-center hover:bg-sky-600 transition-all duration-200`}
         >

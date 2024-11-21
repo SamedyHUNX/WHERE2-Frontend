@@ -7,7 +7,9 @@ import DropdownComponent from './../../../reusable/DropdownComponent';
 import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
-
+import { useFetchPublicPhoto } from '../../../../hooks/useFetchPublicPhoto';
+import { useSelector } from 'react-redux';
+import AccommodationListing from '../Developer/AccommodationListing';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -22,7 +24,7 @@ const entityConfig = {
       { name: 'name', label: 'University Name', type: 'text' },
       { name: 'description', label: 'University Description', type: 'textarea' },
       { name: 'location', label: 'Location', type: 'text' },
-      {name : 'image_url' , label: 'Image URL', type: 'text'}
+      // {name : 'image_url' , label: 'Image URL', type: 'text'}
     ],
   },
   'Job offer': {
@@ -62,6 +64,8 @@ const AdminEditor = () => {
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
+  const { imageLink } = useSelector(state => state.universities);
+
 
 
   const [links, setLinks] = useState([
@@ -74,9 +78,8 @@ const AdminEditor = () => {
   const entityDataKey = `${entity}Data`;
 
   useEffect(() => {
-    const newUuid = uuidv4();  // Generate a new UUID
-    setPostId(newUuid);      // Set the generated UUID to state
-    console.log('Generated UUID:', newUuid);
+    const newUuid = uuidv4();
+    setPostId(newUuid);
 
     const savedData = JSON.parse(localStorage.getItem(entityDataKey));
     if (savedData) {
@@ -106,7 +109,6 @@ const AdminEditor = () => {
     setFormData({});
   };
 
-  // const formType = localStorage.getItem('formType');
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -129,8 +131,10 @@ const AdminEditor = () => {
       instagram_url: links.find(link => link.title === 'Instagram')?.url || '',
       telegram_url: links.find(link => link.title === 'Telegram')?.url || '',
       website: links.find(link => link.title === 'Website')?.url || '',
+      image_url: imageLink,
       image_alt: formData[entityConfig[entity].fields[0].name],
       userId: parseInt(userId),
+      postId
     };
 
     // Special case for Job offer due to different data structure
@@ -167,6 +171,9 @@ const AdminEditor = () => {
     };
     localStorage.setItem(entityDataKey, JSON.stringify(data));
   };
+
+
+  if (entity === 'Accommodation') return <AccommodationListing />;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">

@@ -19,8 +19,9 @@ export const useFetchPhoto = (userId) => {
     setError(null);
 
     try {
+      const cacheBreaker = Date.now();
       const response = await axios.get(
-        config.photo.fetchProfilePicture(userId) + `?t=${Date.now()}`
+        `${config.photo.fetchProfilePicture(userId)}?t=${cacheBreaker}`
       );
 
       if (response.data.status === "success") {
@@ -60,29 +61,47 @@ export const useUploadPhoto = (userId) => {
 
     try {
       // OBTAINING DATA FROM BACKEND (BACKEND API IS STORED IN config.js)
-      const { data: s3Data } = await axios.post(config.photo.getS3Url, { folder });
+      const { data: s3Data } = await axios.post(config.photo.getS3Url,
+        {
+          contentType: file.type,
+          folder
+        });
 
       if (!s3Data || !s3Data.url) {
         throw new Error("Invalid S3 pre-signed URL received");
       }
 
-      await axios.put(s3Data.url, file, {
+      const uploadConfig = {
         headers: {
-          "Content-Type": file.type,
+          'Content-Type': file.type,
+          // Remove any default Authorization headers
+          Authorization: undefined
         },
-      });
+        // Ensure no default headers or auth are sent
+        withCredentials: false
+      };
+
+      // Upload to S3
+      await axios.put(s3Data.url, file, uploadConfig);
 
       const urlParts = new URL(s3Data.url);
       const imageUrl = `${urlParts.protocol}//${urlParts.host}${urlParts.pathname}`;
 
       if (!imageUrl) {
+        console.error("S3 URL construction failed");
         throw new Error("S3 URL construction failed");
       }
 
-      const response = await axios.post(config.photo.uploadProfilePicture, {
-        userId,
-        imageUrl,
-      });
+      const response = await axios.post(
+        config.photo.uploadProfilePicture,
+        { userId, imageUrl },
+        {
+          // Ensure proper authorization for your backend
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
 
       if (!response.data || !response.data.profilePictureUrl) {

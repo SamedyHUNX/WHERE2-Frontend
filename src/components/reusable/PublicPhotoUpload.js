@@ -3,6 +3,8 @@ import { Edit2  , Image} from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import { useFetchPublicPhoto, useUploadPublicPhoto } from "./../../hooks/useFetchPublicPhoto";
 import { LoadingOverlay } from "./Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setImageUrl } from "../../features/slices/universitySlice";
 
 const MAX_FILE_SIZE = 500 * 1024;
 
@@ -10,6 +12,7 @@ const MAX_FILE_SIZE = 500 * 1024;
 const PublicPhotoUpload = ({ postId }) => {
   const { userId } = useAuth();
   const formType = localStorage.getItem('formType');
+  const dispatch = useDispatch();
   
   // Add state for the current image
   const [currentImage, setCurrentImage] = useState(null);
@@ -39,10 +42,11 @@ const PublicPhotoUpload = ({ postId }) => {
       const result = await uploadPublicPhoto(selectedFile, "public", formType, postId);
       
       if (result.success) {
+        dispatch(setImageUrl(result.imageUrl));
         // Update the current image immediately
         setCurrentImage(result.imageUrl);
         // Refresh the data from server
-        await fetchPhoto();
+        // await fetchPhoto();
       } else {
         console.error('Upload failed:', result.error);
       }
@@ -79,7 +83,7 @@ const PublicPhotoUpload = ({ postId }) => {
         id="public"
         type="file"
         onChange={handleFileChange}
-        accept="image/*"
+        accept=".jpg,.jpeg"
         className="hidden"
       />
       {isUploading && (

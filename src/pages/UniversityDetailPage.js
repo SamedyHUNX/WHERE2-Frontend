@@ -17,32 +17,35 @@ const UniversityDetailPage = () => {
 
     const university = useSelector((state) => state.universities.university);
     const isLoading = useSelector((state) => state.universities.isLoading);
-    
 
     useEffect(() => {
         dispatch(fetchUniversity(id));
     }, [dispatch, id]);
 
     if (isLoading) {
-        return <LoadingOverlay/>;
+        return <LoadingOverlay isFullScreen={true} message='We are fetching the university...'/>;
     }
+
+    // Check for image in the university's details (university.list.image_url)
+    // Fallback to the first image in the university.images array if available
+    const imageUrl = university?.list?.image_url || (university?.images && university.images[0]?.imageUrl);
 
     return (
         <>
             <Navbar />
             {university && (
                 <DetailLayout
-                    image={university.image_url}
-                    description={university.description}
-                    title={university.name}
-                    websiteLink={university.website}
-                    facebookLink={university.facebook_url}
-                    instagramLink={university.instagram_url}
-                    twitterLink={university.twitter_url}
-                    telegramLink={university.telegram_url}
+                    image={imageUrl}
+                    description={university.list?.description}
+                    title={university.list?.name}
+                    websiteLink={university.list?.website}
+                    facebookLink={university.list?.facebook_url}
+                    instagramLink={university.list?.instagram_url}
+                    twitterLink={university.list?.twitter_url}
+                    telegramLink={university.list?.telegram_url}
                 />
             )}
-            <FloatingContact/>
+            <FloatingContact />
             <Footer />
         </>
     );
