@@ -183,7 +183,9 @@ const FollowersFollowing = () => {
                   profile={item.profilePictureUrl}
                   name={item.userName || item.entity}
                   userEmail={item.email}
-                  userBio={item.bio}
+                  userBio={item.bio || "This user does not have a bio"}
+                  followedAt={item.followedAt}
+                  activeTab={activeTab}
                 />
                 {index < filteredData.length - 1 && <Divider />}
               </React.Fragment>
