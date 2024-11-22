@@ -30,6 +30,7 @@ const PublicPhotoUpload = ({ postId }) => {
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
+    console.log("single Photo",selectedFile)
 
     // CHECK FILE SIZE BEFORE UPLOADING
     if (selectedFile.size > MAX_FILE_SIZE) {
