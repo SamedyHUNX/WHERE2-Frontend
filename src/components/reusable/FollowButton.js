@@ -76,7 +76,7 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
 
   const getFollowersCount = async () => {
     if (!token) return;
-
+  
     try {
       const response = await axios.get(
         config.follow.getFollowersCount(targetUserId),
@@ -86,8 +86,12 @@ const FollowButton = ({ targetUserId, currentUserId }) => {
           },
         }
       );
-
-      setFollowersCount(response.data.results);
+  
+      if (response.data && response.data.status === "success") {
+        setFollowersCount(response.data.data.followers.length || 0);
+      } else {
+        console.error("Unexpected response structure:", response);
+      }
     } catch (error) {
       console.error("Error getting followers count:", error.response || error);
     }
