@@ -9,8 +9,10 @@ import SaveSection from "./../components/reusable/Saves";
 import JoinUs from "./../components/reusable/JoinUs";
 import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 // import Card from "../components/reusable/Card";
-import FloatingContact from "./../components/reusable/FloatingContact"
-
+import FloatingContact from "./../components/reusable/FloatingContact";
+import university from "../../public/images/University.webp";
+import scholarship from "../../public/images/scholarship.webp";
+import livelihood from "../../public/images/Livelihood.jpg"
 // slices
 import { searchUniversities } from "../features/slices/universitySlice";
 
@@ -159,19 +161,19 @@ path: "https://anbschool.org/"
 const featureCards = [
   {
     title: "University",
-    image: "https://i.imgur.com/nLz3Gqg.png",
+    image: university,
     description: "Find out available scholarships.",
     path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: "https://i.imgur.com/zwFZOIk.png",
+    image: scholarship,
     description: "Find out available scholarships.",
     path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
-    image: "https://i.imgur.com/lfOwU5G.png",
+    image: livelihood ,
     description: "Find support for your education.",
     path: "/livelihood"
   }
