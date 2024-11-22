@@ -89,9 +89,9 @@ export const useUploadPublicPhoto = () => {
           }
     
           // Step 2: Upload to S3 with progress tracking
-          await axios.put(s3Data.url, files, {
+          await axios.put(s3Data.url, file, {
             headers: {
-              "Content-Type": files.type,
+              "Content-Type": file.type,
               "Access-Control-Allow-Origin": "*",
               Authorization: undefined
             },
@@ -108,7 +108,7 @@ export const useUploadPublicPhoto = () => {
           console.log("imageUR>", imageUrl)
           accommodationImage[`img${cnt}`] = imageUrl,
             cnt++;
-          imageUrl = JSON.stringify(accommodationImage);
+          
         }
       }
        else {
@@ -141,15 +141,19 @@ export const useUploadPublicPhoto = () => {
         console.log("imageUR>",imageUrl)
       }
 
-      console.log("final image url", imageUrl)
-      console.log("acoomimage",accommodationImage)
+      
+      console.log("acoomimage", accommodationImage)
+      if (accommodationImage.img1) {
+        imageUrl = JSON.stringify(accommodationImage);
+      }
+      console.log("final image url len", imageUrl)
       // Step 4: Update backend with the new image URL
       const response = await axios.post(config.photo.uploadPublicPhoto, {
         formType,
         userId,
-        imageUrl,
+        imageUrl:`${imageUrl}`,
         postId
-      });
+        });
 
       // Proper response validation
       if (!response.data) {
@@ -157,7 +161,7 @@ export const useUploadPublicPhoto = () => {
       }
 
       const { status, data, message } = response.data;
-
+console.log("data",data)
       if (status !== 'success') {
         throw new Error(message || "Upload failed");
       }
@@ -165,7 +169,7 @@ export const useUploadPublicPhoto = () => {
       // Return success response with all relevant data
       return {
         success: true,
-        imageUrl: data.imageUrl,
+        imageUrl: `{img1:"` + data.imageUrl,
         postId: data.postId,
         imageId: data.id,
       };
