@@ -10,9 +10,6 @@ import JoinUs from "./../components/reusable/JoinUs";
 import SocialMediaLinks from "./../components/reusable/SocialMediaLinks";
 // import Card from "../components/reusable/Card";
 import FloatingContact from "./../components/reusable/FloatingContact";
-import university from "../../public/images/University.webp";
-import scholarship from "../../public/images/scholarship.webp";
-import livelihood from "../../public/images/Livelihood.jpg"
 // slices
 import { searchUniversities } from "../features/slices/universitySlice";
 
@@ -161,19 +158,19 @@ path: "https://anbschool.org/"
 const featureCards = [
   {
     title: "University",
-    image: university,
+    image: "https://ebn3uweccht.exactdn.com/wp-content/uploads/2023/04/RUPP-Campus-blue-sky-768x512.jpeg?strip=all&lossy=1&ssl=1",
     description: "Find out available scholarships.",
     path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: scholarship,
+    image: "https://issr.edu.kh/wp-content/uploads/2023/05/IMG_6132-1024x683.jpg",
     description: "Find out available scholarships.",
     path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
-    image: livelihood ,
+    image: "https://lomatechnology.com/storage/blog/fsOjujUEdq59FExiJl2bgZfXwfsYl31NzUvoq7Pi.jpg" ,
     description: "Find support for your education.",
     path: "/livelihood"
   }
