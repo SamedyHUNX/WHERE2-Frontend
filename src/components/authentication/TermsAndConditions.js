@@ -7,14 +7,19 @@ import { register } from "../../features/slices/authSlice";
 import { LoadingSpinner, LoadingOverlay } from "../reusable/Loading";
 
 
-// HARD CODED TERMSANDCONDITIONS; WE WILL UPDATE THIS WHEN WE HAVE COME UP WITH TERMSANDCONDITIONS LATER
+// HARD CODED TERMS AND CONDITIONS; WE WILL UPDATE THIS WHEN WE HAVE COME UP WITH TERMS AND CONDITIONS LATER
 const termsAndConditions = [
   {
     p1: "Account Registration: By signing up, you agree to create an account to access our services. This means you'll provide some basic information, like your name and email address, so we can help you get started.",
   },
+  
   {
     p2: "Cookies and Browsing History: To improve your experience, we use cookies to keep track of your browsing history. This helps us understand how you use our service. By using our site, you grant us permission to use cookies. If you have any questions about this, feel free to ask!",
   },
+  
+  {
+    p3: "We reserve the right to update or amend these Terms and Conditions at any time. By continuing to use our services and clicking 'Agree' to the current Terms and Conditions, you automatically consent to any future changes we may make. We encourage you to periodically review this page to stay informed about any updates."
+  }
 ];
 
 const TermsAndConditionsComponent = () => {
@@ -102,7 +107,7 @@ const TermsAndConditionsComponent = () => {
         <div className="mb-4">
           <button
             onClick={handleBack}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 transition-colors hover:text-gray-800"
           >
             ← Back
           </button>
@@ -116,11 +121,11 @@ const TermsAndConditionsComponent = () => {
         </div>
 
         <div className="mb-6 overflow-y-auto max-h-[40vh]">
-          <h3 className="font-semibold mb-2">1. Clause 1</h3>
-          <p className="text-sm text-gray-600 mb-4">{termsAndConditions[0].p1}</p>
+          <h3 className="mb-2 font-semibold">1. Clause 1</h3>
+          <p className="mb-4 text-sm text-gray-600">{termsAndConditions[0].p1}</p>
 
-          <h3 className="font-semibold mb-2">2. Clause 2</h3>
-          <p className="text-sm text-gray-600 mb-4">{termsAndConditions[1].p2}</p>
+          <h3 className="mb-2 font-semibold">2. Clause 2</h3>
+          <p className="mb-4 text-sm text-gray-600">{termsAndConditions[1].p2}</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -138,12 +143,12 @@ const TermsAndConditionsComponent = () => {
           </div>
 
           {localError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-red-600 text-sm text-center">{localError}</p>
+            <div className="p-3 mb-4 border border-red-200 rounded-md bg-red-50">
+              <p className="text-sm text-center text-red-600">{localError}</p>
             </div>
           )}
 
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <ButtonComponent
               variant="primary"
               className="mt-2 w-[197px] sm:w-full h-[38px] sm:w-[343px] sm:h-[50px]"
@@ -158,7 +163,7 @@ const TermsAndConditionsComponent = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to="/login" className="text-sky-500 underline">
+            <Link to="/login" className="underline text-sky-500">
               Log in
             </Link>
           </p>
