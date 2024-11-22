@@ -35,8 +35,7 @@ const config = {
     getPublicProfile: (userId) =>
       `${API_URL}/api/users/public/${userId}`,
 
-    getAdminContentList: (adminId) =>
-      `${API_URL}/api/users/content-list/${adminId}`,
+    getAdminContentList: (adminId) => `${API_URL}/api/users/content-list/${adminId}`,
   },
   analytics: {
     getAllUsers: `${API_URL}/api/users/user-list`,
@@ -74,7 +73,7 @@ const config = {
     approveJob: (jobId) => `${API_URL}/api/jobs/approve/${jobId}`,
     disapproveJob: (jobId) => `${API_URL}/api/jobs/disapprove/${jobId}`,
     getJob: (jobId) => `${API_URL}/api/jobs/${jobId}`,
-    deleteJob : (jobId) => `${API_URL}/api/jobs/delete/${jobId}`,
+    deleteJob : (jobId) => `${API_URL}/api/jobs/deleteJob/${jobId}`,
   },
   favorite: {
     addFavorite: `${API_URL}/api/favorites/addFavorite`,

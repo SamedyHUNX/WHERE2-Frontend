@@ -31,6 +31,7 @@ import {
 import { Edit } from 'lucide-react';
 
 const AdminContentListing = () => {
+  let response;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteDialog, setDeleteDialog] = useState({
@@ -42,12 +43,17 @@ const AdminContentListing = () => {
   
   const { userId } = useAuth();
   const navigate = useNavigate();
-
+console.log("userId", userId)
   const fetchAdminContents = async () => {
     try {
       console.log('Fetching admin content');
-      const response = await axios.get(config.profile.getAdminContentList(userId));
-      const approvedPosts = response.data.data.posts.filter(post => post.isApproved === true);
+      console.log("userId inside function", userId)
+      console.log('link URL', typeof (config.profile.getAdminContentList(userId)))
+      if (userId) {
+        response = await axios.get(config.profile.getAdminContentList(userId));
+        console.log("Response",response)
+      }
+      const approvedPosts = response.data.data.posts;
       setPosts(approvedPosts);
     } catch (error) {
       console.error("Error fetching admin content list:", error);
