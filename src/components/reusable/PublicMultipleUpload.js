@@ -32,9 +32,6 @@ const PublicMultipleUpload = ({ postId }) => {
     const selectedFile = e.target.files;
     if (!selectedFile) return;
       
-      for (let i of selectedFile) {
-        console.log("selectedFile", i)
-      }
     // CHECK FILE SIZE BEFORE UPLOADING
     if (selectedFile.size > MAX_FILE_SIZE) {
       alert("File size exceeds the maximum allowed (500 KB).");
@@ -44,11 +41,11 @@ const PublicMultipleUpload = ({ postId }) => {
     try {
       // Upload the photo and get the response
       const result = await uploadPublicPhoto(selectedFile, "public", formType, postId);
-      console.log('result Multiple',result)
+    
       if (result.success) {
-        // dispatch(setImageUrl(result.imageUrl));
+
         // Update the current image immediately
-        setCurrentImage(result.imageUrl);
+        setCurrentImage(accommodationImages);
         // Refresh the data from server
         // await fetchPhoto();
       } else {

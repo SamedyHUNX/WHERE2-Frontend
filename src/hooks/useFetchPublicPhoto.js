@@ -172,7 +172,7 @@ console.log("data",data)
       // Return success response with all relevant data
       return {
         success: true,
-        imageUrl: `{img1:"` + data.imageUrl,
+        imageUrl: data.imageUrl,
         postId: data.postId,
         imageId: data.id,
       };

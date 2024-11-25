@@ -24,7 +24,7 @@ const hero1 = {
   backgroundGradient: "bg-gray-primary",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: "https://i.imgur.com/dACQws5.png",
+  mainImageSrc: "https://i.imgur.com/agM6LN0.png",
   mainImageAlt: "University building",
   onSearch: () => {},
 };
@@ -37,7 +37,8 @@ const hero2 = {
   backgroundGradient: "from-blue-100",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
+  // mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
+  mainImageSrc: "https://lomatechnology.com/storage/blog/1lJCMBnciXYaBo9H51SV8lRnH8BEazY4pjUqB0dQ.jpg",
   mainImageAlt: "University building",
   button:"Find part time jobs",
   onSearch: () => {},
@@ -170,12 +171,11 @@ const featureCards = [
   },
   {
     title: "Livelihood",
-    image: "https://lomatechnology.com/storage/blog/fsOjujUEdq59FExiJl2bgZfXwfsYl31NzUvoq7Pi.jpg" ,
+    image: "https://lomatechnology.com/storage/uploads/StX3fWFpbGcHV9iu7dkb6DCWvybYf1HWpjsoJgjn.jpg",
     description: "Find support for your education.",
     path: "/livelihood"
   }
 ];
-
 
 
 const HomePage = () => {

@@ -101,7 +101,10 @@ const config = {
     getAllAccommodation: `${API_URL}/api/list/accommodation`,
     getAccommodationById: `${ API_URL }/api/accommodation`,
     addAccommodation: `${ API_URL }/api/accommodation/addAccommodation`,
-    deleteAccommodation: (accId) => `${API_URL}/api/accommodation/deleteAccommodation/${accId}`
+    deleteAccommodation: (accId) => `${ API_URL }/api/accommodation/deleteAccommodation/${ accId }`,
+    getAllAccommodationList: `${ API_URL }/api/accommodation/accommodation-list/all`,
+    approveAccommodation : (accommodationId) => `${API_URL}/api/accommodation/approve/${accommodationId}`,
+    disapproveAccommodation : (accommodationId) => `${API_URL}/api/accommodation/disapprove/${accommodationId}`,
   },
   search: {
     searchAny: `${API_URL}/api/`,

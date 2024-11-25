@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AccommodationListing from '../Developer/AccommodationListing';
 import PublicMultipleUpload from '../../../reusable/PublicMultipleUpload';
 import { clearAccommodationImage } from '../../../../features/slices/accommodationSlice';
+import { clearImageLink } from '../../../../features/slices/universitySlice';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -69,10 +70,11 @@ const AdminEditor = () => {
   const dispatch = useDispatch();
   const { imageLink } = useSelector(state => state.universities);
   const { accommodationImages } = useSelector(state => state.accommodations);
-  console.log("Hello Admin Content is called")
+
   useEffect(() => {
     dispatch(clearAccommodationImage())
-    console.log("Hello firstUseEffect")
+    // setEntity('University')
+    localStorage.setItem('formType', 'University')
 },[])
 
   const [links, setLinks] = useState([
@@ -89,7 +91,7 @@ const AdminEditor = () => {
     setPostId(newUuid);
 
     const savedData = JSON.parse(localStorage.getItem(entityDataKey));
-    console.log("savedData",savedData)
+
     if (savedData) {
       setFormData(savedData.formData || {});
       setLinks(savedData.links || [
@@ -116,7 +118,7 @@ const AdminEditor = () => {
     setEntity(selectedEntity.label);
     setFormData({});
   };
-console.log("FormData",formData)
+
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -130,7 +132,12 @@ console.log("FormData",formData)
 
   const handleApplyChanges = async () => {
     localStorage.removeItem(`${entity}Data`);
-    alert('Changes saved successfully');
+    alert('Changes saved successfully',setFormData({}),dispatch(clearAccommodationImage()),dispatch(clearImageLink()),setLinks([
+      { title: 'Telegram', url: '' },
+      { title: 'Facebook', url: '' },
+      { title: 'Instagram', url: '' },
+      { title: 'Website', url: '' },
+    ]));
 
     // Base data object with common fields and userId
     let data = {
@@ -139,7 +146,7 @@ console.log("FormData",formData)
       instagram_url: links.find(link => link.title === 'Instagram')?.url || '',
       telegram_url: links.find(link => link.title === 'Telegram')?.url || '',
       website: links.find(link => link.title === 'Website')?.url || '',
-      image_url: imageLink,
+      image_url: imageLink || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg',
       image_alt: formData[entityConfig[entity].fields[0].name],
       userId: parseInt(userId),
       postId
@@ -183,6 +190,8 @@ console.log("FormData",formData)
 
     try {
       const response = await axios.post(entityConfig[entity].createEndpoint, data);
+      // if (entity === 'Accommodation'){dispatch(clearAccommodationImage)}
+      // setFormData({})
     } catch (error) {
       console.error('Error saving changes:', error.response ? error.response.data : error.message);
     }

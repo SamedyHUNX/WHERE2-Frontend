@@ -80,6 +80,9 @@ const universitySlice = createSlice({
         },
         setImageUrl: (state, action) => {
             state.imageLink = action.payload;
+        },
+        clearImageLink: (state, action) => {
+            state.imageLink = ''
         }
     },
     extraReducers: (builder) => {
@@ -139,5 +142,5 @@ const universitySlice = createSlice({
     },
 });
 
-export const { setUniversities, setLoading,setImageUrl } = universitySlice.actions;
+export const { setUniversities, setLoading,setImageUrl, clearImageLink} = universitySlice.actions;
 export default universitySlice.reducer;
