@@ -64,7 +64,7 @@ const AdminContentListing = () => {
                       </p>
                     </div>
                     <span className="ml-4 px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
-                      {post.postType === 'university' ? 'University' : 'Job'}
+                      {post.postType}
                     </span>
                   </div>
                 </div>

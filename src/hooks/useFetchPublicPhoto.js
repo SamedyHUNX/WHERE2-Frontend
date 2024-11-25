@@ -2,14 +2,15 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import config from "./../config";
 import useAuth from "./useAuth";
-
+import { useDispatch } from "react-redux";
+import { setAccommodationImages } from "../features/slices/accommodationSlice";
 
 // THIS FUNCTION IS USED TO FETCH USER PHOTO
 export const useFetchPublicPhoto = (userId, postId) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch();
   const fetchPhoto = useCallback(async () => {
     if (!userId || !postId) return;
 
@@ -47,6 +48,7 @@ export const useUploadPublicPhoto = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const dispatch = useDispatch();
   let urlParts;
   let imageUrl = '';
   let accommodationImage = {};
@@ -145,6 +147,7 @@ export const useUploadPublicPhoto = () => {
       console.log("acoomimage", accommodationImage)
       if (accommodationImage.img1) {
         imageUrl = JSON.stringify(accommodationImage);
+        dispatch(setAccommodationImages(accommodationImage))
       }
       console.log("final image url len", imageUrl)
       // Step 4: Update backend with the new image URL

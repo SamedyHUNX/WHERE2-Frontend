@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { useFetchPublicPhoto, useUploadPublicPhoto } from "./../../hooks/useFetchPublicPhoto";
 import { LoadingOverlay } from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { setImageUrl } from "../../features/slices/universitySlice";
+
 
 const MAX_FILE_SIZE = 500 * 1024;
 
@@ -19,13 +19,14 @@ const PublicMultipleUpload = ({ postId }) => {
 
   const { imageUrl, isLoading, fetchPhoto } = useFetchPublicPhoto(userId, postId);
   const { uploadPublicPhoto, isUploading, uploadError } = useUploadPublicPhoto();
+  const { accommodationImages } = useSelector(state => state.accommodations);
 
   // Effect to update currentImage when imageUrl changes
-  useEffect(() => {
-    if (imageUrl) {
-      setCurrentImage(imageUrl);
-    }
-  }, [imageUrl]);
+  // useEffect(() => {
+  //   if (accommodationImages) {
+  //     setCurrentImage(accommodationImages);
+  //   }
+  // }, [accommodationImages]);
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files;
@@ -68,14 +69,40 @@ const PublicMultipleUpload = ({ postId }) => {
 
   return (
     <div className="relative">
+      <div className="flex flex-wrap gap-2">
       <img
-        src={currentImage || '/where2.jpg'}
+        src={accommodationImages.img1 || '/where2.jpg'}
         alt="Public photo"
-        className="w-full h-[400px] object-cover"
+        className="flex-1 h-[400px] object-cover"
         onError={(e) => {
           e.target.src = "/where2.jpg";
         }}
       />
+         <img
+        src={accommodationImages.img2 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+      />
+         <img
+        src={accommodationImages.img3 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+      />
+         <img
+        src={accommodationImages.img4 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+        />
+        </div>
       <label
         htmlFor="public"
         className="absolute bottom-0 right-0 bg-white p-1 shadow-md cursor-pointer hover:bg-gray-100 transition-colors"
