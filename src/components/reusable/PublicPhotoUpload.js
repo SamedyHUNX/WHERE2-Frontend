@@ -19,6 +19,7 @@ const PublicPhotoUpload = ({ postId }) => {
 
   const { imageUrl, isLoading, fetchPhoto } = useFetchPublicPhoto(userId, postId);
   const { uploadPublicPhoto, isUploading, uploadError } = useUploadPublicPhoto();
+  const { imageLink } = useSelector(state => state.universities);
 
   // Effect to update currentImage when imageUrl changes
   useEffect(() => {
@@ -45,9 +46,10 @@ const PublicPhotoUpload = ({ postId }) => {
       if (result.success) {
         dispatch(setImageUrl(result.imageUrl));
         // Update the current image immediately
-        setCurrentImage(result.imageUrl);
+        console.log("imageUrl",result.imageUrl)
+        // setCurrentImage(result.imageUrl);
         // Refresh the data from server
-        // await fetchPhoto();
+        await fetchPhoto();
       } else {
         console.error('Upload failed:', result.error);
       }
@@ -63,11 +65,11 @@ const PublicPhotoUpload = ({ postId }) => {
       </div>
     );
   }
-
+console.log("currentImage",currentImage)
   return (
     <div className="relative">
       <img
-        src={currentImage || '/where2.jpg'}
+        src={imageLink || '/where2.jpg'}
         alt="Public photo"
         className="w-full h-[400px] object-cover"
         onError={(e) => {

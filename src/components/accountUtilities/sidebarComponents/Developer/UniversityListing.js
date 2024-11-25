@@ -87,7 +87,7 @@ const UniversityListing = () => {
           showApproved ? "Approved Universities" : "Unapproved Universities"
         }
         data={filteredUniversities}
-        columns={["id", "email", "name", "role"]}
+        columns={["id", "name"]}
         totalItems={filteredUniversities.length}
         actions={getUniversityFunctions(showApproved)}
       />

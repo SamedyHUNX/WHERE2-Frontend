@@ -25,7 +25,7 @@ const hero1 = {
   backgroundGradient: "bg-gray-primary",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: "https://i.imgur.com/dACQws5.png",
+  mainImageSrc: "https://i.imgur.com/agM6LN0.png",
   mainImageAlt: "University building",
   onSearch: () => {},
 };
@@ -38,7 +38,8 @@ const hero2 = {
   backgroundGradient: "from-blue-100",
   titleColor: "text-blue-900",
   subtitleColor: "text-blue-600",
-  mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
+  // mainImageSrc: "https://i.imgur.com/4LZH1N6.png",
+  mainImageSrc: "https://lomatechnology.com/storage/blog/1lJCMBnciXYaBo9H51SV8lRnH8BEazY4pjUqB0dQ.jpg",
   mainImageAlt: "University building",
   button:"Find part time jobs",
   onSearch: () => {},
@@ -159,24 +160,23 @@ path: "https://anbschool.org/"
 const featureCards = [
   {
     title: "University",
-    image: "https://i.imgur.com/nLz3Gqg.png",
+    image: "https://ebn3uweccht.exactdn.com/wp-content/uploads/2023/04/RUPP-Campus-blue-sky-768x512.jpeg?strip=all&lossy=1&ssl=1",
     description: "Find out available scholarships.",
     path: "/list/university"
   },
   {
     title: "Scholarship",
-    image: "https://i.imgur.com/zwFZOIk.png",
+    image: "https://issr.edu.kh/wp-content/uploads/2023/05/IMG_6132-1024x683.jpg",
     description: "Find out available scholarships.",
     path: "/list/Scholarship"
   },
   {
     title: "Livelihood",
-    image: "https://i.imgur.com/lfOwU5G.png",
+    image: "https://lomatechnology.com/storage/uploads/StX3fWFpbGcHV9iu7dkb6DCWvybYf1HWpjsoJgjn.jpg",
     description: "Find support for your education.",
     path: "/livelihood"
   }
 ];
-
 
 
 const HomePage = () => {

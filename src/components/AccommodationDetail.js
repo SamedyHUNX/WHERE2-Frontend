@@ -21,10 +21,10 @@ const AccommodationDetail = () => {
 
   const images = accommodation?.image_url 
     ? [
-        accommodation.image_url.img1,
-        accommodation.image_url.img2,
-        accommodation.image_url.img3,
-        accommodation.image_url.img4,
+        accommodation.image_url.img1 || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg',
+        accommodation.image_url.img2 || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg' ,
+        accommodation.image_url.img3 || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg',
+        accommodation.image_url.img4 || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg',
       ]
     : [];
 
