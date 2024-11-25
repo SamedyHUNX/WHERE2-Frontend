@@ -99,7 +99,9 @@ const config = {
   },
   accommodation: {
     getAllAccommodation: `${API_URL}/api/list/accommodation`,
-    getAccommodationById: `${API_URL}/api/accommodation`,
+    getAccommodationById: `${ API_URL }/api/accommodation`,
+    addAccommodation: `${ API_URL }/api/accommodation/addAccommodation`,
+    deleteAccommodation: (accId) => `${API_URL}/api/accommodation/deleteAccommodation/${accId}`
   },
   search: {
     searchAny: `${API_URL}/api/`,
@@ -134,7 +136,7 @@ const config = {
   contentCreation: {
     createUniversity: `${API_URL}/api/detail/university/addUniversity`,
     createJob: `${API_URL}/api/jobs/addJob`,
-    createAccomodation: `${API_URL}`,
+    createAccomodation: `${API_URL}/api/accommodation/addAccommodation`,
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,

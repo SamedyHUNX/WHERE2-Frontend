@@ -8,9 +8,10 @@ import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 import { useFetchPublicPhoto } from '../../../../hooks/useFetchPublicPhoto';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AccommodationListing from '../Developer/AccommodationListing';
 import PublicMultipleUpload from '../../../reusable/PublicMultipleUpload';
+import { clearAccommodationImage } from '../../../../features/slices/accommodationSlice';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -45,7 +46,7 @@ const entityConfig = {
   },
   'Accommodation': {
     hasLocation: true,
-    createEndpoint: config.contentCreation,
+    createEndpoint: config.contentCreation.createAccomodation,
     fields: [
       { name: 'accommodation_name', label: 'Accommodation Name', type: 'text' },
       { name: 'accommodation_description', label: 'Accommodation Description', type: 'textarea' },
@@ -65,9 +66,14 @@ const AdminEditor = () => {
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
+  const dispatch = useDispatch();
   const { imageLink } = useSelector(state => state.universities);
-
-
+  const { accommodationImages } = useSelector(state => state.accommodations);
+  console.log("Hello Admin Content is called")
+  useEffect(() => {
+    dispatch(clearAccommodationImage())
+    console.log("Hello firstUseEffect")
+},[])
 
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
@@ -83,6 +89,7 @@ const AdminEditor = () => {
     setPostId(newUuid);
 
     const savedData = JSON.parse(localStorage.getItem(entityDataKey));
+    console.log("savedData",savedData)
     if (savedData) {
       setFormData(savedData.formData || {});
       setLinks(savedData.links || [
@@ -109,7 +116,7 @@ const AdminEditor = () => {
     setEntity(selectedEntity.label);
     setFormData({});
   };
-
+console.log("FormData",formData)
 
   const handleInputChange = (fieldName, value) => {
     setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -150,6 +157,23 @@ const AdminEditor = () => {
         position: data.position,
         deadline: data.deadline,
         work_hour: data.work_hour,
+        userId: parseInt(userId),
+        postId
+      };
+    }
+ // Special case for Accommodation due to different data structure
+    if (entity === 'Accommodation') {
+      data = {
+        name: data.accommodation_name,
+        type: data.accommodation_type,
+        price: data.price,
+        size: data.size,
+        location: data.location,
+        description: data.accommodation_description,
+        google_map: data.google_map_link,
+        image_url: accommodationImages,
+        availability: data.availability,
+        contact:data.contact_information,
         userId: parseInt(userId),
         postId
       };
