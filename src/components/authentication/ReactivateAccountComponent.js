@@ -148,7 +148,7 @@ const ReactivateAccountComponent = () => {
               variant="primary"
               className="mt-2 w-[197px] sm:w-full h-[38px] sm:w-[343px] sm:h-[50px]"
               type="submit"
-              disabled={status === "loading" || status === "succeeded"}
+              disabled={status === "loading" || status === "succeeded" || !email || !password}
             >
               {status === "loading" ? <LoadingSpinner /> : "Reactivate Account"}
             </ButtonComponent>
