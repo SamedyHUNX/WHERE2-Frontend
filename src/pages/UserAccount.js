@@ -7,7 +7,6 @@ import { LoadingOverlay } from "./../components/reusable/Loading";
 import VisitorTracker from "./../components/reusable/VisitorTracker";
 import PictureUpload from "./../components/reusable/PhotoUpload";
 import useGeolocation from "./../hooks/useGeolocation";
-import ButtonComponentComponent from "../components/reusable/ButtonComponent";
 import axios from "axios";
 import config from "./../config";
 import * as yup from 'yup';

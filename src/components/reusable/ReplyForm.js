@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import ButtonComponent from "./Button";
-import useComments from "./../../hooks/useComments";
 import useAuth from "./../../hooks/useAuth";
 import config from "./../../config";
 
@@ -50,7 +48,6 @@ const ReplyForm = ({ discussionId, onReplySubmitted, onCancel, isHealthPage }) =
         throw new Error("Invalid response format");
       }
     } catch (error) {
-      console.error("Error posting comment:", error);
       setError(
         error.response?.data?.message ||
           "Failed to post reply. Please try again."
@@ -95,6 +92,7 @@ const ReplyForm = ({ discussionId, onReplySubmitted, onCancel, isHealthPage }) =
       <div className="flex justify-end gap-2">
         <ButtonComponent
           variant={isHealthPage ? "ghost-dark" : "ghost"}
+          rounded={false}
           onClick={onCancel}
           disabled={isSubmitting}
           type="button"
@@ -105,6 +103,7 @@ const ReplyForm = ({ discussionId, onReplySubmitted, onCancel, isHealthPage }) =
         <ButtonComponent
           type="submit"
           disabled={isSubmitting || !content.trim()}
+          rounded={false}
           variant={isHealthPage ? "primary-dark" : "primary"}
           className={isHealthPage 
             ? "bg-blue-600 hover:bg-blue-700 text-white" 
