@@ -15,6 +15,7 @@ import DeleteConfirmationModal from "./reusable/functions/DeleteConfirmationModa
 const SettingPanel = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState();
 
   const [formData, setFormData] = useState({
     passwordCurrent: "",
@@ -122,7 +123,7 @@ const SettingPanel = () => {
       setTimeout(async () => {
         await dispatch(logout());
         navigate("/login");
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.error("Failed to update password:", err);
       showSnackbar(err || "An error occurred. Please try again.");
@@ -130,15 +131,28 @@ const SettingPanel = () => {
   };
 
   const handleDeleteAccount = async () => {
+    setLoading(true);
+
     try {
       await deleteUser(userId);
-      dispatch(logout());
-      navigate("/login");
+      const timeOutId = setTimeout(() => {
+        dispatch(logout());
+        setLoading(false);
+        navigate("/login");
+      }, 2000);
+
+      return () => {
+        clearTimeout(timeOutId);
+      }
     } catch (error) {
       console.error("Failed to delete account:", error);
       showSnackbar("Failed to delete account. Please try again.");
     }
   };
+
+  if (loading) {
+    return <LoadingOverlay message="Deleting account..."/>;
+  }
 
   const renderPasswordInput = (label, field) => (
     <div className="relative">

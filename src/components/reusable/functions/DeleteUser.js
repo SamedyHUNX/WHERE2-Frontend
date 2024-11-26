@@ -1,4 +1,4 @@
-import config from "../../../config";
+import config from "./../../../config";
 
 // Function to handle the deletion API call
   const deleteUser = async (userId) => {
