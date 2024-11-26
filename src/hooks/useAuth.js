@@ -57,7 +57,6 @@ const useAuth = () => {
         token,
       });
     } catch (error) {
-      console.error("Error fetching user data and role:", error);
       clearAuthData();
     }
   }, []);
@@ -99,7 +98,6 @@ const useAuth = () => {
       localStorage.setItem("authData", JSON.stringify(authData));
       await fetchUserDataAndRole();
     } catch (error) {
-      console.error("Login error:", error);
       clearAuthData();
       throw error;
     }
