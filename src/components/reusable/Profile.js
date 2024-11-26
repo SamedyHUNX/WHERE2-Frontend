@@ -18,10 +18,11 @@ import DiscussionList from "./../community/DiscussionList.js";
 import MessageListing from "../accountUtilities/sidebarComponents/Developer/MessageListing.js";
 import FollowersFollowing from "../accountUtilities/Followers.js";
 import FollowersList from "./FollowersList.js";
-
+import CompanyProfile from "../accountUtilities/sidebarComponents/Admin/CompanyProfile.js";
 export const SidebarContentContext = createContext();
 
 const contentComponents = {
+  company: CompanyProfile,
   account: UserAccount,
   schoolList: UniversityListing,
   userList: UserListing,
@@ -142,7 +143,8 @@ const Profile = ({ userData, isPublic }) => {
               sidebarContent !== "messageListing" &&
               sidebarContent !== "followers" &&
               sidebarContent !== "following" &&
-              sidebarContent !== "discussionListing" ? (
+              sidebarContent !== "discussionListing" &&
+              sidebarContent !== "company" ? (
                 <CollectionPanel category={sidebarContent} className="h-full" />
               ) : (
                 <ContentComponent userInfo={userData} className="h-full" />

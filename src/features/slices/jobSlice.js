@@ -11,6 +11,13 @@ export const fetchCompany = createAsyncThunk(
     return { associatedCompany: companyDetails };
   }
 );
+export const fetchOneCompany = createAsyncThunk(
+  "company/getOneCompany",
+  async (id) => {
+    const response = await axios.get(config.job.getOneCompany(id));
+    return response;
+  }
+);
 
 const jobSlices = createSlice({
   name: "job",
@@ -19,7 +26,18 @@ const jobSlices = createSlice({
     company: {
       isLoading: true,
       data: {}
+    },
+    companyImage: '',
+    companyProfile: {
+      isLoading: true,
+      data:{}
+    },
+  },
+  reducers: {
+    setCompanyImage: (state, action) => {
+      state.companyImage = action.payload
     }
+
   },
   extraReducers: (builder) => {
     builder
@@ -33,8 +51,21 @@ const jobSlices = createSlice({
       .addCase(fetchCompany.rejected, (state, action) => {
         state.company.isLoading = false;
         state.company.error = action.error.message;
-      });
+      })
+      .addCase(fetchOneCompany.pending, (state, action) => {
+        state.companyProfile.isLoading = true;
+      })
+      .addCase(fetchOneCompany.fulfilled, (state, action) => {
+        state.companyProfile.isLoading = false;
+        state.companyProfile.data = action.payload;
+      })
+      .addCase(fetchOneCompany.rejected, (state, action) => {
+        state.companyProfile.isLoading = false;
+        state.companyProfile.error = action.error.message;
+      })
+    
   }
 });
 
+export const { setCompanyImage } = jobSlices.actions;
 export default jobSlices.reducer;

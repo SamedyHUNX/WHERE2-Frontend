@@ -72,7 +72,8 @@ const config = {
     approveJob: (jobId) => `${API_URL}/api/jobs/approve/${jobId}`,
     disapproveJob: (jobId) => `${API_URL}/api/jobs/disapprove/${jobId}`,
     getJob: (jobId) => `${API_URL}/api/jobs/${jobId}`,
-    deleteJob : (jobId) => `${API_URL}/api/jobs/deleteJob/${jobId}`,
+    deleteJob: (jobId) => `${ API_URL }/api/jobs/deleteJob/${ jobId }`,
+    getOneCompany: (comId) => `${API_URL}/api/companies/getOneCompany/${comId}`
   },
   favorite: {
     addFavorite: `${API_URL}/api/favorites/addFavorite`,
@@ -90,7 +91,7 @@ const config = {
     getUniversityById : `${API_URL}/api/detail/university`,
     approveUniversity : (universityId) => `${API_URL}/api/detail/university/approve/${universityId}`,
     disapproveUniversity : (universityId) => `${API_URL}/api/detail/university/disapprove/${universityId}`,
-    deleteUniversity : (universityId) => `${API_URL}/api/detail/university/delete/${universityId}`,
+    deleteUniversity : (universityId) => `${API_URL}/api/detail/university/deleteUniversity/${universityId}`,
   },
   scholarships: {
     getAllScholarships: `${API_URL}/api/list/scholarship`,
@@ -138,7 +139,8 @@ const config = {
   contentCreation: {
     createUniversity: `${API_URL}/api/detail/university/addUniversity`,
     createJob: `${API_URL}/api/jobs/addJob`,
-    createAccomodation: `${API_URL}/api/accommodation/addAccommodation`,
+    createAccomodation: `${ API_URL }/api/accommodation/addAccommodation`,
+    createCompany: `${API_URL}/api/companies/addCompany`
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,

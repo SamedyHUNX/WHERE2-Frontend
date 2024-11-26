@@ -25,6 +25,7 @@ import {
 import {
   School,
   Work,
+  Home,
   Add as AddIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
@@ -90,10 +91,13 @@ console.log("userId", userId)
   const handleDeleteConfirm = async () => {
     try {
       let response;
-      if (deleteDialog.postType === 'job') {
+      if (deleteDialog.postType === 'Job') {
         response = await axios.delete(config.job.deleteJob(deleteDialog.postId));
-      } else {
+      }else if(deleteDialog.postType === 'University'){
         response = await axios.delete(config.universities.deleteUniversity(deleteDialog.postId));
+      }
+      else {
+        response = await axios.delete(config.accommodation.deleteAccommodation(deleteDialog.postId));
       }
       
       if (response.status === 200) {
@@ -212,9 +216,9 @@ console.log("userId", userId)
       }}
     >
       {/* Icon based on post type */}
-      {post.postType === 'university' ? 
-        <School fontSize="small" sx={{ mr: 1 }} /> : 
-        <Work fontSize="small" sx={{ mr: 1 }} />
+      {post.postType === 'University' ? 
+        <School fontSize="small" sx={{ mr: 1 }} /> : post.postType === 'Job' ?
+        <Work fontSize="small" sx={{ mr: 1 }} /> :  <Home fontSize="small" sx={{ mr: 1 }} />
       }
       {post.title || 'Untitled'}
     </Typography>
@@ -243,8 +247,8 @@ console.log("userId", userId)
   }}>
     {/* Post Type Chip */}
     <Chip
-      label={post.postType === 'university' ? 'University' : 'Job'}
-      color={post.postType === 'university' ? 'primary' : 'secondary'}
+      label={post.postType}
+      color={post.postType === 'University' ? 'primary' : post.postType === 'Job' ?'secondary':'success'}
       size="small"
       sx={{ minWidth: 90 }}
     />
