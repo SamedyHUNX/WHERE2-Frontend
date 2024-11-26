@@ -16,12 +16,24 @@ const LoginComponent = ({ auth }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { status, error, isAuthenticated } = useSelector((state) => state.auth);
 
   // Navigate if user is already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/", { replace: true });
+
+      setLoading(true);
+
+      const timeOutId = setTimeout(() => {
+        setLoading(false);
+        <LoadingOverlay isFullScreen={true} message="We are navigating you to homepage..."/>
+        navigate("/", { replace: true });
+      }, 2000)
+
+      return () => {
+        clearTimeout(timeOutId);
+      }
     }
   }, [isAuthenticated, navigate]);
 
@@ -79,7 +91,17 @@ const LoginComponent = ({ auth }) => {
 
       const resultAction = await dispatch(login({ email, password }));
       if (login.fulfilled.match(resultAction)) {
-        navigate("/");
+        setLoading(true);
+
+        const timeOutId = setTimeout(() => {
+          setLoading(false);
+          <LoadingOverlay isFullScreen={true} message="We are logging you in..."/>
+          navigate("/");
+        }, 1000);
+
+        return () => {
+          clearTimeout(timeOutId);
+        };
       }
     } catch (err) {
       console.error(err);
