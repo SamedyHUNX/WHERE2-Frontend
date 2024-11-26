@@ -182,6 +182,13 @@ const LoginComponent = ({ auth }) => {
         >
           Forgot Password?
         </Link>
+        <p className="mt-6 text-sm text-gray-600"> or </p>
+        <Link
+          to="/reactivate"
+          className="text-[rgb(0,122,255)] underline text-sm"
+        >
+          Reactivate your account
+        </Link>
         <p className="mt-6 text-sm text-gray-600">
           Don't have an Account?{" "}
           <Link to="/signup" className="text-[rgb(0,122,255)] underline">

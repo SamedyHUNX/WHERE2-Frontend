@@ -2,7 +2,6 @@ import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
-  current,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import config from "./../../config"
@@ -220,6 +219,61 @@ import config from "./../../config"
         return thunkAPI.rejectWithValue(
           handleAsyncError(error, "Failed to log in. Please try again.")
         );
+      }
+    }
+  );
+
+  export const reactivateAccount = createAsyncThunk(
+    "auth/reactivateAccount",
+    async ({ email, password }, thunkAPI) => {
+      try {
+        const response = await axios.post(config.auth.reactivate, {
+          email,
+          password,
+        });
+  
+        return response.data.message;
+      } catch (error) {
+        // Log the full error for debugging
+        console.error('Reactivate Account Error:', error.response?.data, error.response?.status);
+  
+        // Specific error handling based on status codes
+        if (error.response) {
+          switch (error.response.status) {
+            case 400:
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || "Invalid email or password provided."
+              );
+            case 402:
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || "Account is already active!"
+              );
+            case 403:
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || "Account is not verified."
+              );
+            case 404:
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || "Account not found."
+              );
+            case 401:
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || "Incorrect password."
+              );
+            default:
+              // For any other error, use the backend error message if available
+              return thunkAPI.rejectWithValue(
+                error.response.data.message || 
+                handleAsyncError(error, "Failed to reactivate account. Please try again.")
+              );
+          }
+        } else if (error.request) {
+          // Request was made but no response received
+          return thunkAPI.rejectWithValue("No response from server. Please check your connection.");
+        } else {
+          // Something happened in setting up the request
+          return thunkAPI.rejectWithValue("An error occurred while processing your request.");
+        }
       }
     }
   );
@@ -545,7 +599,22 @@ import config from "./../../config"
           state.status = "failed";
           state.error = action.payload?.message || "Failed to update password";
           state.message = null;
-        });
+        })
+        .addCase(reactivateAccount.pending, (state) => {
+          state.status = "loading";
+          state.error = null;
+          state.message = null;
+        })
+        .addCase(reactivateAccount.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.error = null;
+          state.message = action.payload; // Direct use of payload as message
+        })
+        .addCase(reactivateAccount.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.payload || "Failed to reactivate your account.";
+          state.message = null;
+        })
     },
   });
   

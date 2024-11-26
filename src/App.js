@@ -34,6 +34,7 @@ import HealthArticlePage from "./components/health/HealthArticlePage";
 import AboutUsPage from "./pages/AboutUsPage";
 import FloatingContact from "./components/reusable/FloatingContact";
 import PublicProfileContainer from "./components/reusable/PublicProfilePage";
+import ReactivatePage from "./pages/ReactivatePage";
 
 
 const queryClient = new QueryClient();
@@ -149,6 +150,7 @@ const router = createBrowserRouter([
   { path: "/profile/:userName", element: <UserProfile /> },
   { path: "/livelihood", element: <LivelihoodPage /> },
   { path: "/forget-password", element: <ForgetPasswordPage /> },
+  { path: "reactivate", element: <ReactivatePage /> },
   { path: "/signup/verification", element: <VerificationPage /> },
   { path: "/dashboard/:userName", element: <DashboardComponent /> },
   { path: "/profile/:userName", element: <UserProfile /> },

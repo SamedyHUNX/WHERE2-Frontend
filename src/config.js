@@ -22,6 +22,7 @@ const config = {
     fetchProfileUrl: (username) => `${API_URL}/api/users/profile/${username}`,
     getUserRole: `${API_URL}/api/users/login/getRole`,
     updatePassword: (userId) => `${API_URL}/api/users/updatePassword/${userId}`,
+    reactivate: `${API_URL}/api/users/reactivate`,
   },
   user: {
     upload: `${API_URL}/api/upload`,
