@@ -111,8 +111,8 @@ const RegisterComponent = ({ auth }) => {
 
       case "phoneNumber":
         if (!value) return "Phone number is required";
-        if (!/^\d{10}$/.test(value.replace(/\D/g, ""))) {
-          return "Please enter a valid 10-digit phone number";
+        if (!/^\d{9}$/.test(value.replace(/\D/g, ""))) {
+          return "Please enter a valid 9 or 10-digit phone number";
         }
         return null;
 
