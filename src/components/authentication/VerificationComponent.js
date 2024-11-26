@@ -19,6 +19,7 @@ const VerificationComponent = () => {
   const [timeLeft, setTimeLeft] = useState(600);
   const [inputError, setInputError] = useState(false);
   const [resendMessage, setResendMessage] = useState("");
+  const [loading, setLoading] = useState(false)
   
   const location = useLocation();
   const dispatch = useDispatch();
@@ -33,7 +34,15 @@ const VerificationComponent = () => {
 
   useEffect(() => {
     if (!email) {
-      navigate("/signup");
+      setLoading(true);
+
+      const timeOutId = setTimeout(() => {
+        <LoadingOverlay isFullScreen={true} message="No valid email found. Navigating to signup..."/>
+        setLoading(false);
+        navigate("/signup");
+      }, 1000);
+
+      return () => clearTimeout(timeOutId);
     }
   }, [email, navigate]);
 
@@ -179,7 +188,7 @@ const VerificationComponent = () => {
           </ButtonComponent>
         </div>
       </form>
-      <div className="mt-6 text-center">
+      {/* <div className="mt-6 text-center">
         <button
           onClick={handleResendCode}
           className="text-[rgb(0,122,255)] underline text-sm"
@@ -187,7 +196,7 @@ const VerificationComponent = () => {
         >
           Resend Code
         </button>
-      </div>
+      </div> */}
 
       <div className="mt-6 text-center">
         <Tooltip 
