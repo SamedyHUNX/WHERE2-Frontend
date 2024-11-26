@@ -10,6 +10,8 @@ import {
   sendWelcomeEmail,
   resendVerificationCode,
 } from "./../../features/slices/authSlice";
+import { Tooltip, IconButton } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingOverlay } from "./../reusable/Loading";
 
 const VerificationComponent = () => {
@@ -113,8 +115,14 @@ const VerificationComponent = () => {
     );
   }
 
+  const formatRemainingTime = () => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    return `${minutes} minute${minutes !== 1 ? 's' : ''} and ${seconds} second${seconds !== 1 ? 's' : ''}`;
+  };
+
   if (!email) {
-    return <div>Loading...</div>;
+    return <LoadingOverlay isFullScreen={true} message="Loading..."/>;
   }
 
   return (
@@ -179,6 +187,31 @@ const VerificationComponent = () => {
         >
           Resend Code
         </button>
+      </div>
+
+      <div className="mt-6 text-center">
+        <Tooltip 
+          title={
+            timeLeft > 0 
+              ? `You can resend the code in ${formatRemainingTime()}`
+              : "Click to resend verification code"
+          } 
+          placement="top"
+        >
+          <span>
+            <IconButton 
+              onClick={handleResendCode}
+              disabled={timeLeft > 0}
+              color="primary"
+              aria-label="resend verification code"
+            >
+              <RefreshIcon />
+              <span className="ml-2 text-[rgb(0,122,255)] underline text-sm">
+                Resend Code
+              </span>
+            </IconButton>
+          </span>
+        </Tooltip>
       </div>
     </ContainerComponent>
   );
