@@ -217,7 +217,7 @@ const AdminEditor = () => {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {entity === "University" ? (
+        {entity === 'Job offer'?null:
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <Image size={24} className="mr-2" />
@@ -227,7 +227,7 @@ const AdminEditor = () => {
             <PublicPhotoUpload postId={postId}/>
           }
     
-        </div>):null}
+        </div>}
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
