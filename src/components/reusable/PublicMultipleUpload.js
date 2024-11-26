@@ -4,12 +4,12 @@ import useAuth from "../../hooks/useAuth";
 import { useFetchPublicPhoto, useUploadPublicPhoto } from "./../../hooks/useFetchPublicPhoto";
 import { LoadingOverlay } from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { setImageUrl } from "../../features/slices/universitySlice";
+
 
 const MAX_FILE_SIZE = 500 * 1024;
 
 
-const PublicPhotoUpload = ({ postId }) => {
+const PublicMultipleUpload = ({ postId }) => {
   const { userId } = useAuth();
   const formType = localStorage.getItem('formType');
   const dispatch = useDispatch();
@@ -19,20 +19,19 @@ const PublicPhotoUpload = ({ postId }) => {
 
   const { imageUrl, isLoading, fetchPhoto } = useFetchPublicPhoto(userId, postId);
   const { uploadPublicPhoto, isUploading, uploadError } = useUploadPublicPhoto();
-  const { imageLink } = useSelector(state => state.universities);
+  const { accommodationImages } = useSelector(state => state.accommodations);
 
   // Effect to update currentImage when imageUrl changes
-  useEffect(() => {
-    if (imageUrl) {
-      setCurrentImage(imageUrl);
-    }
-  }, [imageUrl]);
+  // useEffect(() => {
+  //   if (accommodationImages) {
+  //     setCurrentImage(accommodationImages);
+  //   }
+  // }, [accommodationImages]);
 
   const handleFileChange = async (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files;
     if (!selectedFile) return;
-    console.log("single Photo",selectedFile)
-
+      
     // CHECK FILE SIZE BEFORE UPLOADING
     if (selectedFile.size > MAX_FILE_SIZE) {
       alert("File size exceeds the maximum allowed (500 KB).");
@@ -42,14 +41,13 @@ const PublicPhotoUpload = ({ postId }) => {
     try {
       // Upload the photo and get the response
       const result = await uploadPublicPhoto(selectedFile, "public", formType, postId);
-      
+    
       if (result.success) {
-        dispatch(setImageUrl(result.imageUrl));
+
         // Update the current image immediately
-        console.log("imageUrl",result.imageUrl)
-        // setCurrentImage(result.imageUrl);
+        setCurrentImage(accommodationImages);
         // Refresh the data from server
-        await fetchPhoto();
+        // await fetchPhoto();
       } else {
         console.error('Upload failed:', result.error);
       }
@@ -65,17 +63,43 @@ const PublicPhotoUpload = ({ postId }) => {
       </div>
     );
   }
-console.log("currentImage",currentImage)
+
   return (
     <div className="relative">
+      <div className="flex flex-wrap gap-2">
       <img
-        src={imageLink || '/where2.jpg'}
+        src={accommodationImages.img1 || '/where2.jpg'}
         alt="Public photo"
-        className="w-full h-[400px] object-cover"
+        className="flex-1 h-[400px] object-cover"
         onError={(e) => {
           e.target.src = "/where2.jpg";
         }}
       />
+         <img
+        src={accommodationImages.img2 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+      />
+         <img
+        src={accommodationImages.img3 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+      />
+         <img
+        src={accommodationImages.img4 || '/where2.jpg'}
+        alt="Public photo"
+        className="flex-1 h-[400px] object-cover"
+        onError={(e) => {
+          e.target.src = "/where2.jpg";
+        }}
+        />
+        </div>
       <label
         htmlFor="public"
         className="absolute bottom-0 right-0 bg-white p-1 shadow-md cursor-pointer hover:bg-gray-100 transition-colors"
@@ -84,7 +108,8 @@ console.log("currentImage",currentImage)
       </label>
       <input
         id="public"
-        type="file"
+              type="file"
+              multiple
         onChange={handleFileChange}
         accept=".jpg,.jpeg"
         className="hidden"
@@ -103,4 +128,4 @@ console.log("currentImage",currentImage)
   );
 };
 
-export default PublicPhotoUpload;
+export default PublicMultipleUpload;

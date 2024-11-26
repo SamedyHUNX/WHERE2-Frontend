@@ -8,8 +8,11 @@ import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 import { useFetchPublicPhoto } from '../../../../hooks/useFetchPublicPhoto';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AccommodationListing from '../Developer/AccommodationListing';
+import PublicMultipleUpload from '../../../reusable/PublicMultipleUpload';
+import { clearAccommodationImage } from '../../../../features/slices/accommodationSlice';
+import { clearImageLink } from '../../../../features/slices/universitySlice';
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -44,7 +47,7 @@ const entityConfig = {
   },
   'Accommodation': {
     hasLocation: true,
-    createEndpoint: config.contentCreation,
+    createEndpoint: config.contentCreation.createAccomodation,
     fields: [
       { name: 'accommodation_name', label: 'Accommodation Name', type: 'text' },
       { name: 'accommodation_description', label: 'Accommodation Description', type: 'textarea' },
@@ -64,9 +67,15 @@ const AdminEditor = () => {
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
+  const dispatch = useDispatch();
   const { imageLink } = useSelector(state => state.universities);
+  const { accommodationImages } = useSelector(state => state.accommodations);
 
-
+  useEffect(() => {
+    dispatch(clearAccommodationImage())
+    // setEntity('University')
+    localStorage.setItem('formType', 'University')
+},[])
 
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
@@ -82,6 +91,7 @@ const AdminEditor = () => {
     setPostId(newUuid);
 
     const savedData = JSON.parse(localStorage.getItem(entityDataKey));
+
     if (savedData) {
       setFormData(savedData.formData || {});
       setLinks(savedData.links || [
@@ -122,7 +132,12 @@ const AdminEditor = () => {
 
   const handleApplyChanges = async () => {
     localStorage.removeItem(`${entity}Data`);
-    alert('Changes saved successfully');
+    alert('Changes saved successfully',setFormData({}),dispatch(clearAccommodationImage()),dispatch(clearImageLink()),setLinks([
+      { title: 'Telegram', url: '' },
+      { title: 'Facebook', url: '' },
+      { title: 'Instagram', url: '' },
+      { title: 'Website', url: '' },
+    ]));
 
     // Base data object with common fields and userId
     let data = {
@@ -131,7 +146,7 @@ const AdminEditor = () => {
       instagram_url: links.find(link => link.title === 'Instagram')?.url || '',
       telegram_url: links.find(link => link.title === 'Telegram')?.url || '',
       website: links.find(link => link.title === 'Website')?.url || '',
-      image_url: imageLink,
+      image_url: imageLink || 'https://mywhere2bucket.s3.ap-southeast-1.amazonaws.com/public/2910dfc0-0738-4639-b255-f0e9e6074e47.jpg',
       image_alt: formData[entityConfig[entity].fields[0].name],
       userId: parseInt(userId),
       postId
@@ -153,11 +168,30 @@ const AdminEditor = () => {
         postId
       };
     }
+ // Special case for Accommodation due to different data structure
+    if (entity === 'Accommodation') {
+      data = {
+        name: data.accommodation_name,
+        type: data.accommodation_type,
+        price: data.price,
+        size: data.size,
+        location: data.location,
+        description: data.accommodation_description,
+        google_map: data.google_map_link,
+        image_url: accommodationImages,
+        availability: data.availability,
+        contact:data.contact_information,
+        userId: parseInt(userId),
+        postId
+      };
+    }
 
     console.log(`Sending the following ${entity} data to the server:`, data);
 
     try {
       const response = await axios.post(entityConfig[entity].createEndpoint, data);
+      // if (entity === 'Accommodation'){dispatch(clearAccommodationImage)}
+      // setFormData({})
     } catch (error) {
       console.error('Error saving changes:', error.response ? error.response.data : error.message);
     }
@@ -173,7 +207,7 @@ const AdminEditor = () => {
   };
 
 
-  if (entity === 'Accommodation') return <AccommodationListing />;
+  // if (entity === 'Accommodation') return <AccommodationListing />;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
@@ -188,10 +222,12 @@ const AdminEditor = () => {
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <Image size={24} className="mr-2" />
             {entity} Image
-          </h2>
-          <PublicPhotoUpload postId={postId}/>
-        </div>
-        ) : null}
+            </h2>
+            {entity === 'Accommodation' ? <PublicMultipleUpload postId={postId}/>:
+            <PublicPhotoUpload postId={postId}/>
+          }
+    
+        </div>}
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">

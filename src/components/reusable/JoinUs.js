@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const KeepInWithUs = "https://i.imgur.com/96f0W9s.jpg"
+const KeepInWithUs = "https://lomatechnology.com/storage/blog/fsOjujUEdq59FExiJl2bgZfXwfsYl31NzUvoq7Pi.jpg"
 
 const joinUs = () => {
 	return (
@@ -18,7 +18,7 @@ const joinUs = () => {
 					</button>
 				</Link>
 			</div>
-			
+
 		</div>
 	)
 };

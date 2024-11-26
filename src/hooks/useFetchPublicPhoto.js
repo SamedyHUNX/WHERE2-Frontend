@@ -2,14 +2,15 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import config from "./../config";
 import useAuth from "./useAuth";
-
+import { useDispatch } from "react-redux";
+import { setAccommodationImages } from "../features/slices/accommodationSlice";
 
 // THIS FUNCTION IS USED TO FETCH USER PHOTO
 export const useFetchPublicPhoto = (userId, postId) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch();
   const fetchPhoto = useCallback(async () => {
     if (!userId || !postId) return;
 
@@ -47,11 +48,15 @@ export const useUploadPublicPhoto = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-
-  const uploadPublicPhoto = async (file, folder, formType, postId) => {
+  const dispatch = useDispatch();
+  let urlParts;
+  let imageUrl = '';
+  let accommodationImage = {};
+  let cnt = 1;
+  const uploadPublicPhoto = async (files, folder, formType, postId) => {
     // Input validation
     const requiredFields = {
-      file: file,
+      file: files,
       folder: folder,
       formType: formType,
       postId: postId,
@@ -75,41 +80,83 @@ export const useUploadPublicPhoto = () => {
 
     try {
       // Step 1: Get S3 pre-signed URL
-      const { data: s3Data } = await axios.post(config.photo.getS3Url, {
-        folder,
-        contentType: file.type
-      });
-
-      if (!s3Data?.url) {
-        throw new Error("Failed to get S3 upload URL");
+      if (formType === 'Accommodation') {
+        for (let file of files) {
+          const { data: s3Data } = await axios.post(config.photo.getS3Url, {
+            folder,
+            contentType: file.type
+          });
+          if (!s3Data?.url) {
+            throw new Error("Failed to get S3 upload URL");
+          }
+    
+          // Step 2: Upload to S3 with progress tracking
+          await axios.put(s3Data.url, file, {
+            headers: {
+              "Content-Type": file.type,
+              "Access-Control-Allow-Origin": "*",
+              Authorization: undefined
+            },
+            withCredentials: false,
+            onUploadProgress: (progressEvent) => {
+              const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+              setUploadProgress(progress);
+            }
+          });
+    
+          // Step 3: Construct the final image URL
+          urlParts = new URL(s3Data.url);
+          imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
+          console.log("imageUR>", imageUrl)
+          accommodationImage[`img${cnt}`] = imageUrl,
+            cnt++;
+          
+        }
+      }
+       else {
+        const { data: s3Data } = await axios.post(config.photo.getS3Url, {
+          folder,
+          contentType: files.type
+        });
+  
+        if (!s3Data?.url) {
+          throw new Error("Failed to get S3 upload URL");
+        }
+  
+        // Step 2: Upload to S3 with progress tracking
+        await axios.put(s3Data.url, files, {
+          headers: {
+            "Content-Type": files.type,
+            "Access-Control-Allow-Origin": "*",
+            Authorization: undefined
+          },
+          withCredentials: false,
+          onUploadProgress: (progressEvent) => {
+            const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+            setUploadProgress(progress);
+          }
+        });
+  
+        // Step 3: Construct the final image URL
+         urlParts = new URL(s3Data.url);
+         imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
+        console.log("imageUR>",imageUrl)
       }
 
-      // Step 2: Upload to S3 with progress tracking
-      await axios.put(s3Data.url, file, {
-        headers: {
-          "Content-Type": file.type,
-          "Access-Control-Allow-Origin": "*",
-          Authorization: undefined
-        },
-        withCredentials: false,
-        onUploadProgress: (progressEvent) => {
-          const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-          setUploadProgress(progress);
-        }
-      });
-
-      // Step 3: Construct the final image URL
-      const urlParts = new URL(s3Data.url);
-      const imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
-      console.log("imageUR>",imageUrl)
-
+      
+      console.log("acoomimage", accommodationImage)
+      if (accommodationImage.img1) {
+        imageUrl = JSON.stringify(accommodationImage);
+        dispatch(setAccommodationImages(accommodationImage))
+      }
+      console.log("final image url len", imageUrl)
       // Step 4: Update backend with the new image URL
       const response = await axios.post(config.photo.uploadPublicPhoto, {
         formType,
         userId,
-        imageUrl,
+        imageUrl:`${imageUrl}`,
         postId
-      });
+        });
 
       // Proper response validation
       if (!response.data) {
@@ -117,7 +164,7 @@ export const useUploadPublicPhoto = () => {
       }
 
       const { status, data, message } = response.data;
-
+console.log("data",data)
       if (status !== 'success') {
         throw new Error(message || "Upload failed");
       }
