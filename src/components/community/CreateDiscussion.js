@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 import useGeolocation from "./../../hooks/useGeolocation";
 import { LoadingSpinner } from "./../reusable/Loading";
 import DiscussionForm from "./DiscussionForm";
-import DiscussionList from "./DiscussionList";
 import useDiscussions from "./../../hooks/useDiscussions";
 
 const CreateDiscussion = ({ showForm }) => {
