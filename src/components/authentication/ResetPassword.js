@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import FormInput from "../reusable/InputField";
-import ButtonComponent from "../reusable/Button";
-import ContainerComponent from "../reusable/ContainerComponent";
-import { resetPassword, clearAuthState } from "../../features/slices/authSlice";
-import { LoadingSpinner, LoadingOverlay } from "../reusable/Loading";
+import FormInput from "./../reusable/InputField";
+import ButtonComponent from "./../reusable/Button";
+import ContainerComponent from "./../reusable/ContainerComponent";
+import { resetPassword, clearAuthState } from "./../../features/slices/authSlice";
+import { LoadingSpinner, LoadingOverlay } from "./../reusable/Loading";
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // THIS COMPONENT IS USED TO RESET USERPASSWORD
 const ResetPasswordComponent = () => {
@@ -14,6 +16,10 @@ const ResetPasswordComponent = () => {
   const [error, setError] = useState("");
   const [resetAttempted, setResetAttempted] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +34,7 @@ const ResetPasswordComponent = () => {
     if (resetAttempted && status === "succeeded") {
       const timer = setTimeout(() => {
         navigate("/login");
-      }, 500);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [status, resetAttempted, navigate]);
@@ -36,6 +42,17 @@ const ResetPasswordComponent = () => {
   useEffect(() => {
     setPasswordMismatch(password !== passwordConfirm && password !== "" && passwordConfirm !== "");
   }, [password, passwordConfirm]);
+
+  const handleClickShowPassword = (field) => {
+    setShowPassword(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }));
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -58,12 +75,12 @@ const ResetPasswordComponent = () => {
     }
 
     if (password !== passwordConfirm) {
-      setError("Passwords do not match");
+      setError("Passwords do not match.");
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      setError("Password must be at least 6 characters long.");
       return;
     }
 
@@ -105,30 +122,105 @@ const ResetPasswordComponent = () => {
         <FormInput
           name="password"
           label="New Password"
-          type="password"
+          type={showPassword.password ? "text" : "password"}
           className={passwordMismatch ? "border-rose-400 border-[1px]" : ""}
           value={password}
           onChange={handlePasswordChange}
           required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => handleClickShowPassword('password')}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword.password ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <FormInput
           name="passwordConfirm"
           label="Confirm New Password"
-          type="password"
+          type={showPassword.confirmPassword ? "text" : "password"}
           value={passwordConfirm}
           className={passwordMismatch ? "border-rose-400 border-[1px]" : ""}
           onChange={handlePasswordConfirmChange}
           required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => handleClickShowPassword('confirmPassword')}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-        {resetAttempted && status === "failed" && (
-          <p className="text-red-500 text-sm text-center">{message}</p>
+        
+        {/* Error Handling Improvements */}
+        {passwordMismatch && (
+          <div className="text-rose-500 text-sm flex items-center">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 mr-2" 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path 
+                fillRule="evenodd" 
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" 
+                clipRule="evenodd" 
+              />
+            </svg>
+            Passwords do not match
+          </div>
         )}
+
+        {error && (
+          <div className="text-red-500 text-sm flex items-center">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 mr-2" 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path 
+                fillRule="evenodd" 
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" 
+                clipRule="evenodd" 
+              />
+            </svg>
+            {error}
+          </div>
+        )}
+
         {resetAttempted && status === "succeeded" && (
-          <p className="text-green-500 text-sm text-center">
+          <div className="text-green-500 text-sm flex items-center">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 mr-2" 
+              viewBox="0 0 20 20" 
+              fill="currentColor"
+            >
+              <path 
+                fillRule="evenodd" 
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
+                clipRule="evenodd" 
+              />
+            </svg>
             Password reset successfully. Redirecting to login...
-          </p>
+          </div>
         )}
+
         <div className="flex justify-center items-center">
           <ButtonComponent
             variant="primary"
