@@ -37,7 +37,7 @@ const LoginComponent = ({ auth }) => {
   // Clear authentication state on form reset or new input
   useEffect(() => {
     dispatch(clearAuthState());
-  }, [dispatch, email, password]);
+  }, [dispatch]);
 
   // Email validation function
   const validateEmail = (email) => {
