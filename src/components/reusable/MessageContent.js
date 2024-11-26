@@ -2,8 +2,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Send } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from './../../hooks/useAuth';
 import FormInput from './InputField';
+import { 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogContentText, 
+  DialogActions, 
+  Button, 
+  Alert, 
+  AlertTitle 
+} from '@mui/material';
 import config from './../../config';
 import ButtonComponent from './Button';
 
@@ -12,15 +23,21 @@ const MessagesContent = ({ targetUserId }) => {
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const messagesEndRef = useRef(null);
-  const { userId: currentUserId, token } = useAuth();
+  const { userId: currentUserId, token, isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      setOpenLoginDialog(true);
+      setLoading(false);
+      return
+    };
     
     fetchMessages();
     const interval = setInterval(fetchMessages, 10000);
@@ -30,7 +47,7 @@ const MessagesContent = ({ targetUserId }) => {
 
   const fetchMessages = async () => {
     if (!token) {
-      console.error("Token is not available");
+      setOpenLoginDialog(true);
       return;
     }
 
@@ -47,7 +64,6 @@ const MessagesContent = ({ targetUserId }) => {
         setError('Failed to fetch messages');
       }
     } catch (error) {
-      console.error('Error fetching messages:', error);
       setError('Error loading messages. Please try again.');
     } finally {
       setLoading(false);
@@ -56,6 +72,12 @@ const MessagesContent = ({ targetUserId }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      setOpenLoginDialog(true);
+      return;
+    }
+
     if (!newMessage.trim()) return;
 
     try {
@@ -75,7 +97,6 @@ const MessagesContent = ({ targetUserId }) => {
         setError('Failed to send message');
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       setError('Failed to send message. Please try again.');
     } finally {
       setLoading(false);
@@ -85,17 +106,14 @@ const MessagesContent = ({ targetUserId }) => {
   const MessageBubble = ({ message }) => {
     const isCurrentUser = message.senderId === currentUserId;
     
-    // For incoming messages (not current user), show sender's profile
-    // For outgoing messages (current user), show receiver's profile
     const profileToShow = message.sender?.profile || {};
     
-    // Fallback values for profile data
     const firstName = profileToShow.firstName || 'User';
     const lastName = profileToShow.lastName || '';
     const profilePictureUrl = profileToShow.profilePictureUrl || '/api/placeholder/32/32';
     
     return (
-      <div className={`flex items-start space-x-2 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
+      <div className={`flex items-start space-x-3 ${isCurrentUser ? 'justify-end' : 'justify-start'}`}>
         {!isCurrentUser && (
           <img 
             src={profilePictureUrl}
@@ -133,8 +151,62 @@ const MessagesContent = ({ targetUserId }) => {
     );
   };
 
+  // Login Dialog Component
+  const LoginPromptDialog = () => {
+    const handleClose = () => {
+      setOpenLoginDialog(false);
+    };
+
+    const handleLogin = () => {
+      navigate('/login', { replace: true });
+      setOpenLoginDialog(false);
+    };
+
+    return (
+      <Dialog
+        open={openLoginDialog}
+        onClose={handleClose}
+        aria-labelledby="login-dialog-title"
+        aria-describedby="login-dialog-description"
+      >
+        <DialogTitle id="login-dialog-title">
+          Login Required
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="login-dialog-description">
+            You need to log in to access messaging features. 
+            Please log in to view and send messages or consider signup.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <ButtonComponent onClick={handleClose} variant='danger' rounded={false}>
+            Cancel
+          </ButtonComponent>
+          <ButtonComponent onClick={handleLogin} variant="primary" rounded={false} autoFocus>
+            Log In
+          </ButtonComponent>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
   if (loading && messages.length === 0) {
     return <div className="flex justify-center items-center h-full">Loading messages...</div>;
+  }
+
+  if (!token) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Alert severity="warning">
+          <AlertTitle>Login Required</AlertTitle>
+          You need to log in to access messaging features. 
+          <Button onClick={() => setOpenLoginDialog(true)} color="warning">
+            Log In
+          </Button>
+        </Alert>
+        <LoginPromptDialog />
+      </div>
+    );
   }
 
   if (error) {
@@ -178,6 +250,8 @@ const MessagesContent = ({ targetUserId }) => {
           </ButtonComponent>
         </div>
       </form>
+
+      {!isLoggedIn && <LoginPromptDialog />}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { User, MessageSquareText } from "lucide-react";
 
 const ProfileSidebar = ({ userInfo }) => {
   const { userId: targetUserId } = useParams();
-  const { userId: currentUserId } = { userId: "123" }; // Mock useAuth
+  const { userId: currentUserId } = { userId: "123" };
   const [activeTab, setActiveTab] = useState("profile");
 
   // Define components for each tab

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { User, MessageSquareText, ChevronRight, Rss } from 'lucide-react';
-import ButtonComponent from './Button';
 import { LoadingOverlay } from './Loading';
 import useIsMobile from './../../hooks/useIsMobile';
 import useAuth from './../../hooks/useAuth';
@@ -192,13 +191,6 @@ const PublicProfilePage = ({ userInfo }) => {
                   </button>
                 ))}
               </nav>
-  
-              {/* <ButtonComponent
-              className="w-full mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              onClick={() => setActiveTab('messages')} // Update to switch to messages tab
-            >
-              Message
-            </ButtonComponent> */}
             </div>
   
             {/* Main Content - Adjusted margin for mobile */}
