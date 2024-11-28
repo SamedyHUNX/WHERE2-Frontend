@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import config from "../../config";
 import { setTotalPage } from "./paginationSlice";
+import { act } from "react";
 
 /**
  * Fetch all accommodations with pagination.
@@ -45,6 +46,7 @@ const accommodationSlice = createSlice({
         data: [],
         totalPages: 1,
         accommodation: {},
+        accommodationImages: {}
     },
     reducers: {
         /**
@@ -54,6 +56,12 @@ const accommodationSlice = createSlice({
          */
         setAccommodation: (state, action) => {
             state.accommodation = action.payload;
+        },
+        setAccommodationImages: (state, action) => {
+            state.accommodationImages = action.payload
+        },
+        clearAccommodationImage: (state, action) => {
+            state.accommodationImages = {}
         }
     },
     extraReducers: (builder) => {
@@ -88,5 +96,5 @@ const accommodationSlice = createSlice({
     }
 });
 
-export const { setAccommodation } = accommodationSlice.actions;
+export const { setAccommodation, setAccommodationImages,clearAccommodationImage } = accommodationSlice.actions;
 export default accommodationSlice.reducer;

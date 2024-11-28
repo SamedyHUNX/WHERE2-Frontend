@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   PowerIcon,
+  BuildingOfficeIcon
 } from '@heroicons/react/24/solid';
 import { X,
   User,
@@ -135,7 +136,8 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
       { label: 'Log out', icon: <PowerIcon className="h-5 w-5" /> , onClick: () => handleItemClick("logOut", "logOut") },
     ],
     admin: [
-      { label: 'Profile', icon: <UserCircleIcon className="h-5 w-5" /> , onClick: () => handleItemClick("account", "account") },
+      { label: 'Profile', icon: <UserCircleIcon className="h-5 w-5" />, onClick: () => handleItemClick("account", "account") },
+      { label: 'Company Profile', icon: <BuildingOfficeIcon className="h-5 w-5" /> , onClick: () => handleItemClick("company", "company") },
       { label: 'Content', icon: <DocumentDuplicateIcon className="h-5 w-5" />, onClick: () => handleItemClick("adminContent", "adminContent") },
       { label: 'View your posts', icon: <PanelsLeftBottom className="h-5 w-5" /> , onClick: () => handleItemClick("adminContentListing", "adminContentListing")  },
       { label: 'Followers/Followings', icon: <UserCheck className="h-5 w-5" /> , onClick: () => handleItemClick("followers", "followers")  },

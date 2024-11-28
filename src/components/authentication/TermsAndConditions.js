@@ -126,6 +126,8 @@ const TermsAndConditionsComponent = () => {
 
           <h3 className="mb-2 font-semibold">2. Clause 2</h3>
           <p className="mb-4 text-sm text-gray-600">{termsAndConditions[1].p2}</p>
+          <h3 className="mb-2 font-semibold">3. Clause 3</h3>
+          <p className="mb-4 text-sm text-gray-600">{termsAndConditions[2].p3}</p>
         </div>
 
         <form onSubmit={handleSubmit}>

@@ -25,12 +25,14 @@ import {
 import {
   School,
   Work,
+  Home,
   Add as AddIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { Edit } from 'lucide-react';
 
 const AdminContentListing = () => {
+  let response;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteDialog, setDeleteDialog] = useState({
@@ -42,12 +44,17 @@ const AdminContentListing = () => {
   
   const { userId } = useAuth();
   const navigate = useNavigate();
-
+console.log("userId", userId)
   const fetchAdminContents = async () => {
     try {
       console.log('Fetching admin content');
-      const response = await axios.get(config.profile.getAdminContentList(userId));
-      const approvedPosts = response.data.data.posts.filter(post => post.isApproved === true);
+      console.log("userId inside function", userId)
+      console.log('link URL', typeof (config.profile.getAdminContentList(userId)))
+      if (userId) {
+        response = await axios.get(config.profile.getAdminContentList(userId));
+        console.log("Response",response)
+      }
+      const approvedPosts = response.data.data.posts;
       setPosts(approvedPosts);
     } catch (error) {
       console.error("Error fetching admin content list:", error);
@@ -84,10 +91,13 @@ const AdminContentListing = () => {
   const handleDeleteConfirm = async () => {
     try {
       let response;
-      if (deleteDialog.postType === 'job') {
+      if (deleteDialog.postType === 'Job') {
         response = await axios.delete(config.job.deleteJob(deleteDialog.postId));
-      } else {
+      }else if(deleteDialog.postType === 'University'){
         response = await axios.delete(config.universities.deleteUniversity(deleteDialog.postId));
+      }
+      else {
+        response = await axios.delete(config.accommodation.deleteAccommodation(deleteDialog.postId));
       }
       
       if (response.status === 200) {
@@ -206,9 +216,9 @@ const AdminContentListing = () => {
       }}
     >
       {/* Icon based on post type */}
-      {post.postType === 'university' ? 
-        <School fontSize="small" sx={{ mr: 1 }} /> : 
-        <Work fontSize="small" sx={{ mr: 1 }} />
+      {post.postType === 'University' ? 
+        <School fontSize="small" sx={{ mr: 1 }} /> : post.postType === 'Job' ?
+        <Work fontSize="small" sx={{ mr: 1 }} /> :  <Home fontSize="small" sx={{ mr: 1 }} />
       }
       {post.title || 'Untitled'}
     </Typography>
@@ -237,8 +247,8 @@ const AdminContentListing = () => {
   }}>
     {/* Post Type Chip */}
     <Chip
-      label={post.postType === 'university' ? 'University' : 'Job'}
-      color={post.postType === 'university' ? 'primary' : 'secondary'}
+      label={post.postType}
+      color={post.postType === 'University' ? 'primary' : post.postType === 'Job' ?'secondary':'success'}
       size="small"
       sx={{ minWidth: 90 }}
     />
