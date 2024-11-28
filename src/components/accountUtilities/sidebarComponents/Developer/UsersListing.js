@@ -8,9 +8,15 @@ import ButtonComponent from "./../../../reusable/Button";
 const UserListing = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showActive, setShowActive] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 15;
 
   // Pass the update function to useUserFunctions
   const handleUserUpdate = (userId, newActiveStatus) => {
@@ -19,14 +25,31 @@ const UserListing = () => {
     );
     setUsers(updatedUsers);
     
-    // Update filtered users based on current view
-    const newFilteredUsers = updatedUsers.filter(user => 
-      showActive ? user.isActive : !user.isActive
-    );
+    // Reapply filters after update
+    const newFilteredUsers = filterUsers(updatedUsers, showActive, searchTerm);
     setFilteredUsers(newFilteredUsers);
+    setSearchResults(newFilteredUsers);
   };
 
   const { getUserFunctions } = useUserFunctions(handleUserUpdate);
+
+  // Comprehensive filtering logic
+  const filterUsers = (userList, active, search) => {
+    return userList.filter(user => {
+      // First filter by active status
+      const matchesActiveStatus = active ? user.isActive : !user.isActive;
+      
+      // Then filter by search term
+      const searchText = search.toLowerCase();
+      const matchesSearch = 
+        user.email.toLowerCase().includes(searchText) ||
+        (user.entity || '').toLowerCase().includes(searchText) ||
+        user.role.toLowerCase().includes(searchText) ||
+        (user.location || '').toLowerCase().includes(searchText);
+      
+      return matchesActiveStatus && matchesSearch;
+    });
+  };
 
   const getAllUsers = async () => {
     try {
@@ -41,6 +64,8 @@ const UserListing = () => {
       // Filter and set initially active users
       const activeUsers = usersData.filter(user => user.isActive);
       setFilteredUsers(activeUsers);
+      setSearchResults(activeUsers);
+      setCurrentPage(1); // Reset to first page when users are loaded
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,6 +76,24 @@ const UserListing = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  // Handle search term changes
+  useEffect(() => {
+    const newFilteredUsers = filterUsers(users, showActive, searchTerm);
+    setFilteredUsers(newFilteredUsers);
+    setSearchResults(newFilteredUsers);
+    setCurrentPage(1); // Reset to first page when filter changes
+  }, [searchTerm, showActive, users]);
+
+  // Pagination logic
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = searchResults.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Handle page change
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -66,29 +109,52 @@ const UserListing = () => {
 
   const toggleActiveStatus = () => {
     setShowActive(!showActive);
-    const newFilteredUsers = users.filter(user => 
-      !showActive ? user.isActive : !user.isActive
-    );
-    setFilteredUsers(newFilteredUsers);
   };
 
   return (
     <main>
-      <ButtonComponent onClick={toggleActiveStatus} className={'rounded-md mx-5'}>
-        {showActive ? "Show Inactive Users" : "Show Active Users"}
-      </ButtonComponent>
+      <div className="flex items-center justify-between mx-5 mb-4">
+        <ButtonComponent onClick={toggleActiveStatus} className={'rounded-md'}>
+          {showActive ? "Show Inactive Users" : "Show Active Users"}
+        </ButtonComponent>
+
+        <TextField
+          variant="outlined"
+          placeholder="Search users globally..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-64"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
 
       <ListingComponent
         title={showActive ? "Active Users" : "Inactive Users"}
-        data={filteredUsers}
+        data={currentUsers}
         columns={["id", "email", "role"]}
-        totalItems={filteredUsers.length}
+        totalItems={searchResults.length}
         additionalStats={[
           { label: "Total Admins", value: users.filter(user => user.role === "admin").length },
-          { label: "Total Inactive", value: users.filter(user => !user.isActive).length }
+          { label: "Total Inactive", value: users.filter(user => !user.isActive).length },
+          { label: "Search Results", value: searchResults.length }
         ]}
         actions={getUserFunctions(showActive)}
       />
+
+      <div className="flex justify-center mt-4">
+        <Pagination
+          count={Math.ceil(searchResults.length / usersPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </div>
     </main>
   );
 };
