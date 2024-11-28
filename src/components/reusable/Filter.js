@@ -8,7 +8,7 @@ import Accordion from "./Accordion";
 import DateRange from "./DateRange";
 import { BiCategory } from "react-icons/bi";
 
-function FilterComponent ({ items , category , location }){
+function FilterComponent ({ items , category , location, major, price}){
 	const [openFilter,setOpenFilter] = useState(false)
 
 	const handleModel = () => {

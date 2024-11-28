@@ -45,6 +45,16 @@ const UniversityPage = () => {
             label: 'Location',
             content: ['Phnom Penh', 'Siem Reap']
         },
+        {
+            id: '2eqsb',
+            label: 'Major',
+            content: ['Medical', 'Mathematics']
+        },
+        {
+            id: '2eqsc',
+            label: 'Price',
+            content: ['200-300', '400-500']
+        },
     ];
 
 

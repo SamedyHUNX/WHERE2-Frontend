@@ -146,7 +146,8 @@ const config = {
   },
   filterMajor: {
     getFilterMajor: (id) => `${ API_URL }/api/filteredmajor/${id}`,
-    getMajor: (name)=>`${API_URL}/api/filteredmajor/major/${name}`
+    getMajor: (name) => `${ API_URL }/api/filteredmajor/major/${ name }`,
+    getFilterPrice: `${ API_URL }/api/filteredmajor/price`,
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,

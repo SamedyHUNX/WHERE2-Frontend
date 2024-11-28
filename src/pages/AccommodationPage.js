@@ -12,6 +12,7 @@ import ListContainer from '../components/reusable/ListContainer';
 import AccommodationList from '../components/AccommodationList';
 
 import { fetchAccommodations } from '../features/slices/accommodationSlice';
+import Filter from '../components/reusable/Filter';
 
 import FloatingContact from './../components/reusable/FloatingContact';
 import SocialMediaLinks from './../components/reusable/SocialMediaLinks';
@@ -26,6 +27,14 @@ const AccommodationPage = () => {
     const limit = parseInt(urlParams.get('limit')) || 10;
     const searchQuery = urlParams.get('q') || '';
 
+    const items = [
+        {
+            id: '2eqsa',
+            label: 'University',
+            content: ['Rupp', 'paragon']
+        },
+    ];
+
     const dispatch = useDispatch();
     const { data, loading, error, totalPages } = useSelector((state) => state.accommodations);
 
@@ -36,6 +45,11 @@ const AccommodationPage = () => {
         <div>
             <Navbar />
             <ListContainer>
+            <Filter 
+                    items={items}
+                    category={"university"}
+                    location={location}
+                />
             {loading && <LoadingOverlay/>}
             {error && <p>{error}</p>}
                 <AccommodationList accommodations={data} page={page} />
