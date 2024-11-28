@@ -51,9 +51,19 @@ export const fetchFilteredMajor = createAsyncThunk(
         const response = await axios.get(config.filterMajor.getMajor(name));
         const majorId = response.data.majorId;
         const getFilter = await axios.get(config.filterMajor.getFilterMajor(majorId));
-        return getFilter.data.filteredMajor
+        return getFilter.data.list
     }
-)
+);
+
+export const fetchFilteredPrice = createAsyncThunk(
+    'university/fetchFilterPrice',
+    async({ min, max }) => {
+        console.log("min",min,"max:",max)
+        const response = await axios.get(`${ config.filterMajor.getFilterPrice }?price=${ min }&price=${ max }`);
+        console.log("response from filterPrice",response)
+        return response.data.list
+    }
+);
 
 /** 
  * Search universities by query. 
@@ -77,7 +87,8 @@ const universitySlice = createSlice({
         imageLink:'',
         universities: [],
         university: [],
-        filteredUniversity:[],
+        filteredUniversity: [],
+        filteredPrice:[],
         loading: false,
         error: null,
     },
@@ -161,6 +172,19 @@ const universitySlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
                 state.filteredUniversity = [];
+            })
+            .addCase(fetchFilteredPrice.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchFilteredPrice.fulfilled, (state, action) => {
+                state.loading = false;
+                state.filteredPrice = action.payload;
+            })
+            .addCase(fetchFilteredPrice.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+                state.filteredPrice = [];
             });
         
     },

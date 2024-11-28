@@ -6,7 +6,7 @@ import { useQueryParams } from '../hooks/useQueryParams';
 
 import { setTotalPage } from '../features/slices/paginationSlice';
 import { filterByLocation } from '../features/slices/filterSlice';
-import { fetchUniversities, searchUniversities, setUniversities , setLoading, fetchFilteredMajor } from '../features/slices/universitySlice';
+import { fetchUniversities, searchUniversities, setUniversities , setLoading, fetchFilteredMajor, fetchFilteredPrice } from '../features/slices/universitySlice';
 
 import { LoadingOverlay } from '../components/reusable/Loading';
 
@@ -32,10 +32,12 @@ const UniversityPage = () => {
     const page = parseInt(urlParams.get('page')) || 1;
     const location = urlParams.get('location') || '';
     const searchQuery = urlParams.get('q') || '';
+    const major = urlParams.get('major') || '';
+    let price = urlParams.get('price') || '';
 
 
     const dispatch = useDispatch();
-    const { universities, loading, error, filteredUniversity } = useSelector((state) => state.universities);
+    const { universities, loading, error, filteredUniversity,filteredPrice } = useSelector((state) => state.universities);
     const { totalPage } = useSelector((state) => state.pagination);
 
     // university filter options
@@ -48,15 +50,16 @@ const UniversityPage = () => {
         {
             id: '2eqsb',
             label: 'Major',
-            content: ['Medical', 'Mathematics']
+            content: ['Medical', 'Mathematics', 'Law']
         },
         {
             id: '2eqsc',
             label: 'Price',
-            content: ['200-300', '400-500']
+            content: ['200-300', '400-700']
         },
     ];
-
+    console.log("major", major);
+    console.log("price",price)
 
     /**
      * async function
@@ -91,11 +94,21 @@ const UniversityPage = () => {
         } else if (location !== "") {
             setLoading(true)
             filterLocation()
-        } else {
+        } else if (major !== "") {
+            setLoading(true)
+            dispatch(fetchFilteredMajor(major))
+            dispatch(setTotalPage(1))
+            console.log("universities",universities)
+        }else if (price !== "") {
+            setLoading(true)
+            price = price.split('-')
+            dispatch(fetchFilteredPrice({ min: price[0], max: price[1] }))
+            dispatch(setTotalPage(1))
+        }else {
             dispatch(fetchUniversities({ page }));
         }
-        dispatch(fetchFilteredMajor("Science and Technology"))
-    }, [dispatch, page, searchQuery, location]);
+        
+    }, [dispatch, page, searchQuery, location, major, price]);
 console.log("filteredMajor",filteredUniversity)
     return (
         <>
@@ -111,12 +124,16 @@ console.log("filteredMajor",filteredUniversity)
                     items={items}
                     category={"university"}
                     location={location}
+                    major={major}
+                    price={price}
                 />
                 <ListLayout 
-                    items={universities} 
+                    items={major !== ''?filteredUniversity:price !== ''? filteredPrice: universities}
                     category="university"
                     page={page} 
-                    isLoading={loading}    
+                    isLoading={loading}  
+                    major={major}
+                    price = {price}
                 />
                 <Pagination 
                     totalPage={totalPage} 

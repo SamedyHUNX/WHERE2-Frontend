@@ -145,9 +145,9 @@ const config = {
     createCompany: `${API_URL}/api/companies/addCompany`
   },
   filterMajor: {
-    getFilterMajor: (id) => `${ API_URL }/api/filteredmajor/${id}`,
-    getMajor: (name) => `${ API_URL }/api/filteredmajor/major/${ name }`,
-    getFilterPrice: `${ API_URL }/api/filteredmajor/price`,
+    getFilterMajor: (id) => `${ API_URL }/api/filtered/major/${id}`,
+    getMajor: (name) => `${ API_URL }/api/filtered/majorName/${ name }`,
+    getFilterPrice: `${ API_URL }/api/filtered/price`,
   },
   contact: {
     sendEmail: `${API_URL}/api/contact`,

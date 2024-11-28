@@ -27,7 +27,7 @@ function FilterComponent ({ items , category , location, major, price}){
 
 	useEffect(() => {
 		setOpenFilter(false);
-	}, [location])
+	}, [location,major,price])
 
 	return(
 		<div className="" style={{ display: "flex" , width:"100%", margin: "0px 0px 30px 0px" }}>

@@ -27,7 +27,7 @@ function Accordion({ items, applyFilter }) {
               <AccordionButton
                 key={contentIndex}
                 contentItem={contentItem}
-                applyFilter={() => applyFilter({ location: contentItem, major: contentItem, price: contentItem })}
+                applyFilter={() => applyFilter(item.label ==='Major'?{major:contentItem}:item.label === 'Location'?{location:contentItem}:{price:contentItem})}
               />
             ))}
           </div>
