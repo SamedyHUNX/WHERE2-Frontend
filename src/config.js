@@ -175,6 +175,11 @@ const config = {
     readAll: `${API_URL}/api/notifications/read-all`,
     delete: (notificationId) => `${API_URL}/api/notifications/${notificationId}l`
   },
+  companies : {
+    getCompanyProfile : (companyId) => `${API_URL}/api/companies/getOneCompany/${companyId}`,
+    updateCompanyProfile : (companyId) => `${API_URL}/api/companies/updateCompany/${companyId}`,
+    
+  },
   filterMajor: {
     getFilterMajor: (id) => `${ API_URL }/api/filtered/major/${id}`,
     getMajor: (name) => `${ API_URL }/api/filtered/majorName/${ name }`,
