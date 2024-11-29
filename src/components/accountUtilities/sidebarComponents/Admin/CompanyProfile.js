@@ -7,8 +7,9 @@ import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCompany, fetchOneCompany } from '../../../../features/slices/jobSlice';
-
+import { fetchCompany, fetchOneCompany, setCompanyImage } from '../../../../features/slices/jobSlice';
+import { setLoading } from '../../../../features/slices/universitySlice';
+import { LoadingOverlay } from '../../../reusable/Loading';
 const entityConfig = {
   'Company': {
     hasLocation: true,
@@ -25,11 +26,11 @@ const entityConfig = {
 };
 
 const CompanyProfile = () => {
-  const { userId } = useAuth();
+  const  userId  = JSON.parse(localStorage.getItem('authData')).id;
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'Company');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompanyExists, setIsCompanyExists] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
@@ -41,15 +42,15 @@ const CompanyProfile = () => {
   ]);
 
   const entityDataKey = `${entity}Data`;
-
+console.log("id from storage",userId)
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
         localStorage.setItem('formType', 'Company');
         
         // Dispatch action to fetch company
-        await dispatch(fetchOneCompany(userId));
-
+          await dispatch(fetchOneCompany(userId));
+      
         // Fetch company profile
         const response = await axios.get(config.companies.getCompanyProfile(userId));
         const companyData = response.data.oneCompany;
@@ -61,7 +62,7 @@ const CompanyProfile = () => {
         // Pre-fill form data if company profile exists
         if (companyData) {
           setIsCompanyExists(true);
-          
+          setCompanyImage(companyData.img_url)
           // Prepare initial form data
           const initialFormData = {
             company_name: companyData.company_name || '',
@@ -69,6 +70,7 @@ const CompanyProfile = () => {
             email: companyData.email || '',
             tel: companyData.tel || '',
             location: companyData.location || '',
+            website_url: companyData.website_url || ''
           };
 
           setFormData(initialFormData);
@@ -118,7 +120,7 @@ const CompanyProfile = () => {
     // Prepare data for submission
     let data = {
       ...formData,
-      website: links.find(link => link.title === 'Website')?.url || '',
+      website_url: links.find(link => link.title === 'Website')?.url || '',
       img_url: companyImage,
       image_alt: formData[entityConfig[entity].fields[0].name],
       company_id: parseInt(userId),

@@ -11,7 +11,7 @@ const JobList = ({ jobs, page }) => {
 	const { isClicked } = useSelector((state) => state.favorites);
 	let image;
 
-	console.log('sdfbjkdfsajbkfdhksajhdjklafskhjadfshjkfsjhdfsahjkdffdsajhkdfsahj job list')
+	// console.log('sdfbjkdfsajbkfdhksajhdjklafskhjadfshjkfsjhdfsahjkdffdsajhkdfsahj job list')
 	useEffect(() => {
 		const fetchFavorites = async () => {
 			try {
