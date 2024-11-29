@@ -55,7 +55,7 @@ const UniversityPage = () => {
         {
             id: '2eqsc',
             label: 'Price',
-            content: ['200-400', '400-600','600-800']
+            content: ['$200-400', '$400-600','$600-800']
         },
     ];
 
@@ -101,7 +101,7 @@ const UniversityPage = () => {
         }else if (price !== "") {
             setLoading(true)
             price = price.split('-')
-            dispatch(fetchFilteredPrice({ min: price[0], max: price[1] }))
+            dispatch(fetchFilteredPrice({ min: price[0].replace('$',''), max: price[1] }))
             dispatch(setTotalPage(1))
         }else {
             dispatch(fetchUniversities({ page }));

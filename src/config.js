@@ -174,6 +174,11 @@ const config = {
       `${API_URL}/api/notifications/read`,
     readAll: `${API_URL}/api/notifications/read-all`,
     delete: (notificationId) => `${API_URL}/api/notifications/${notificationId}l`
+  },
+  filterMajor: {
+    getFilterMajor: (id) => `${ API_URL }/api/filtered/major/${id}`,
+    getMajor: (name) => `${ API_URL }/api/filtered/majorName/${ name }`,
+    getFilterPrice: `${ API_URL }/api/filtered/price`,
   }
 };
 export default config;
