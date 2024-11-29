@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlusCircle, Save, Image, Link, FileText } from 'lucide-react';
+import { PlusCircle, Save, Image, Link, FileText, Eye } from 'lucide-react';
 import ButtonComComponent from './../../../reusable/ButtonComponent';
 import axios from 'axios';
 import config from './../../../../config';
@@ -12,8 +12,8 @@ import { fetchCompany, fetchOneCompany } from '../../../../features/slices/jobSl
 const entityConfig = {
   'Company': {
     hasLocation: true,
-    createEndpoint: config.contentCreation.createCompany,
-    updateEndpoint: config.companies.updateCompany,
+    createEndpoint: config.companies.uploadCompanyProfile,
+    updateEndpoint: config.companies.updateCompanyProfile,
     fields: [
       { name: 'company_name', label: 'Company Name', type: 'text' },
       { name: 'company_bg', label: 'Company Background', type: 'textarea' },
@@ -31,6 +31,8 @@ const CompanyProfile = () => {
   const [postId, setPostId] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCompanyExists, setIsCompanyExists] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
   const { companyImage, CompanyProfile: companyProfileFromRedux } = useSelector(state => state.job);
   const dispatch = useDispatch();
 
@@ -58,6 +60,8 @@ const CompanyProfile = () => {
 
         // Pre-fill form data if company profile exists
         if (companyData) {
+          setIsCompanyExists(true);
+          
           // Prepare initial form data
           const initialFormData = {
             company_name: companyData.company_name || '',
@@ -76,12 +80,17 @@ const CompanyProfile = () => {
               url: companyData.website_url 
             }]);
           }
+        } else {
+          // Reset form if no company data
+          setFormData({});
+          setIsEditable(true);
         }
 
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching company data:', error);
         setIsLoading(false);
+        setIsEditable(true);
       }
     };
 
@@ -89,13 +98,17 @@ const CompanyProfile = () => {
   }, [userId, dispatch]);
 
   const handleInputChange = (fieldName, value) => {
-    setFormData(prev => ({ ...prev, [fieldName]: value }));
+    if (isEditable) {
+      setFormData(prev => ({ ...prev, [fieldName]: value }));
+    }
   };
 
   const handleLinkChange = (index, field, value) => {
-    const newLinks = [...links];
-    newLinks[index][field] = value;
-    setLinks(newLinks);
+    if (isEditable) {
+      const newLinks = [...links];
+      newLinks[index][field] = value;
+      setLinks(newLinks);
+    }
   };
 
   const handleApplyChanges = async () => {
@@ -122,7 +135,7 @@ const CompanyProfile = () => {
     try {
       // Use PATCH method to update company details
       const response = await axios.patch(
-        config.companies.updateCompany(userId), 
+        config.companies.updateCompanyProfile(userId), 
         data
       );
 
@@ -131,8 +144,14 @@ const CompanyProfile = () => {
 
       // Optional: Refresh company data after update
       await dispatch(fetchOneCompany(userId));
+
+      // Set to view mode after successful update
+      setIsEditable(false);
+      setIsCompanyExists(true);
     } catch (error) {
       // Handle error
+      console.log(data, 'jasdhfjshfjksdfhasdfsdhfjsdfhasfhsdkjf')
+
       console.error('Error updating company profile:', error.response ? error.response.data : error.message);
       alert('Failed to update company profile. Please try again.');
     } finally {
@@ -140,13 +159,8 @@ const CompanyProfile = () => {
     }
   };
 
-  const handleSaveChanges = () => {
-    const data = {
-      formData,
-      links,
-    };
-    localStorage.setItem(entityDataKey, JSON.stringify(data));
-    alert('Changes saved to local storage');
+  const handleEditToggle = () => {
+    setIsEditable(!isEditable);
   };
 
   if (isLoading) {
@@ -156,19 +170,33 @@ const CompanyProfile = () => {
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6  items-center">
+        <div className="bg-white rounded-lg shadow-md p-6 items-center">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
             <Image size={24} className="mr-2" />
             {entity} Logo
           </h2>
-          <PublicPhotoUpload postId={postId} />
+          <PublicPhotoUpload 
+            postId={postId} 
+            disabled={!isEditable}
+          />
         </div>
 
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center text-indigo-700">
-            <FileText size={24} className="mr-2" />
-            {entity} Details
-          </h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold flex items-center text-indigo-700">
+              <FileText size={24} className="mr-2" />
+              {entity} Details
+            </h2>
+            {isCompanyExists && (
+              <button 
+                onClick={handleEditToggle}
+                className="text-blue-500 hover:text-blue-700 flex items-center"
+              >
+                {isEditable ? <Eye size={20} className="mr-1" /> : <PlusCircle size={20} className="mr-1" />}
+                {isEditable ? 'View Mode' : 'Edit'}
+              </button>
+            )}
+          </div>
           {entityConfig[entity].fields.map((field) => (
             <div key={field.name} className="mb-4">
               <h2>{field.label}</h2>
@@ -177,7 +205,9 @@ const CompanyProfile = () => {
                   value={formData[field.name] || ''}
                   onChange={(e) => handleInputChange(field.name, e.target.value)}
                   rows={4}
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 h-fit"
+                  readOnly={!isEditable}
+                  className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 h-fit 
+                    ${!isEditable ? 'bg-gray-100 cursor-default' : ''}`}
                   placeholder={field.label}
                 />
               ) : (
@@ -185,7 +215,9 @@ const CompanyProfile = () => {
                   type={field.type}
                   value={formData[field.name] || ''}
                   onChange={(e) => handleInputChange(field.name, e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  readOnly={!isEditable}
+                  className={`w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 
+                    ${!isEditable ? 'bg-gray-100 cursor-default' : ''}`}
                   placeholder={field.label}
                 />
               )}
@@ -212,30 +244,25 @@ const CompanyProfile = () => {
               type="text"
               value={link.url}
               onChange={(e) => handleLinkChange(index, 'url', e.target.value)}
+              readOnly={!isEditable}
               placeholder="Link URL"
-              className="flex-grow p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:mb-5"
+              className={`flex-grow p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:mb-5
+                ${!isEditable ? 'bg-gray-100 cursor-default' : ''}`}
             />
           </div>
         ))}
       </div>
 
-      <ButtonComComponent
-        variant='success'
-        onClick={handleSaveChanges}
-        className="mt-6 w-full bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200 flex items-center justify-center text-lg font-semibold"
-      >
-        <Save size={24} />
-        <span className="ml-2">Save Changes</span>
-      </ButtonComComponent>
-      
-      <ButtonComComponent
-        onClick={handleApplyChanges}
-        disabled={isSubmitting}
-        className="mt-6 w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 flex items-center justify-center text-lg font-semibold"
-      >
-        <PlusCircle size={24} />
-        <span className="ml-2">{isSubmitting ? 'Applying...' : 'Apply Changes'}</span>
-      </ButtonComComponent>
+      {!isCompanyExists || isEditable ? (
+        <ButtonComComponent
+          onClick={handleApplyChanges}
+          disabled={isSubmitting}
+          className="mt-6 w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 flex items-center justify-center text-lg font-semibold"
+        >
+          <PlusCircle size={24} />
+          <span className="ml-2">{isSubmitting ? 'Applying...' : 'Apply changes'}</span>
+        </ButtonComComponent>
+      ) : null}
     </div>
   );
 };

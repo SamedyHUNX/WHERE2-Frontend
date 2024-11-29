@@ -178,12 +178,14 @@ const config = {
   companies : {
     getCompanyProfile : (companyId) => `${API_URL}/api/companies/getOneCompany/${companyId}`,
     updateCompanyProfile : (companyId) => `${API_URL}/api/companies/updateCompany/${companyId}`,
+    uploadCompanyProfile : (companyId) => `${API_URL}/api/companies/addCompany/${companyId}`
     
   },
   filterMajor: {
     getFilterMajor: (id) => `${ API_URL }/api/filtered/major/${id}`,
     getMajor: (name) => `${ API_URL }/api/filtered/majorName/${ name }`,
     getFilterPrice: `${ API_URL }/api/filtered/price`,
+    
   }
 };
 export default config;
