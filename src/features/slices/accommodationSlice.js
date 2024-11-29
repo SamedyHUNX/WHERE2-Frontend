@@ -37,6 +37,13 @@ export const fetchAccommodation = createAsyncThunk(
         return response.data.oneAccommodation;
     }
 );
+export const fetchFilterAccommodation = createAsyncThunk(
+    'accommodation/fetchFilterAccommodation',
+    async (universityName) => {
+        const response = await axios.get(config.accommodation.getFilterAccommodation(universityName))
+        return response.data.list
+    }
+)
 
 const accommodationSlice = createSlice({
     name: 'accommodation',
@@ -46,7 +53,8 @@ const accommodationSlice = createSlice({
         data: [],
         totalPages: 1,
         accommodation: {},
-        accommodationImages: {}
+        accommodationImages: {},
+        filteredAccommodation:[]
     },
     reducers: {
         /**
@@ -90,6 +98,19 @@ const accommodationSlice = createSlice({
                 state.accommodation = action.payload;
             })
             .addCase(fetchAccommodation.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || action.error.message;
+            })
+            // Fetch the filtered accommodation
+            .addCase(fetchFilterAccommodation.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchFilterAccommodation.fulfilled, (state, action) => {
+                state.loading = false;
+                state.filteredAccommodation = action.payload;
+            })
+            .addCase(fetchFilterAccommodation.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || action.error.message;
             });

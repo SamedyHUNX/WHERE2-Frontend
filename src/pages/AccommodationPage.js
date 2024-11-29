@@ -10,8 +10,10 @@ import Footer from '../components/reusable/Footer';
 import Pagination from '../components/reusable/Pagination';
 import ListContainer from '../components/reusable/ListContainer';
 import AccommodationList from '../components/AccommodationList';
+import NoResults from '../layouts/NoResults';
 
-import { fetchAccommodations } from '../features/slices/accommodationSlice';
+
+import { fetchAccommodations,fetchFilterAccommodation } from '../features/slices/accommodationSlice';
 import Filter from '../components/reusable/Filter';
 
 import FloatingContact from './../components/reusable/FloatingContact';
@@ -23,38 +25,54 @@ const isDebug = true;
 const AccommodationPage = () => {
     const urlParams = useQueryParams();
 
-    const page = parseInt(urlParams.get('page')) || 1;
+    let page = parseInt(urlParams.get('page')) || 1;
     const limit = parseInt(urlParams.get('limit')) || 10;
     const searchQuery = urlParams.get('q') || '';
+    const university = urlParams.get('university') || '';
 
     const items = [
         {
-            id: '2eqsa',
+            id: '2eqsd',
             label: 'University',
-            content: ['Rupp', 'paragon']
+            content: [
+                'Royal University of Phnom Penh',
+                'Institute of Technology of Cambodia',
+                'Western University',
+                'University of Health Sciences, Cambodia',
+                'Limkokwing University of Creative Technology',
+                'International University - Cambodia',
+                'University of Cambodia',
+                'Royal University of Law and Economics',
+                'Paragon Internation University',
+                'Paññāsāstra University of Cambodia'
+            ]
         },
     ];
 
     const dispatch = useDispatch();
-    const { data, loading, error, totalPages } = useSelector((state) => state.accommodations);
+    const { data, loading, error, totalPages, filteredAccommodation } = useSelector((state) => state.accommodations);
 
     useEffect(() => {
+        if (university !== '') {
+            dispatch(fetchFilterAccommodation(university))
+
+        }
         dispatch(fetchAccommodations({page, limit}))
-    },[page, limit])
+    }, [page, limit, university])
+
     return (
         <div>
             <Navbar />
             <ListContainer>
             <Filter 
                     items={items}
-                    category={"university"}
-                    location={location}
+                    category={"accommodation"}
+                    university={university}
                 />
             {loading && <LoadingOverlay/>}
-            {error && <p>{error}</p>}
-                <AccommodationList accommodations={data} page={page} />
+            <AccommodationList accommodations={university === ''?data:filteredAccommodation} page={page} />
             </ListContainer>
-            <Pagination totalPage={totalPages} limit={limit} currentPage={page} category='accommodation'/>
+            <Pagination totalPage={university === ''?totalPages:1} limit={limit} currentPage={page} category='accommodation'/>
              <FloatingContact />
              <SocialMediaLinks notAuth={true}/>
             <Footer />

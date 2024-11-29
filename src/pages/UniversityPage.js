@@ -50,16 +50,15 @@ const UniversityPage = () => {
         {
             id: '2eqsb',
             label: 'Major',
-            content: ['Medical', 'Mathematics', 'Law']
+            content: ['Engineer', 'Science and Technology', 'Law','Foriegn Language','Tourism','Business','Management','Design and Art', 'Education', 'Economics']
         },
         {
             id: '2eqsc',
             label: 'Price',
-            content: ['200-300', '400-700']
+            content: ['200-400', '400-600','600-800']
         },
     ];
-    console.log("major", major);
-    console.log("price",price)
+
 
     /**
      * async function
@@ -98,7 +97,7 @@ const UniversityPage = () => {
             setLoading(true)
             dispatch(fetchFilteredMajor(major))
             dispatch(setTotalPage(1))
-            console.log("universities",universities)
+
         }else if (price !== "") {
             setLoading(true)
             price = price.split('-')
@@ -109,7 +108,7 @@ const UniversityPage = () => {
         }
         
     }, [dispatch, page, searchQuery, location, major, price]);
-console.log("filteredMajor",filteredUniversity)
+
     return (
         <>
             <Navbar />

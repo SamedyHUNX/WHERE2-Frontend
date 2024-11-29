@@ -102,6 +102,7 @@ const config = {
   accommodation: {
     getAllAccommodation: `${API_URL}/api/list/accommodation`,
     getAccommodationById: `${ API_URL }/api/accommodation`,
+    getFilterAccommodation: (universityName) => `${ API_URL }/api/accommodation/filterAccommodation/${universityName}`,
     addAccommodation: `${ API_URL }/api/accommodation/addAccommodation`,
     deleteAccommodation: (accId) => `${ API_URL }/api/accommodation/deleteAccommodation/${ accId }`,
     getAllAccommodationList: `${ API_URL }/api/accommodation/accommodation-list/all`,

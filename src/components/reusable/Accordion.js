@@ -22,12 +22,12 @@ function Accordion({ items, applyFilter }) {
           <span>{icon}</span>
         </div>
         {isExpanded && Array.isArray(item.content) && (
-          <div className="md:w-[300px] flex flex-col md:flex-row p-2 overflow-x-auto">
+          <div className="max-w-[700px] flex flex-wrap md:flex-row p-2 overflow-x-auto">
             {item.content.map((contentItem, contentIndex) => (
               <AccordionButton
                 key={contentIndex}
                 contentItem={contentItem}
-                applyFilter={() => applyFilter(item.label ==='Major'?{major:contentItem}:item.label === 'Location'?{location:contentItem}:{price:contentItem})}
+                applyFilter={() => applyFilter(item.label === 'Major' ? { major: contentItem } : item.label === 'Location' ? { location: contentItem } : item.label === 'University' ? {university:contentItem}:{price:contentItem})}
               />
             ))}
           </div>

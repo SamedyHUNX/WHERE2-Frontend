@@ -88,7 +88,7 @@ const ScholarshipPage = () => {
                     searchPlaceholder="Search scholarships..."
                     category="scholarship"
                 />
-                <Filter items={items} category={"scholarship"}/>
+                <Filter items={items} category={"scholarship"} location={location}/>
                 <ListLayout 
                     items={scholarships}
                     category="scholarship"
