@@ -13,6 +13,8 @@ import AccommodationListing from '../Developer/AccommodationListing';
 import PublicMultipleUpload from '../../../reusable/PublicMultipleUpload';
 import { clearAccommodationImage } from '../../../../features/slices/accommodationSlice';
 import { clearImageLink } from '../../../../features/slices/universitySlice';
+import { setCompanyName,fetchOneCompany } from '../../../../features/slices/jobSlice';
+
 const dropdownItems = [
   { label: 'University' },
   { label: 'Job offer' },
@@ -34,12 +36,10 @@ const entityConfig = {
     hasLocation: true,
     createEndpoint: config.contentCreation.createJob,
     fields: [
-      { name: 'job_title', label: 'Job Title', type: 'text' },
+      { name: 'position', label: 'Position', type: 'text' },
       { name: 'job_desc', label: 'Job Description', type: 'textarea' },
-      { name: 'company_name', label: 'Company Name', type: 'text' },
       { name: 'job_require', label: 'Job Requirements', type: 'textarea' },
       { name: 'salary', label: 'Salary', type: 'number' },
-      { name: 'position', label: 'Position', type: 'text' },
       { name: 'deadline', label: 'Application Deadline', type: 'date' },
       { name: 'work_hour', label: 'Work Hours', type: 'text' },
       { name: 'location', label: 'Location', type: 'text' },
@@ -63,20 +63,35 @@ const entityConfig = {
 };
 
 const AdminEditor = () => {
-  const {  userId } = useAuth();
-  const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
+  const  userId  = JSON.parse(localStorage.getItem('authData')).id;  const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'University');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
   const dispatch = useDispatch();
   const { imageLink } = useSelector(state => state.universities);
   const { accommodationImages } = useSelector(state => state.accommodations);
+  const { companyName } = useSelector(state => state.job);
 
   useEffect(() => {
     dispatch(clearAccommodationImage())
     // setEntity('University')
+    const fetchCompanyData = async () => {
+      try {
+        // Dispatch action to fetch company
+          await dispatch(fetchOneCompany(userId));
+        // Fetch company profile
+        const response = await axios.get(config.companies.getCompanyProfile(userId));
+        const companyData = response.data.oneCompany;
+        // Pre-fill form data if company profile exists
+        if (companyData) {
+          dispatch(setCompanyName(companyData.company_name));
+        } 
+      } catch (error) {
+        console.error('Error fetching company data:', error);
+      }
+    };
+    fetchCompanyData()
     localStorage.setItem('formType', 'University')
 },[])
-
   const [links, setLinks] = useState([
     { title: 'Telegram', url: '' },
     { title: 'Facebook', url: '' },
@@ -156,7 +171,7 @@ const AdminEditor = () => {
     if (entity === 'Job offer') {
       data = {
         company_id: parseInt(userId),
-        company_name: data.company_name,
+        company_name: companyName,
         job_desc: data.job_desc,
         job_require: data.job_require,
         location: data.location,
@@ -208,6 +223,11 @@ const AdminEditor = () => {
 
 
   // if (entity === 'Accommodation') return <AccommodationListing />;
+  if (entity === 'Job offer' && companyName === '') {
+   return (<div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md align-middle flex">
+     <h1>PLEASE FILL IN YOUR COMPANY PROFILE IN ORDER ANOUNCE THE JOB OFFER. THANKS</h1>
+   </div>)
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">

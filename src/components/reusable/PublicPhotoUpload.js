@@ -6,6 +6,8 @@ import { LoadingOverlay } from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setImageUrl } from "../../features/slices/universitySlice";
 import { setCompanyImage } from "../../features/slices/jobSlice";
+import config from "../../config";
+import axios from "axios";
 
 const MAX_FILE_SIZE = 500 * 1024;
 
@@ -23,6 +25,12 @@ const PublicPhotoUpload = ({ postId }) => {
   const { imageLink } = useSelector(state => state.universities);
   const { companyImage } = useSelector(state => state.job);
 
+  const updateCompanyLogo = async (newLogo) => {
+    const response = await axios.patch(
+      config.companies.updateCompanyProfile(userId), 
+     { img_url: newLogo}
+    );
+  }
   // Effect to update currentImage when imageUrl changes
   useEffect(() => {
     if (imageUrl) {
@@ -33,7 +41,6 @@ const PublicPhotoUpload = ({ postId }) => {
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
-    console.log("single Photo",selectedFile)
 
     // CHECK FILE SIZE BEFORE UPLOADING
     if (selectedFile.size > MAX_FILE_SIZE) {
@@ -50,10 +57,10 @@ const PublicPhotoUpload = ({ postId }) => {
           dispatch(setImageUrl(result.imageUrl));
         } else if (formType === 'Company') {
           dispatch(setCompanyImage(result.imageUrl))
+          updateCompanyLogo(result.imageUrl)
         }
-   
+
         // Update the current image immediately
-        console.log("imageUrl",result.imageUrl)
         // setCurrentImage(result.imageUrl);
         // Refresh the data from server
         await fetchPhoto();
@@ -72,7 +79,6 @@ const PublicPhotoUpload = ({ postId }) => {
       </div>
     );
   }
-console.log("currentImage",currentImage)
   return (
     <div className="relative">
       {formType === 'Company'?

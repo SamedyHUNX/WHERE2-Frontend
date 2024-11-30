@@ -28,6 +28,7 @@ const jobSlices = createSlice({
       data: {}
     },
     companyImage: '',
+    companyName: '',
     companyProfile: {
       isLoading: true,
       data:{}
@@ -36,7 +37,11 @@ const jobSlices = createSlice({
   reducers: {
     setCompanyImage: (state, action) => {
       state.companyImage = action.payload
+    },
+    setCompanyName: (state, action) => {
+      state.companyName = action.payload
     }
+
 
   },
   extraReducers: (builder) => {
@@ -67,5 +72,5 @@ const jobSlices = createSlice({
   }
 });
 
-export const { setCompanyImage } = jobSlices.actions;
+export const { setCompanyImage,setCompanyName } = jobSlices.actions;
 export default jobSlices.reducer;

@@ -7,7 +7,7 @@ import useAuth from './../../../../hooks/useAuth';
 import { v4 as uuidv4 } from 'uuid';
 import PublicPhotoUpload from './../../../reusable/PublicPhotoUpload';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCompany, fetchOneCompany, setCompanyImage } from '../../../../features/slices/jobSlice';
+import { fetchCompany, fetchOneCompany, setCompanyImage, setCompanyName } from '../../../../features/slices/jobSlice';
 import { setLoading } from '../../../../features/slices/universitySlice';
 import { LoadingOverlay } from '../../../reusable/Loading';
 const entityConfig = {
@@ -30,7 +30,7 @@ const CompanyProfile = () => {
   const [entity, setEntity] = useState(localStorage.getItem('businessEntity') || 'Company');
   const [formData, setFormData] = useState({});
   const [postId, setPostId] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompanyExists, setIsCompanyExists] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
@@ -42,7 +42,7 @@ const CompanyProfile = () => {
   ]);
 
   const entityDataKey = `${entity}Data`;
-console.log("id from storage",userId)
+
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
@@ -62,7 +62,8 @@ console.log("id from storage",userId)
         // Pre-fill form data if company profile exists
         if (companyData) {
           setIsCompanyExists(true);
-          setCompanyImage(companyData.img_url)
+          dispatch(setCompanyImage(companyData.img_url));
+          dispatch(setCompanyName(companyData.company_name));
           // Prepare initial form data
           const initialFormData = {
             company_name: companyData.company_name || '',
@@ -152,7 +153,6 @@ console.log("id from storage",userId)
       setIsCompanyExists(true);
     } catch (error) {
       // Handle error
-      console.log(data, 'jasdhfjshfjksdfhasdfsdhfjsdfhasfhsdkjf')
 
       console.error('Error updating company profile:', error.response ? error.response.data : error.message);
       alert('Failed to update company profile. Please try again.');
@@ -166,7 +166,7 @@ console.log("id from storage",userId)
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingOverlay />;
   }
 
   return (
