@@ -34,7 +34,7 @@ const CompanyProfile = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCompanyExists, setIsCompanyExists] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
-  const { companyImage, CompanyProfile: companyProfileFromRedux } = useSelector(state => state.job);
+  const { companyImage, CompanyProfile: companyProfileFromRedux, companyName} = useSelector(state => state.job);
   const dispatch = useDispatch();
 
   const [links, setLinks] = useState([
@@ -136,11 +136,19 @@ const CompanyProfile = () => {
     setIsSubmitting(true);
 
     try {
-      // Use PATCH method to update company details
-      const response = await axios.patch(
-        config.companies.updateCompanyProfile(userId), 
-        data
-      );
+        // Use post method to add company details
+         if (companyName === '') {
+        const response = await axios.post(
+          config.contentCreation.createCompany,
+          data
+        );
+      } else {
+        // Use PATCH method to update company details
+        const response = await axios.patch(
+          config.companies.updateCompanyProfile(userId), 
+          data
+        );
+      }
 
       // Show success message
       alert('Company profile updated successfully!');
