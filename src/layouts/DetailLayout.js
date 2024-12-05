@@ -3,7 +3,9 @@ import { Facebook, Twitter, Instagram, ImageIcon, Globe, Send} from "lucide-reac
 import {convertToHTML} from "../utility/markdownConverter/markdownConverter"
 import DiscussionContainer from "./../components/reusable/DiscussionContainer";
 import RelevantLinks from "../components/reusable/RelevantLinks";
-
+import config from "../config";
+import axios from "axios";
+import { Link } from "react-router-dom";
 const DetailLayout = ({ 
   image, 
   description, 
@@ -13,16 +15,46 @@ const DetailLayout = ({
   instagramLink, 
   twitterLink, 
   telegramLink,
+  postUserId,
   author = "WHERE2 Team",
   date = "March 2024",
 }) => {
   const [imageError, setImageError] = useState(false);
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [userData, setUserData] = useState([])
+  const userId = postUserId
+
+  const userDetail = async () => {
+    if (!postUserId) {
+      console.warn("No postUserId provided");
+      return;
+    }
+  
+    try {
+      const url = config.profile.getMyProfile(userId);
+      const response = await axios.get(url);
+  
+      if (response.data && response.data.data) {
+        setUserData(response.data.data);
+      } else {
+        console.warn("No data found in response");
+      }
+    } catch (error) {
+      console.error("Failed to fetch user details:", error);
+    }
+  };
+
+  const fullName = `${userData?.firstName || ""} ${userData?.lastName || ""}`.trim();
+
+  useEffect(() => {
+    userDetail();
+  }, [postUserId])
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+  
 
   const socialMediaLinks = [
     { 
@@ -90,10 +122,12 @@ const DetailLayout = ({
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
             {author[0]}
           </div>
+          <Link to={`/public/user/${userId}`}>
           <div>
-            <h3 className="font-semibold text-gray-900 text-2xl tracking-tight">{author}</h3>
+            <h3 className="font-semibold text-gray-900 text-2xl tracking-tight">{fullName ? fullName : userData.entity ? userData.entity : "WHERE2 Team"}</h3>
             <p className="text-sm text-gray-500 font-semibold">{date}</p>
           </div>
+          </Link>
         </div>
       </div>
 

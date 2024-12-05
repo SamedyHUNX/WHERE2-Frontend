@@ -36,6 +36,7 @@ const UniversityDetailPage = () => {
             {university && (
                 <DetailLayout
                     image={imageUrl}
+                    postUserId={university.list?.userId ? university.list.userId : '204'}
                     description={university.list?.description}
                     title={university.list?.name}
                     websiteLink={university.list?.website}

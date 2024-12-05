@@ -109,12 +109,13 @@ const RegisterComponent = ({ auth }) => {
         if (value !== formData.password) return "Passwords do not match";
         return null;
 
-      case "phoneNumber":
-        if (!value) return "Phone number is required";
-        if (!/^\d{9}$/.test(value.replace(/\D/g, ""))) {
-          return "Please enter a valid 9 or 10-digit phone number";
-        }
-        return null;
+        case "phoneNumber":
+          if (!value) return "Phone number is required";
+          const digitsOnly = value.replace(/\D/g, ""); 
+          if (!/^\d{9,10}$/.test(digitsOnly)) {
+            return "Please enter a valid 9 or 10-digit phone number";
+          }
+          return null;
 
         case "entityType":
         if (accountType === "business" && !value) {

@@ -7,13 +7,43 @@ import { MapPin, Phone, Home, DollarSign, Bed, Square, Calendar } from "lucide-r
 import { convertToHTML } from "./../utility/markdownConverter/markdownConverter";
 import DiscussionContainer from "./reusable/DiscussionContainer";
 import ButtonComponent from "./reusable/Button";
+// import config from "./../config";
+import { Link } from "react-router-dom";
 const AccommodationDetail = () => {
   const param = useParams();
+  const [userData, setUserData] = useState([]);
   const dispatch = useDispatch();
   const { loading, error, accommodation } = useSelector(
     (state) => state.accommodations
   );
   const [activeImage, setActiveImage] = useState(0);
+  // const userId = accommodation?.userId;
+
+  // const userDetail = async () => {
+  //   if (!userId) {
+  //     console.warn("No userId provided");
+  //     return;
+  //   }
+  
+  //   try {
+  //     const url = config.profile.getMyProfile(userId);
+  //     const response = await axios.get(url);
+  
+  //     if (response.data && response.data.data) {
+  //       setUserData(response.data.data);
+  //     } else {
+  //       console.warn("No data found in response");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch user details:", error);
+  //   }
+  // };
+
+  // const fullName = `${userData?.firstName || ""} ${userData?.lastName || ""}`.trim();
+
+  // useEffect(() => {
+  //   userDetail();
+  // }, [userId])
 
   useEffect(() => {
     dispatch(fetchAccommodation(param.id));
@@ -37,6 +67,11 @@ const AccommodationDetail = () => {
     <div className="min-h-screen bg-gray-50 pt-[100px]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
+        {/* <Link to={`/public/user/${userId}`}>
+          <div>
+            <h3 className="font-semibold text-gray-900 text-2xl tracking-tight">{fullName ? fullName : userData.entity ? userData.entity : "WHERE2 Team"}</h3>
+          </div>
+          </Link> */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {accommodation.type}
@@ -143,9 +178,11 @@ const AccommodationDetail = () => {
                   </div>
                 </div>
               </div>
+              <Link to={`/public/user/${accommodation?.userId? accommodation.userId : '27'}`}>
               <ButtonComponent className="w-full bg-blue-600 text-white py-3 rounded-lg mt-6 hover:bg-blue-700 transition-colors">
                 Contact Owner
               </ButtonComponent>
+              </Link>
             </div>
           </div>
         </div>

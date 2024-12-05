@@ -12,6 +12,7 @@ import DiscussionContainer from "./../reusable/DiscussionContainer";
 import TextSummary from "./../reusable/TextSummary";
 import config from "./../../config";
 import FloatingContact from "./../reusable/FloatingContact";
+import { Link } from "react-router-dom";
 
 
 // import {
@@ -114,12 +115,13 @@ const HealthArticlePage = () => {
                     </h1>
   
                     <div className="flex items-center space-x-4 text-sm text-gray-300 mb-8">
+                      <Link to={`/public/user/204`}>
                       <div className="flex items-center">
                         <span className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-2">
                           {article.author[0]}
                         </span>
-                        <span className="font-medium">{article.author}</span>
-                      </div>
+                        <span className="font-medium">{'WHERE2 Team'}</span>
+                      </div></Link>
                       <span>•</span>
                       <span>{formattedDate}</span>
                     </div>

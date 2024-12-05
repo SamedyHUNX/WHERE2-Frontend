@@ -28,6 +28,7 @@ import NoResults from "../../layouts/NoResults";
 import DiscussionsContainer from "./../reusable/DiscussionContainer"
 import axios from "axios";
 import config from "../../config";
+import { Link } from "react-router-dom";
 
 
   const JobDetail = () => {
@@ -88,11 +89,13 @@ import config from "../../config";
     return (
       <>      
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+        <Link to={`/public/user/${company?.data?.userId? company.data.userId : '204'}`}>
         <CompanyHeader 
           name={company?.data?.company_name || "Company Name"}
           imageUrl={company?.data?.company?.img_url}
           highlights={jobHighlights}
         />
+        </Link>
         <DetailText 
           title="Company Information"
           content={convertToHTML(company?.data?.company?.company_bg) || "N/A"}
