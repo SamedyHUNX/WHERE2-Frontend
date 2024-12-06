@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "./../config";
 import useAuth from "./useAuth";
 import { useDispatch } from "react-redux";
-import { setAccommodationImages } from "../features/slices/accommodationSlice";
+import { setAccommodationImages } from "./../features/slices/accommodationSlice";
 
 // THIS FUNCTION IS USED TO FETCH USER PHOTO
 export const useFetchPublicPhoto = (userId, postId) => {
@@ -49,10 +49,7 @@ export const useUploadPublicPhoto = () => {
   const [uploadError, setUploadError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const dispatch = useDispatch();
-  let urlParts;
-  let imageUrl = '';
-  let accommodationImage = {};
-  let cnt = 1;
+
   const uploadPublicPhoto = async (files, folder, formType, postId) => {
     // Input validation
     const requiredFields = {
@@ -81,6 +78,9 @@ export const useUploadPublicPhoto = () => {
     try {
       // Step 1: Get S3 pre-signed URL
       if (formType === 'Accommodation') {
+        const accommodationImage = {};
+        let cnt = 1;
+
         for (let file of files) {
           const { data: s3Data } = await axios.post(config.photo.getS3Url, {
             folder,
@@ -105,15 +105,47 @@ export const useUploadPublicPhoto = () => {
           });
     
           // Step 3: Construct the final image URL
-          urlParts = new URL(s3Data.url);
-          imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
-          console.log("imageUR>", imageUrl)
-          accommodationImage[`img${cnt}`] = imageUrl,
-            cnt++;
+          const urlParts = new URL(s3Data.url);
+          const imageUrl = `${urlParts.protocol}//${urlParts.host}${urlParts.pathname}`;
+          console.log("imageURL>", imageUrl);
           
+          // Correctly set the accommodation image
+          accommodationImage[`img${cnt}`] = imageUrl;
+          cnt++;
+          
+          // Save the final image URL
+          let finalImageUrl = JSON.stringify(accommodationImage);
+          console.log("accommodationImage", accommodationImage);
+          dispatch(setAccommodationImages(accommodationImage));
+
+          // Step 4: Update backend with the new image URL
+          const response = await axios.post(config.photo.uploadPublicPhoto, {
+            formType,
+            userId,
+            imageUrl: finalImageUrl,
+            postId
+          });
+
+          // Proper response validation
+          if (!response.data) {
+            throw new Error("No response data received from server");
+          }
+
+          const { status, data, message } = response.data;
+          console.log("data", data);
+
+          if (status !== 'success') {
+            throw new Error(message || "Upload failed");
+          }
         }
-      }
-       else {
+
+        // Return success response with all relevant data
+        return {
+          success: true,
+          imageUrl: Object.values(accommodationImage)[0], // Return first image URL
+          postId: postId,
+        };
+      } else {
         const { data: s3Data } = await axios.post(config.photo.getS3Url, {
           folder,
           contentType: files.type
@@ -138,44 +170,38 @@ export const useUploadPublicPhoto = () => {
         });
   
         // Step 3: Construct the final image URL
-         urlParts = new URL(s3Data.url);
-         imageUrl = `${ urlParts.protocol }//${ urlParts.host }${ urlParts.pathname }`;
-        console.log("imageUR>",imageUrl)
-      }
+        const urlParts = new URL(s3Data.url);
+        const imageUrl = `${urlParts.protocol}//${urlParts.host}${urlParts.pathname}`;
+        console.log("imageURL>", imageUrl);
 
-      
-      console.log("acoomimage", accommodationImage)
-      if (accommodationImage.img1) {
-        imageUrl = JSON.stringify(accommodationImage);
-        dispatch(setAccommodationImages(accommodationImage))
-      }
-      console.log("final image url len", imageUrl)
-      // Step 4: Update backend with the new image URL
-      const response = await axios.post(config.photo.uploadPublicPhoto, {
-        formType,
-        userId,
-        imageUrl:`${imageUrl}`,
-        postId
+        // Step 4: Update backend with the new image URL
+        const response = await axios.post(config.photo.uploadPublicPhoto, {
+          formType,
+          userId,
+          imageUrl,
+          postId
         });
 
-      // Proper response validation
-      if (!response.data) {
-        throw new Error("No response data received from server");
-      }
+        // Proper response validation
+        if (!response.data) {
+          throw new Error("No response data received from server");
+        }
 
-      const { status, data, message } = response.data;
-console.log("data",data)
-      if (status !== 'success') {
-        throw new Error(message || "Upload failed");
-      }
+        const { status, data, message } = response.data;
+        console.log("data", data);
 
-      // Return success response with all relevant data
-      return {
-        success: true,
-        imageUrl: data.imageUrl,
-        postId: data.postId,
-        imageId: data.id,
-      };
+        if (status !== 'success') {
+          throw new Error(message || "Upload failed");
+        }
+
+        // Return success response with all relevant data
+        return {
+          success: true,
+          imageUrl: imageUrl,
+          postId: data.postId,
+          imageId: data.id,
+        };
+      }
 
     } catch (error) {
       console.error("Photo upload error:", {

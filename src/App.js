@@ -36,7 +36,6 @@ import FloatingContact from "./components/reusable/FloatingContact";
 import PublicProfileContainer from "./components/reusable/PublicProfilePage";
 import ReactivatePage from "./pages/ReactivatePage";
 
-
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
